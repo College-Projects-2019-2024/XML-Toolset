@@ -75,7 +75,7 @@ bool openFile(const char *fileName)
                         else // if it is not valid
                         {
                             cout << "Problem at Line : " << lineNumber << ", char : " << charNumber<< " (Invalid closing tag).";
-
+                            return false;
 
                         }
                     }
@@ -109,14 +109,6 @@ bool openFile(const char *fileName)
         tagStack.pop();
         tagLines.pop();
     }
-
-
-
-
-
-
-
-
     return true;
 
 }
