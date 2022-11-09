@@ -16,10 +16,8 @@ bool isValidTagOpeningAndClosing(string open,string close)
         }
     }
     return true;
+    //test change to commit
 }
-
-
-
 
 
 bool openFile(const char *fileName)
