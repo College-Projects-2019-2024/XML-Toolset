@@ -14,7 +14,8 @@ using namespace std;
         a = b;       \
         b = lol;     \
     }
-#define sum(a) a *((a) + 1) / 2
+#define sum(a) a *((a) + 1) /2
+//lollolol
 void gg()
 {
 #ifndef ONLINE_JUDGE
