@@ -1,3 +1,3 @@
-C:/Users/Administrator/CLionProjects/XML-Toolset/cmake-build-debug/CMakeFiles/CollegeProject.dir
-C:/Users/Administrator/CLionProjects/XML-Toolset/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Administrator/CLionProjects/XML-Toolset/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Mohammad Dallash/CLionProjects/XML-Toolset/cmake-build-debug/CMakeFiles/CollegeProject.dir
+C:/Users/Mohammad Dallash/CLionProjects/XML-Toolset/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Mohammad Dallash/CLionProjects/XML-Toolset/cmake-build-debug/CMakeFiles/rebuild_cache.dir

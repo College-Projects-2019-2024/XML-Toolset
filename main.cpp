@@ -51,9 +51,10 @@ bool openFile(const char *fileName)
                 return false;
             }
 
-            //Case 2 :  Error in Closing Bracket
+
             else if(c=='>')
             {
+                if (1);
                 if(bracketStack.size() != 1 || bracketStack.top() != '<') //Bracket opened but not closed
                 {
                     cout << "Problem at Line : " << lineNumber << ", char : " << charNumber << " (Missing opening bracket).";
