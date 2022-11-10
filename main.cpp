@@ -116,7 +116,7 @@ bool openFile(const char *fileName)
 int main() {
     freopen("input.xml", "r", stdin);
     openFile("input.xml");
-
+    cout << "lol";
 
 
 
