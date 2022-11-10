@@ -3,4 +3,4 @@ project(CollegeProject)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(CollegeProject main.cpp gg.cpp)
+add_executable(CollegeProject main.cpp gg.cpp test.cpp)
