@@ -95,7 +95,7 @@ bool openFile(const char *fileName)
                 cout << "Problem at Line : " << lineNumber << " char : " << charNumber << " (Expected closing bracket).";
                 return false;
             }
-
+//ggggggggggggggggggggggggggggggggggggggggggggggggggggggg
             charNumber++;
         }
         charNumber=1;
