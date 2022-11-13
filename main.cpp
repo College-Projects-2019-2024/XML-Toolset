@@ -31,10 +31,7 @@ using ll = long long;
 #define fork(size) for(int k=0; k < (size); k+= 1)
 #define MOD 1000000007
 
-
-
-
-list < pair <string , pair<int,int> >> errs;
+list <pair<string , pair<int,int>>> errs;
 
 void printmsg (string s, int line, int CASE)
 {
