@@ -3,7 +3,7 @@
 
 #ifndef ONLINE_JUDGE
 
-
+#include "debug.h"
 
 #else
 
@@ -34,7 +34,7 @@ using ll = long long;
 
 
 
-///يصثيصي
+list < pair <string , pair<int,int> >> errs;
 
 void printmsg (string s, int line, int CASE)
 {
@@ -50,11 +50,6 @@ void printmsg (string s, int line, int CASE)
         {
             cout << "line :" <<line;
             cout << " that was opened and not closed" << ' '<<(s) << endl;
-        }
-            break;
-        case 3:
-        {
-            cout << "sorry I found the closing of" << ' '<<(s)  << " That was at the line " <<line<< endl;
         }
             break;
         default: {}
@@ -87,13 +82,15 @@ bool ans()
             }
             else if (str[start_pos+1] == '/')
             {
-                if (stac.empty()) printmsg ( str.substr(start_pos + 2, end_pos - start_pos - 2),  line, 1);
+                if (stac.empty()) errs.push_back({str.substr(start_pos + 2, end_pos - start_pos - 2), {line, 1}});
+
+
                 else
                 {
                     list <pair <string,int>> myList;
                     while (! stac.empty() && (stac.top().first) != str.substr(start_pos+2,end_pos-start_pos-2))
                     {
-                        printmsg(stac.top().first,stac.top().second,2);
+                       errs.push_back({stac.top().first, {stac.top().second,2}});
                         myList.push_back(stac.top()) ;
                         stac.pop();
                     }
@@ -102,11 +99,11 @@ bool ans()
                     {
                         while (!myList.empty())
                         {
-                            printmsg(myList.back().first,myList.back().second,3);
+                            errs.pop_back();
                             stac.push(myList.back()) ;
                             myList.pop_back( );
                         }
-                        printmsg ( str.substr(start_pos + 2, end_pos - start_pos - 2),  line, 1);
+                        errs.push_back({str.substr(start_pos + 2, end_pos - start_pos - 2),{line, 1}});
                     }
                 }
 
@@ -116,7 +113,7 @@ bool ans()
 
     while (! stac.empty())
     {
-        printmsg(stac.top().first,stac.top().second,2);
+        errs.push_back({stac.top().first, {stac.top().second,2}});
         stac.pop();
     }
 
@@ -128,4 +125,9 @@ int main()
 {
     freopen("in.in", "r", stdin);
     ans();
+    for (auto x : errs)
+    {
+        printmsg(x.first, x.second.first, x.second.second);
+    }
+
 }
