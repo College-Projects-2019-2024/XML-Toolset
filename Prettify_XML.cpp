@@ -1,3 +1,7 @@
+//prettify partially done, it works correctly with tags only and not in all cases.
+
+
+
 #include <iostream>
 #include "string"
 #include "stack"
