@@ -16,14 +16,13 @@ bool isValidTagOpeningAndClosing(string open,string close)
         }
     }
     return true;
-    //test change to commit gggggggggggggggggggggggggggg
 }
 
 
 bool openFile(const char *fileName)
 
 {
-     freopen("input.xml", "r", stdin);
+    freopen(fileName, "r", stdin);
     stack<char> bracketStack; //the stack where brackets are pushed
     stack<string> tagStack;//the stack where opening and closing brackets are pushed
     string currentLine , tag = "";
@@ -91,7 +90,7 @@ bool openFile(const char *fileName)
                 tag+=c;
             }
                 //Case 3 : No Closing bracket (Corner Case)
-            else if (charNumber==currentLine.length() && !bracketStack.empty())
+            if (c!='>' && charNumber==currentLine.length() && !bracketStack.empty())
             {
                 cout << "Problem at Line : " << lineNumber << " char : " << charNumber << " (Expected closing bracket).";
                 return false;
@@ -114,9 +113,7 @@ bool openFile(const char *fileName)
 }
 
 int main() {
-    freopen("input.xml", "r", stdin);
-    cout<<"fff";
-    cout << "wwww";
+    openFile("sample.xml");
 
 
 
