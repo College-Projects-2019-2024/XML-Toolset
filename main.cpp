@@ -6,6 +6,8 @@ using namespace std;
 
 vector<string>answer;
 
+//test
+
 string insert_tab(string s,int n){
     string str = " ";
 
@@ -59,4 +61,3 @@ int main() {
     for(auto & i : answer) cout<<i<<endl;
     return 0;
 }
-
