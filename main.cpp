@@ -72,9 +72,9 @@ bool ans()
     {
         line++;
         int end_pos=0;
-        int x=str.length()-1;
+        int last_char= str.length() - 1;
 
-        while(end_pos!=string::npos && end_pos!=x)
+        while(end_pos!=string::npos && end_pos != last_char)
         {
             int start_pos=str.find('<',end_pos);
             end_pos = str.find('>', end_pos+1);
@@ -97,7 +97,7 @@ bool ans()
                         myList.push_back(stac.top()) ;
                         stac.pop();
                     }
-                    if ( !stac.empty()&& stac.top().first == str.substr(start_pos+2,end_pos-start_pos-2)) stac.pop();
+                    if ( !stac.empty() && stac.top().first == str.substr(start_pos+2,end_pos-start_pos-2)) stac.pop();
                     else
                     {
                         while (!myList.empty())
