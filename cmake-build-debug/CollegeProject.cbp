@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/Mohammad Dallash/CLionProjects/XML-Toolset/debug.h">
+			<Option target="CollegeProject"/>
+		</Unit>
 		<Unit filename="C:/Users/Mohammad Dallash/CLionProjects/XML-Toolset/main.cpp">
 			<Option target="CollegeProject"/>
 		</Unit>

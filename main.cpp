@@ -130,14 +130,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    bool tests = false;
-    bool yn = false;
 
-    int t = 1; if(tests) cin>>t;
-    fori(t)
-    {
-        if (ans() && yn) cout<<"YES";
-        else if ( yn) cout<<"NO";
-        cout<<endl;
-    }
+
+   ans();
 }
