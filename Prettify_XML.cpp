@@ -32,7 +32,7 @@ void prettify(){
         while(current_line[0] == ' '){
             current_line.erase(0,1);
         }
-//Get tag name "Hoss"
+//Get tag name "Hossam"
         int position = 0;
         int x = current_line.length() - 1;
 
