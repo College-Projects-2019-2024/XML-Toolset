@@ -33,6 +33,17 @@ void prettify(){
             current_line.erase(0,1);
         }
 
+        int position = 0;
+        int x = current_line.length() - 1;
+
+        while (position != string::npos && position != x) {
+
+            int first = current_line.find('<', position);
+            position = current_line.find('>', position + 1);
+
+            if (position == -1 && first == -1) break;
+        }
+
         if(current_line[0] == '<' && current_line[1] != '/'){
             if(current_line.find('/') != -1){
                 answer.push_back(insert_tab(current_line,count));
