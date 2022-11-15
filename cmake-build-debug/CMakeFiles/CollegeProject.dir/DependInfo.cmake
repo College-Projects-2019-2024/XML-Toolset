@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/KH/CLionProjects/XML-Toolset/main.cpp" "CMakeFiles/CollegeProject.dir/main.cpp.obj" "gcc" "CMakeFiles/CollegeProject.dir/main.cpp.obj.d"
+  "C:/Users/Mohammad Dallash/CLionProjects/XML-Toolset/main.cpp" "CMakeFiles/CollegeProject.dir/main.cpp.obj" "gcc" "CMakeFiles/CollegeProject.dir/main.cpp.obj.d"
   )
 
 # Targets to which this target links.
