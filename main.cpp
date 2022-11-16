@@ -16,13 +16,15 @@ public:
     {
         fori(50) table.push_back("null");
 
+        cout<<"hash utility class is done"<<endl;
+
         for (auto x : values)
         {
             table [int (Hash_to_code('<'+x+'>'))]  = '<'+x+'>';
         }
         for (auto x : values)
         {
-            table [int (Hash_to_code("</" + x +'>')) +23]  = "</" + x +'>';
+            table [int (Hash_to_code("</" + x +'>')) ]  = "</" + x +'>';
         }
 
     }
@@ -36,11 +38,11 @@ public:
         {
             if (s[1]== '/')
             {
-                return ( 2* (int(s[2]) - int(s[s.size()-2]) + 23) % 23)  ;
+                return (( 2* (int(s[2]) - int(s[s.size()-2]) + 23) % 23  )+ 23)  ;
             }
             else
             {
-                return ( 2* (int(s[1]) - int(s[s.size()-2]) + 23) % 23  );
+                return ( 2* (int(s[1]) - int(s[s.size()-2]) + 23) % 23 );
             }
         }
     }
@@ -51,6 +53,7 @@ public:
     }
 
 };
+
 
 int main() {
 
