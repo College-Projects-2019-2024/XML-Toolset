@@ -16,8 +16,6 @@ public:
     {
         fori(50) table.push_back("null");
 
-        cout<<"hash utility class is done"<<endl;
-
         for (auto x : values)
         {
             table [int (Hash_to_code('<'+x+'>'))]  = '<'+x+'>';
