@@ -73,6 +73,7 @@ bool ans()
 
             if(end_pos==-1 && start_pos==-1) break;
 
+
             if(str[start_pos] == '<' && str[start_pos+1] != '/')
             {
                 stac.push({str.substr(start_pos+1,end_pos-start_pos-1), (line)});
@@ -91,7 +92,7 @@ bool ans()
                         myList.push_back(stac.top()) ;
                         stac.pop();
                     }
-                    if ( !stac.empty() && stac.top().first == str.substr(start_pos+2,end_pos-start_pos-2)) stac.pop();
+                    if ( !stac.empty() && stac.top().first == str.substr(start_pos+2,end_pos-start_pos-2)) stac.pop(), vs.push_back(str.substr(start_pos+2,end_pos-start_pos-2));
                     else
                     {
                         while (!myList.empty())
@@ -107,7 +108,7 @@ bool ans()
             }
         }
     }
-//dwdwdwd
+
     while (! stac.empty())
     {
         errs.push_back({stac.top().first, {stac.top().second,2}});
@@ -127,4 +128,9 @@ int main()
         printmsg(x.first, x.second.first, x.second.second);
     }
 
+    freopen("out.in", "w", stdout);
+    /*for (auto x : vs)
+    {
+        cout<<x<<endl;
+    }*/
 }
