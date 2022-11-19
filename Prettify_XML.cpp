@@ -1,4 +1,4 @@
-//prettify partially done, it works correctly with tags only and not in all cases.
+//prettify logic done
 
 
 
