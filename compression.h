@@ -6,4 +6,6 @@ string removeSpacesFromLine(string s);
 string mapTags(const char* inFileName,const char* outFileName);
 void fixLine();
 void Minify();
+void Compress();
+void deCompress();
 #endif //COLLEGEPROJECT_COMPRESSION_H

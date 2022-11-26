@@ -1,17 +1,86 @@
 #include <bits/stdc++.h>
+#include "compression.h"
+
 using namespace std;
-unordered_map<string,int> tags(1000);
-hash<string> hasher;
+
+
 ifstream myfile;
 ofstream myfileo;
 
+class hashUtil
+{
+
+private: vector <string> tags {"users", "user", "id", "name", "posts", "post", "body", "topics", "topic", "followers", "follower"};
+    vector <string> table; // a table to contain opening and closing tags
+public:  hashUtil()
+    {
+        table.resize(46); //
+
+        for (string tag : tags)
+        {
+            table [int (hashInTable('<'+ tag +'>'))]  = '<'+tag+'>';
+        }
+        for (string tag : tags)
+        {
+            table [int (hashInTable("</" + tag +'>')) ]  = "</" + tag +'>';
+        }
+
+    }
+private:  unsigned char hashInTable(string s)
+    {
+        if (!(s.front() == '<' && s.back() == '>'))
+        {
+            return -1;
+        }
+        else
+        {
+            if (s[1]== '/')
+            {
+                return (( 2* (int(s[2]) - int(s[s.size()-2]) + 23) % 23  )+ 23);
+            }
+            else
+            {
+                return ( 2* (int(s[1]) - int(s[s.size()-2]) + 23) % 23 );
+            }
+        }
+    }
+
+public:
+
+    string codeToString(unsigned char x)
+    {
+        if(x-128 < 0) return "";
+        return table[(short)x-128];
 
 
-//removes spaces from the start of each line
+
+    }
+
+    unsigned char stringToCode(string x)
+    {
+
+        return (isValidTag(x))? hashInTable(x)+128 : -1;
+    }
+
+    bool isValidTag(string x)
+    {
+        if(find(table.begin(), table.end(),x) != table.end() && hashInTable(x)!=-1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+
+};
+hashUtil x;
+//removes spaces from the start and end of each line
 string removeSpacesFromLine(string s)
 {
-    int begin=0;
-    for(int i =0; i<s.size(); i++)
+    int begin=0 , end = s.length()-1;
+
+    for(int i = begin; i<s.size(); i++)
     {
         if(s[i]!=' ')
         {
@@ -19,7 +88,18 @@ string removeSpacesFromLine(string s)
             break;
         }
     }
-    return s.substr(begin);
+
+
+    for(int i = end; i>=0; i--)
+    {
+        if(s[i]!=' ')
+        {
+            end = i;
+            break;
+        }
+    }
+
+    return s.substr(begin,end+1);
 }
 //removes spaces from the start of each line in the file
 void removeSpacesFromFile()
@@ -100,31 +180,46 @@ void Minify()
 
         }
     }
-
 }
 
-
-
-//TODO Later
-string mapTags(const char* inFileName,const char* outFileName)
+void Compress()
 {
+    fixLine();
+    removeSpacesFromFile();
     myfile.open ("out.xml");
-    myfileo.open("outFileName.xml");
-    string currentLine;
+    myfileo.open("outCompressed.xml");
+    string currentLine = "";
     while (getline(myfile,currentLine))
     {
-        if(removeSpacesFromLine(currentLine)[0]=='<')
+        if(currentLine[0] == '<' && x.isValidTag(currentLine))
         {
-           tags[currentLine] = hasher(currentLine)%1000;
-           myfileo << hasher(currentLine)%1000<<endl;
+                myfileo << x.stringToCode(currentLine) << endl;
         }
         else
         {
-            myfileo << currentLine <<endl;
+            myfileo << currentLine << endl;
         }
     }
+    myfileo.close();
     myfile.close();
-    return outFileName;
-
 }
+
+void deCompress()
+{
+
+    myfile.open ("outCompressed.xml");
+    myfileo.open("outdeCompressed.xml");
+    string currentLine = "";
+    while (getline(myfile,currentLine))
+    {
+        string res = x.codeToString((int)currentLine[0]);
+
+        myfileo << ((res == "")? currentLine : res) << endl;
+
+
+
+    }
+}
+
+
 
