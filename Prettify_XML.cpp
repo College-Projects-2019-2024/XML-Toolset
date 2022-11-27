@@ -1,12 +1,13 @@
 //prettify done
 
-
-
+#include <bits/stdc++.h>
 #include <iostream>
 #include "string"
 #include "stack"
 #include "vector"
 using namespace std;
+ifstream fileInputStream;
+ofstream fileOutputStream;
 
 vector<string>answer;
 
@@ -19,13 +20,15 @@ string insert_tab(string s,int n){
     return s;
 }
 
-void prettify() {
-    freopen("In.in","r",stdin);
+void prettify(string fileName) {
+    fileInputStream.open(fileName);
+    fileOutputStream.open("prettified.xml");
+
     string current_line;
     stack<int> stac;
     int count = 0;
     string str;
-    while (getline(cin, current_line)) {
+    while (getline(fileInputStream, current_line)) {
 
         while (current_line[0] == ' ') {
             current_line.erase(0, 1);
@@ -77,5 +80,8 @@ void prettify() {
         }
     }
 
-    for(auto & i : answer) cout<<i<<endl;
+    for(auto & i : answer) fileOutputStream << i << endl;
+
+    fileInputStream.close();
+    fileOutputStream.close();
 }
