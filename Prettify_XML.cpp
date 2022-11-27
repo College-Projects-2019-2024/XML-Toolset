@@ -28,13 +28,16 @@ void prettify(string fileName) {
     stack<int> stac;
     int count = 0;
     string str;
+
     while (getline(fileInputStream, current_line)) {
 
         while (current_line[0] == ' ') {
             current_line.erase(0, 1);
         }
+        bool text_at_start = true;
 
         int position = 0;
+        int d = position;
         int x = current_line.length() - 1;
 
         while ( position != x) {
@@ -43,7 +46,10 @@ void prettify(string fileName) {
             position = current_line.find('>', first);
             int next = current_line.find('<',position);
 
-
+            if(d<first && text_at_start){
+                answer.push_back(insert_tab(current_line.substr(d,first),stac.top()+1));
+                text_at_start = false;
+            }
 
             if ( first == -1 && position == -1){
                 answer.push_back(insert_tab(current_line, count));
@@ -51,26 +57,27 @@ void prettify(string fileName) {
             }
 
             else if (current_line[first] == '<' && current_line[first+1] != '/') {
-
+                text_at_start = false;
                 stac.push(count);
                 str = current_line.substr(first,position-first+1);
                 answer.push_back(insert_tab(str, count));
+
+                if(next == -1 && x-position != 0){
+                    str = current_line.substr(position+1,x-position);
+                    answer.push_back(insert_tab(str, count+1));
+                    position = x;
+                }
                 if(next-position-1 >0){
-                    if(next == -1){
-                        str = current_line.substr(position+1,x-position);
-                        answer.push_back(insert_tab(str, count+1));
-                        position = x;
-                    }
-                    else{
-                        str = current_line.substr(position+1,next-position-1);
-                        answer.push_back(insert_tab(str, count+1));
-                    }
+
+                    str = current_line.substr(position+1,next-position-1);
+                    answer.push_back(insert_tab(str, count+1));
 
                 }
                 count++;
 
             }
             else if (current_line[first] == '<' && current_line[first+1] == '/') {
+
                 str = current_line.substr(first,position-first+1);
                 answer.push_back(insert_tab(str, stac.top()));
                 stac.pop();
