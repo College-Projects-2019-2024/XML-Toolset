@@ -3,13 +3,8 @@
 using namespace std;
 
 int main() {
-
-
-
-
-Compress();
-deCompress();
-
+     Compress("out1.xml","outCompressed.xml");
+     deCompress("outCompressed.xml","outdeCompressed.xml");
 
 
 
