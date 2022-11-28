@@ -31,6 +31,10 @@ using ll = long long;
 #define fork(size) for(int k=0; k < (size); k+= 1)
 #define MOD 1000000007
 
+
+
+
+
 list <pair<string , pair<int,int>>> errs;
 
 void printmsg (string s, int line, int CASE)
@@ -92,7 +96,7 @@ bool ans()
                         myList.push_back(stac.top()) ;
                         stac.pop();
                     }
-                    if ( !stac.empty() && stac.top().first == str.substr(start_pos+2,end_pos-start_pos-2)) stac.pop(), vs.push_back(str.substr(start_pos+2,end_pos-start_pos-2));
+                    if ( !stac.empty() && stac.top().first == str.substr(start_pos+2,end_pos-start_pos-2)) stac.pop();
                     else
                     {
                         while (!myList.empty())
@@ -121,6 +125,7 @@ bool ans()
 
 int main()
 {
+
     freopen("in.in", "r", stdin);
     ans();
     for (auto x : errs)
@@ -128,9 +133,5 @@ int main()
         printmsg(x.first, x.second.first, x.second.second);
     }
 
-    freopen("out.in", "w", stdout);
-    /*for (auto x : vs)
-    {
-        cout<<x<<endl;
-    }*/
+
 }
