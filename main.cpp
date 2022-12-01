@@ -103,9 +103,29 @@ void checknode(treeNode * node )
     f = ""; f+= "<";f+=node->type; f+=">";
     if (f != s) cout<<f <<" was missing"<<endl,can = false;
     else can = true;
+    if (node->max ==-1)
+    {
+        if (!can)
+        {
+            if ( !(v[x-1].front() != '<' && v[x-1].front() != '>') ) cout << node->type << " has no text" << endl;
+            else can = true;
+        }
+        else
+        {
+            if (!(v[x].front() != '<' && v[x].front() != '>')) cout << node->type << " has no text" << endl;
+            else x++,can = true;
+        }
 
-    if (node->max ==-1) x++;
-    else fori(node->max + 1) checknode(node->children[i]);
+    }
+    else
+    {
+        fori(node->max + 1)
+        {
+            checknode(node->children[i]);
+            f = "";f += "<";f += node->children[node->max]->type; f += ">";
+            if (v[x] == f && i == node->max) i--;
+        }
+    }
 
 
     if (can) s= v[x++];
@@ -113,12 +133,6 @@ void checknode(treeNode * node )
     if (f != s) cout << f << " was missing" << endl,can = false;
     else can = true;
 }
-/*ff = ""; ff+= "<";ff+=(node->children[node->max])->type; ff+=">";
-        string  xx = ff;
-        if ( v[x+1]  == ff  )
-        {
-            i--;
-        }*/
 
 
 int main()
