@@ -1,8 +1,29 @@
-<user0>
-
-e
-<user1>
-frfrfrf
-
-
-</user0>
+<users>
+    <user>
+        <ID>
+            myidis123
+        </ID>
+        <name>
+            Dallash
+        </name>
+        <posts>
+            <post>
+                <body>
+                    thisismybody
+                </body>
+                <topics>
+                    <topic>
+                        thisismytopic
+                    </topic>
+                </topics>
+            </post>
+        </posts>
+        <followers>
+            <follower>
+                <ID>
+                    hisidis456
+                </ID>
+            </follower>
+        </followers>
+    </user>
+</users>

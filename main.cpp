@@ -1,17 +1,5 @@
 #include <bits/stdc++.h>
-
-//8
-#ifndef ONLINE_JUDGE
-
 #include "debug.h"
-
-#else
-
-#define debug(...) 42
-
-
-#endif
-
 
 
 #include <iostream>
@@ -20,118 +8,130 @@ using namespace std;
 using ll = long long;
 
 
-
-//delete
-
 #define all(v) v.begin(),v.end()
 
 #define allr(v) v.rbegin(),v.rend()
 #define fori(size) for(int i=0; i < (size); i+= 1)
 #define forj(size) for(int j=0; j < (size); j+= 1)
 #define fork(size) for(int k=0; k < (size); k+= 1)
-#define MOD 1000000007
 
 
+class treeNode{
+public:
+    int max;
+    string type;
+    string text;
+    treeNode** children = nullptr;
 
-
-
-list <pair<string , pair<int,int>>> errs;
-
-void printmsg (string s, int line, int CASE)
-{
-    switch (CASE)
+    treeNode(int max, string type,string text, treeNode** children)
     {
-        case 1:
-        {
-            cout << "line :" <<line;
-            cout << ' ' << s<<  " are closed although it was never opened" << endl;
-        }
-            break;
-        case 2:
-        {
-            cout << "line :" <<line;
-            cout << " that was opened and not closed" << ' '<<(s) << endl;
-        }
-            break;
-        default: {}
+        this->max = max;
+        this->type = type;
+        this->text = text;
+        this->children = children;
     }
-}
+};
 
 
-
+treeNode * usersSample;
 bool ans()
 {
-    string  str; stack <pair <string,int>> stac;
-
-    int line  = 0;
-    while(getline (cin,str))
-    {
-        line++;
-        int end_pos=0;
-        int last_char= str.length() - 1;
-
-        while(end_pos!=string::npos && end_pos != last_char)
-        {
-            int start_pos=str.find('<',end_pos);
-            end_pos = str.find('>', end_pos+1);
-
-            if(end_pos==-1 && start_pos==-1) break;
+    treeNode * myIDSample = new treeNode( -1, "ID","my id is 123", nullptr);//0
+    treeNode * nameSample = new treeNode( -1, "name","Dallash", nullptr);//1
 
 
-            if(str[start_pos] == '<' && str[start_pos+1] != '/')
-            {
-                stac.push({str.substr(start_pos+1,end_pos-start_pos-1), (line)});
-            }
-            else if (str[start_pos+1] == '/')
-            {
-                if (stac.empty()) errs.push_back({str.substr(start_pos + 2, end_pos - start_pos - 2), {line, 1}});
+    treeNode * topicSample = new treeNode( -1, "topic","this is my topic", nullptr);
+    treeNode * topicsSample = new treeNode( 0, "topics","", &topicSample);
+    treeNode * bodySample =  new treeNode( -1, "body","this is my body", nullptr);
+    treeNode * postChildrenArray [] = { bodySample,  topicsSample};
+    treeNode * postSample = new treeNode( 1, "post","", postChildrenArray);
+    treeNode * postsSample = new treeNode( 0, "posts","", &postSample);//2
 
 
-                else
-                {
-                    list <pair <string,int>> myList;
-                    while (! stac.empty() && (stac.top().first) != str.substr(start_pos+2,end_pos-start_pos-2))
-                    {
-                       errs.push_back({stac.top().first, {stac.top().second,2}});
-                        myList.push_back(stac.top()) ;
-                        stac.pop();
-                    }
-                    if ( !stac.empty() && stac.top().first == str.substr(start_pos+2,end_pos-start_pos-2)) stac.pop();
-                    else
-                    {
-                        while (!myList.empty())
-                        {
-                            errs.pop_back();
-                            stac.push(myList.back()) ;
-                            myList.pop_back( );
-                        }
-                        errs.push_back({str.substr(start_pos + 2, end_pos - start_pos - 2),{line, 1}});
-                    }
-                }
+    treeNode * hisIDSample = new treeNode( -1, "ID","his id is 456", nullptr);
+    treeNode * followerSample = new treeNode( 0, "follower","", &hisIDSample);
+    treeNode * followersSample = new treeNode( 0, "followers","", &followerSample);//3
 
-            }
-        }
-    }
 
-    while (! stac.empty())
-    {
-        errs.push_back({stac.top().first, {stac.top().second,2}});
-        stac.pop();
-    }
+    treeNode * userChildrenArray [] = { myIDSample,  nameSample, postsSample,followersSample};
+    treeNode * userSample = new treeNode( 3, "user","", userChildrenArray);
 
+
+    usersSample = new treeNode( 0, "users","", &userSample);
     return true;
 }
+
+
+
+void printnode(treeNode * node , int depth)
+{
+    fori(depth*4)cout<<' ';
+    cout<<"<"<<node->type<<">"<<endl;
+
+    if (node->max ==-1)
+    {
+        fori(depth*4+4)cout<<' ';
+        cout << node->text << endl;
+    }
+    else fori(node->max + 1)
+    {
+        printnode(node->children[i], depth + 1);
+    }
+
+    fori (depth*4) cout<<' ';
+    cout <<"</"<<node->type<<">"<<endl;
+}
+
+
+
+
+
+string s,f,ff ;
+vector <string> v;
+
+
+
+int x= 0;
+
+
+
+bool can = true;
+
+void checknode(treeNode * node )
+{
+    if (can)s= v[x++];
+    f = ""; f+= "<";f+=node->type; f+=">";
+    if (f != s) cout<<f <<" was missing"<<endl,can = false;
+    else can = true;
+
+    if (node->max ==-1) x++;
+    else fori(node->max + 1) checknode(node->children[i]);
+
+
+    if (can) s= v[x++];
+    f = ""; f+= "</";f+=node->type; f+=">";
+    if (f != s) cout << f << " was missing" << endl,can = false;
+    else can = true;
+}
+/*ff = ""; ff+= "<";ff+=(node->children[node->max])->type; ff+=">";
+        string  xx = ff;
+        if ( v[x+1]  == ff  )
+        {
+            i--;
+        }*/
 
 
 int main()
 {
 
     freopen("in.in", "r", stdin);
+
+
+    while(cin>>s) v.push_back(s);
+    //debug(v);
     ans();
-    for (auto x : errs)
-    {
-        printmsg(x.first, x.second.first, x.second.second);
-    }
+    //checknode( usersSample );
+    checknode(usersSample);
 
 
 }
