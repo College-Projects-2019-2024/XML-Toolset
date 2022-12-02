@@ -142,11 +142,10 @@ void get_XML()
 {
     while(getline (cin,s) )
     {
-
+        if(s.empty()) continue;
         int start_pos =0,end_pos=0;
         int i = 0;
         while (s[i] == ' ') i++;
-        if(s.empty()) continue;
         start_pos = s.find('<', end_pos);
         end_pos = s.find('>', end_pos + 1);
         if ((end_pos == -1 && start_pos == -1) || ((end_pos - start_pos) == s.length() - i -1))
