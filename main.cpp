@@ -86,7 +86,7 @@ void printnode(treeNode * node , int depth)
 
 
 
-string s,f,ff ;
+string s,f ;
 vector <string> v;
 
 
@@ -95,27 +95,31 @@ int x= 0;
 
 
 
-bool can = true;
+bool can_increment = true;
+
+
+
+
 
 void checknode(treeNode * node )
 {
-    if (can)s= v[x++];
-    f = ""; f+= "<";f+=node->type; f+=">";
-    if (f != s) cout<<f <<" was missing"<<endl,can = false;
-    else can = true;
+    if (can_increment) s= v[x++];//
+    f = ""; f+= "<";f+=node->type; f+=">";//
+    if (f != s) cout<<f <<" was missing"<<endl, can_increment = false;//
+    else can_increment = true;//
+
     if (node->max ==-1)
     {
-        if (!can)
+        if (!can_increment)
         {
             if ( !(v[x-1].front() != '<' && v[x-1].front() != '>') ) cout << node->type << " has no text" << endl;
-            else can = true;
+            else can_increment = true;
         }
         else
         {
             if (!(v[x].front() != '<' && v[x].front() != '>')) cout << node->type << " has no text" << endl;
-            else x++,can = true;
+            else x++, can_increment = true;
         }
-
     }
     else
     {
@@ -123,15 +127,15 @@ void checknode(treeNode * node )
         {
             checknode(node->children[i]);
             f = "";f += "<";f += node->children[node->max]->type; f += ">";
-            if (v[x] == f && i == node->max) i--;
+            if ( (v[x] == f && i == node->max)) i--;
         }
     }
 
 
-    if (can) s= v[x++];
-    f = ""; f+= "</";f+=node->type; f+=">";
-    if (f != s) cout << f << " was missing" << endl,can = false;
-    else can = true;
+    if (can_increment) s= v[x++];//
+    f = ""; f+= "</";f+=node->type; f+=">";//
+    if (f != s) cout << f << " was missing" << endl, can_increment = false;//
+    else can_increment = true;//
 }
 
 
