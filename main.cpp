@@ -137,6 +137,38 @@ void checknode(treeNode * node )
     if (f != s) cout << f << " was missing" << endl, can_increment = false;//
     else can_increment = true;//
 }
+void get_XML(string s)
+{
+    while(getline (cin,s)) {
+        if(s=="") continue;
+        int start_pos =0,end_pos=0;
+        int i = 0;
+        while (s[i] == ' ') i++;
+        start_pos = s.find('<', end_pos);
+        end_pos = s.find('>', end_pos + 1);
+        if ((end_pos == -1 && start_pos == -1) || ((end_pos - start_pos) == s.length() - i -1))
+            v.push_back(s.substr(i, s.length()));
+        else {
+            if (s[i] == '<') {
+                v.push_back(s.substr(i, end_pos - i + 1));
+                i = end_pos + 1;
+                start_pos = s.find('<', end_pos);
+                end_pos = s.find('>', end_pos + 1);
+                if (start_pos != -1) {
+                    v.push_back(s.substr(i, start_pos - i));
+                    v.push_back(s.substr(start_pos, end_pos - start_pos + 1));
+                }
+                else v.push_back(s.substr(i, s.length()-i));
+            }
+            else {
+                if (start_pos != -1) v.push_back(s.substr(i, start_pos - i));
+                v.push_back(s.substr(start_pos, end_pos - start_pos + 1));
+            }
+        }
+
+    }
+
+};
 
 
 int main()
@@ -145,10 +177,9 @@ int main()
     freopen("in.in", "r", stdin);
 
 
-    while(cin>>s) v.push_back(s);
+    get_XML(s);
     //debug(v);
     ans();
-    //checknode( usersSample );
     checknode(usersSample);
 
 
