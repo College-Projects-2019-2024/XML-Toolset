@@ -36,7 +36,7 @@ public:
 treeNode * usersSample;
 bool ans()
 {
-    treeNode * myIDSample = new treeNode( -1, "ID","my id is 123", nullptr);//0
+    treeNode * myIDSample = new treeNode( -1, "id","my id is 123", nullptr);//0
     treeNode * nameSample = new treeNode( -1, "name","Dallash", nullptr);//1
 
 
@@ -48,7 +48,7 @@ bool ans()
     treeNode * postsSample = new treeNode( 0, "posts","", &postSample);//2
 
 
-    treeNode * hisIDSample = new treeNode( -1, "ID","his id is 456", nullptr);
+    treeNode * hisIDSample = new treeNode( -1, "id","his id is 456", nullptr);
     treeNode * followerSample = new treeNode( 0, "follower","", &hisIDSample);
     treeNode * followersSample = new treeNode( 0, "followers","", &followerSample);//3
 
@@ -74,9 +74,9 @@ void printnode(treeNode * node , int depth)
         cout << node->text << endl;
     }
     else fori(node->max + 1)
-    {
-        printnode(node->children[i], depth + 1);
-    }
+        {
+            printnode(node->children[i], depth + 1);
+        }
 
     fori (depth*4) cout<<' ';
     cout <<"</"<<node->type<<">"<<endl;
@@ -103,10 +103,10 @@ bool can_increment = true;
 
 void checknode(treeNode * node )
 {
-    if (can_increment) s= v[x++];//
-    f = ""; f+= "<";f+=node->type; f+=">";//
+    if (can_increment) s= v[x++];
+    f = ""; f+= "<";f+=node->type; f+=">";
     if (f != s) cout<<f <<" was missing"<<endl, can_increment = false;//
-    else can_increment = true;//
+    else can_increment = true;
 
     if (node->max ==-1)
     {
@@ -132,44 +132,59 @@ void checknode(treeNode * node )
     }
 
 
-    if (can_increment) s= v[x++];//
-    f = ""; f+= "</";f+=node->type; f+=">";//
-    if (f != s) cout << f << " was missing" << endl, can_increment = false;//
+    if (can_increment) s= v[x++];
+    f = ""; f+= "</";f+=node->type; f+=">";
+    if (f != s) cout << f << " was missing" << endl, can_increment = false;
     else can_increment = true;//
 }
-void get_XML(string s)
+
+void get_XML()
 {
-    while(getline (cin,s)) {
-        if(s=="") continue;
+    while(getline (cin,s) )
+    {
+
         int start_pos =0,end_pos=0;
         int i = 0;
         while (s[i] == ' ') i++;
+        if(s.empty()) continue;
         start_pos = s.find('<', end_pos);
         end_pos = s.find('>', end_pos + 1);
         if ((end_pos == -1 && start_pos == -1) || ((end_pos - start_pos) == s.length() - i -1))
             v.push_back(s.substr(i, s.length()));
         else {
-            if (s[i] == '<') {
+            if (s[i] == '<')
+            {
                 v.push_back(s.substr(i, end_pos - i + 1));
                 i = end_pos + 1;
                 start_pos = s.find('<', end_pos);
                 end_pos = s.find('>', end_pos + 1);
+                int j=start_pos-1;
                 if (start_pos != -1) {
-                    v.push_back(s.substr(i, start_pos - i));
+                    while(s[i]==' ') i++;
+                    while(s[j]==' ')j--;
+                    if (j>=i) v.push_back(s.substr(i, j-i+1));
                     v.push_back(s.substr(start_pos, end_pos - start_pos + 1));
                 }
-                else v.push_back(s.substr(i, s.length()-i));
+                else
+                {
+                    while(s[i]==' ') i++;
+                    v.push_back(s.substr(i, s.length()-i));
+                }
             }
-            else {
-                if (start_pos != -1) v.push_back(s.substr(i, start_pos - i));
+            else
+            {
+                if (start_pos != -1)
+                {
+                    int j=start_pos;
+                    while(s[j]==' ')j--;
+                    v.push_back(s.substr(i, j-i+1));
+                }
                 v.push_back(s.substr(start_pos, end_pos - start_pos + 1));
             }
         }
 
     }
-
 };
-
 
 int main()
 {
@@ -177,9 +192,12 @@ int main()
     freopen("in.in", "r", stdin);
 
 
-    get_XML(s);
-    //debug(v);
+    get_XML();
+
+    //while (cin>>s) v.push_back(s);
+    // debug(v);
     ans();
+    //checknode( usersSample );
     checknode(usersSample);
 
 
