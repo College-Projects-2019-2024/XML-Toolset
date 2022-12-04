@@ -7,7 +7,7 @@ using namespace std;
 int main() {
  cout << "lol" << endl;
 
- new_f();
+ load_tree();
 
 
     }
