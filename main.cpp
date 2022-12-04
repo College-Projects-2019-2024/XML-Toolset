@@ -99,8 +99,6 @@ bool can_increment = true;
 
 
 
-
-
 void checknode(treeNode * node )
 {
     if (can_increment) s= v[x++];
