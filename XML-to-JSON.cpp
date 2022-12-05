@@ -49,7 +49,6 @@ void load_tree (){
     Tree data;
 
     string currentLine;
-    //string content;
 
     int user_no = 0;
     int user_prop = 0;
@@ -84,16 +83,6 @@ void load_tree (){
 
         if (currentLine.find("<id>") != string::npos)
         {
-            /*int start_pos = 0, end_pos = 0;
-            start_pos = currentLine.find('>') + 1;
-            end_pos = currentLine.find('<', start_pos);
-
-            string id;
-            for(int i = start_pos; i < end_pos; i++)
-            {
-                id = id + currentLine[i];
-            }*/
-
             id_flag = true;
             data.root->children[user_no - 1]->children[user_prop] = new Node("id");
             user_prop++;
@@ -130,6 +119,47 @@ void load_tree (){
             continue;
         }
 
+        if (currentLine.find("<topics>") != string::npos)
+        {
+            data.root->children[user_no - 1]->children[user_prop - 1]->children[post_no - 1]->children[post_prop] = new Node("topics");
+            post_prop++;
+            continue;
+        }
+
+        if (currentLine.find("<topic>") != string::npos)
+        {
+            data.root->children[user_no - 1]->children[user_prop - 1]->children[post_no - 1]->children[post_prop - 1]->children[topic_no] = new Node("topic");
+            topic_no++;
+            topic_flag = true;
+            continue;
+        }
+
+
+
+        if (currentLine.find("</topics>") != string::npos)
+        {
+            topic_no = 0;
+            continue;
+        }
+
+        if (currentLine.find("</post>") != string::npos)
+        {
+            post_prop = 0;
+            continue;
+        }
+
+        if (currentLine.find("</posts>") != string::npos)
+        {
+            post_no = 0;
+            continue;
+        }
+
+        if (currentLine.find("</user>") != string::npos)
+        {
+             user_prop = 0;
+             follower_no = 0;
+            continue;
+        }
 
 
         if(currentLine.find('/') != string::npos)
@@ -137,14 +167,14 @@ void load_tree (){
             continue;
         }
 
-        //content = content + currentLine;
+
+        currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\t'), currentLine.end());
+        currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\n'), currentLine.end());
+        currentLine.erase(currentLine.begin(), std::find_if(currentLine.begin(), currentLine.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
 
         if(id_flag || name_flag)
         {
-            currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\t'), currentLine.end());
-            currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\n'), currentLine.end());
             data.root->children[user_no - 1]->children[user_prop - 1]->value = currentLine;
-            //content = "";
             id_flag = false;
             name_flag = false;
             continue;
@@ -152,12 +182,18 @@ void load_tree (){
 
         if(body_flag)
         {
-            currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\t'), currentLine.end());
-            currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\n'), currentLine.end());
-            data.root->children[user_no - 1]->children[user_prop - 1]->children[post_no - 1]->children[post_prop - 1]->value += currentLine;
+            data.root->children[user_no - 1]->children[user_prop - 1]->children[post_no - 1]->children[post_prop - 1]->value = currentLine;
             body_flag = false;
             continue;
         }
+
+        if (topic_flag)
+        {
+            data.root->children[user_no - 1]->children[user_prop - 1]->children[post_no - 1]->children[post_prop - 1]->children[topic_no - 1]->value = currentLine;
+            topic_flag = false;
+            continue;
+        }
+
 
 
     }
