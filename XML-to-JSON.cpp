@@ -62,12 +62,14 @@ void load_tree (){
     bool body_flag = false;
     bool topic_flag = false;
     bool follower_flag = false;
+    bool follower_id_flag = false;
 
     while(getline(myfile, currentLine))
     {
 
         myfileo << currentLine << endl;
 
+        //dealing with opening tags
         if (currentLine.find("<users>") != string::npos)
         {
             data.root = new Node("users");
@@ -83,9 +85,17 @@ void load_tree (){
 
         if (currentLine.find("<id>") != string::npos)
         {
-            id_flag = true;
-            data.root->children[user_no - 1]->children[user_prop] = new Node("id");
-            user_prop++;
+            if(follower_flag){
+                data.root->children[user_no - 1]->children[user_prop - 1]->children[follower_no - 1]->children[0] = new Node("id");
+                id_flag = true;
+                follower_id_flag = true;
+                follower_flag = false;
+            }
+            else {
+                id_flag = true;
+                data.root->children[user_no - 1]->children[user_prop] = new Node("id");
+                user_prop++;
+            }
             continue;
         }
 
@@ -134,8 +144,24 @@ void load_tree (){
             continue;
         }
 
+        if (currentLine.find("<followers>") != string::npos)
+        {
+            data.root->children[user_no - 1]->children[user_prop] = new Node("followers");
+            user_prop++;
+            continue;
+        }
+
+        if (currentLine.find("<follower>") != string::npos)
+        {
+            data.root->children[user_no - 1]->children[user_prop - 1]->children[follower_no] = new Node("follower");
+            follower_no++;
+            follower_flag = true;
+            continue;
+        }
 
 
+
+        //dealing with closing tags
         if (currentLine.find("</topics>") != string::npos)
         {
             topic_no = 0;
@@ -154,27 +180,40 @@ void load_tree (){
             continue;
         }
 
-        if (currentLine.find("</user>") != string::npos)
+        if (currentLine.find("</followers>") != string::npos)
         {
-             user_prop = 0;
-             follower_no = 0;
+            follower_no = 0;
             continue;
         }
 
+        if (currentLine.find("</user>") != string::npos)
+        {
+             user_prop = 0;
+            continue;
+        }
 
         if(currentLine.find('/') != string::npos)
         {
             continue;
         }
 
-
+        //removing tabs, spaces or new lines
         currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\t'), currentLine.end());
         currentLine.erase(remove(currentLine.begin(),currentLine.end(), '\n'), currentLine.end());
         currentLine.erase(currentLine.begin(), std::find_if(currentLine.begin(), currentLine.end(), std::bind1st(std::not_equal_to<char>(), ' ')));
 
+
+        //dealing with strings
         if(id_flag || name_flag)
         {
-            data.root->children[user_no - 1]->children[user_prop - 1]->value = currentLine;
+            if(follower_id_flag)
+            {
+                data.root->children[user_no - 1]->children[user_prop - 1]->children[follower_no - 1]->children[0]->value = currentLine;
+                follower_id_flag = false;
+            }
+            else {
+                data.root->children[user_no - 1]->children[user_prop - 1]->value = currentLine;
+            }
             id_flag = false;
             name_flag = false;
             continue;
