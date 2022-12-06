@@ -27,10 +27,10 @@ string removeSpacesFromLine(string s)
     }
     return s.substr(begin,end+1);
 }
-void fixLine()
+void fixLine(string inputFileName , string outputFileName)
 {
-    fileInputStream2.open ("sample.xml");
-    fileOutputStream2.open("outFixed.xml");
+    fileInputStream2.open (inputFileName);
+    fileOutputStream2.open(outputFileName);
     string currentLine,data="";
     int charNum = 1;
     while (getline(fileInputStream2, currentLine)) {
@@ -53,11 +53,11 @@ void fixLine()
     fileOutputStream2.close();
     fileInputStream2.close();
 }
-void removeSpacesFromFile()
+void removeSpacesFromFile(string inputFileName , string outputFileName)
 {
     //TODO if output file is the same as input file, then create a new file and delete the old one
-    fileInputStream2.open ("outFixed.xml");
-    fileOutputStream2.open("out.xml");
+    fileInputStream2.open (inputFileName);
+    fileOutputStream2.open(outputFileName);
     string currentLine;
     bool allWhiteSpace = true;
     while (getline(fileInputStream2, currentLine))

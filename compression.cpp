@@ -11,49 +11,56 @@ ofstream fileOutputStream1;
 hashUtil x;
 
 
-void Minify(string inputFileName, string outputFileName)
+void MinifyXML(string inputFileName, string outputFileName)
 {
-    fixLine();
-    removeSpacesFromFile();
-    fileInputStream1.open ("out.xml");
-    fileOutputStream1.open("out1.xml");
+    fixLine(inputFileName,"temp_out1.xml");
+    removeSpacesFromFile("temp_out1.xml","temp_out2.xml");
+    fileInputStream1.open("temp_out2.xml");
+    fileOutputStream1.open(outputFileName);
     string currentLine = "";
     while (getline(fileInputStream1, currentLine))
     {
+        currentLine = removeSpacesFromLine(currentLine);
         for(int i=0; i<currentLine.length(); i++)
         {
-            //TODO modify currentLine[i]==' ' && currentLine[i+1]==' ' in a Function
             if(i>0 && currentLine[i]==' ' && currentLine[i+1]==' '  || currentLine[i]=='\n') continue;
             fileOutputStream1 << currentLine[i];
 
         }
     }
+    remove("temp_out1.xml");
+    remove("temp_out2.xml");
 }
-
-
-void Compress(string inputFileName , string outputFileName)
+void CompressXML(string inputFileName , string outputFileName)
 {
-    fixLine();
-    removeSpacesFromFile();
-    fileInputStream1.open(inputFileName);
+    fixLine(inputFileName,"temp_out1.xml");
+    removeSpacesFromFile("temp_out1.xml","temp_out2.xml");
+    fileInputStream1.open("temp_out2.xml");
     fileOutputStream1.open(outputFileName);
     string currentLine = "", text = "";
     bool writeTag = false;
 
     while (getline(fileInputStream1, currentLine))
     {
+        currentLine = removeSpacesFromLine(currentLine);
         for(char c : currentLine)
         {
             if(c=='>')
             {
-                text+=c;
+                text+='>';
                 writeTag = false;
-                fileOutputStream1 << x.stringToCode(text);
+                fileOutputStream1 << x.stringToCodeXML(text);
                 text = "";
 
             }
             else if(c == '<' || writeTag)
             {
+                if(c == '\"')
+                {
+                    text+='<';
+                    writeTag = true;
+                    continue;
+                }
                 text+=c;
                 writeTag = true;
             }
@@ -65,8 +72,10 @@ void Compress(string inputFileName , string outputFileName)
     }
     fileOutputStream1.close();
     fileInputStream1.close();
+    remove("temp_out1.xml");
+    remove("temp_out2.xml");
 }
-void deCompress(string inputFileName , string outputFileName)
+void deCompressXML(string inputFileName , string outputFileName)
 {
 
     fileInputStream1.open(inputFileName);
@@ -76,9 +85,9 @@ void deCompress(string inputFileName , string outputFileName)
     {
         for(char c : currentLine)
         {
-            if(x.codeToString(c)!="")
+            if(x.codeToStringXML(c) != "")
             {
-                fileOutputStream1 << x.codeToString(c);
+                fileOutputStream1 << x.codeToStringXML(c);
             }
             else
             {
@@ -91,4 +100,92 @@ void deCompress(string inputFileName , string outputFileName)
 }
 
 
+
+void MinifyJSON(string inputFileName, string outputFileName)
+{
+    fixLine(inputFileName,"temp_out1.xml");
+    removeSpacesFromFile("temp_out1.xml","temp_out2.xml");
+    fileInputStream1.open("temp_out2.xml");
+    fileOutputStream1.open(outputFileName);
+    string currentLine = "";
+    while (getline(fileInputStream1, currentLine))
+    {
+        currentLine = removeSpacesFromLine(currentLine);
+        for(int i=0; i<currentLine.length(); i++)
+        {
+            if(i>0 && currentLine[i]==' ' && currentLine[i+1]==' '  || currentLine[i]=='\n') continue;
+            fileOutputStream1 << currentLine[i];
+
+        }
+    }
+    remove("temp_out1.xml");
+    remove("temp_out2.xml");
+}
+void CompressJSON(string inputFileName , string outputFileName)
+{
+    fixLine(inputFileName,"temp_out1.xml");
+    removeSpacesFromFile("temp_out1.xml","temp_out2.xml");
+    fileInputStream1.open("temp_out2.xml");
+    fileOutputStream1.open(outputFileName);
+    string currentLine = "", text = "";
+    bool writeTag = false;
+
+    while (getline(fileInputStream1, currentLine))
+    {
+        currentLine = removeSpacesFromLine(currentLine);
+        for(char c : currentLine)
+        {
+            if(c=='>')
+            {
+                text+='>';
+                writeTag = false;
+                fileOutputStream1 << x.stringToCodeXML(text);
+                text = "";
+
+            }
+            else if(c == '<' || writeTag)
+            {
+                if(c == '\"')
+                {
+                    text+='<';
+                    writeTag = true;
+                    continue;
+                }
+                text+=c;
+                writeTag = true;
+            }
+            else
+            {
+                fileOutputStream1 << c ;
+            }
+        }
+    }
+    fileOutputStream1.close();
+    fileInputStream1.close();
+    remove("temp_out1.xml");
+    remove("temp_out2.xml");
+}
+void deCompressJSON(string inputFileName , string outputFileName)
+{
+
+    fileInputStream1.open(inputFileName);
+    fileOutputStream1.open(outputFileName);
+    string currentLine = "";
+    while (getline(fileInputStream1, currentLine))
+    {
+        for(char c : currentLine)
+        {
+            if(x.codeToStringXML(c) != "")
+            {
+                fileOutputStream1 << x.codeToStringXML(c);
+            }
+            else
+            {
+                fileOutputStream1 << c ;
+            }
+        }
+    }
+    fileOutputStream1.close();
+    fileInputStream1.close();
+}
 

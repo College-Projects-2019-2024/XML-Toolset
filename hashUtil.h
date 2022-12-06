@@ -39,23 +39,30 @@ private:  unsigned char hashInTable(string s)
         }
     }
 public:
-    string codeToString(unsigned char x)
+    string codeToStringXML(unsigned char x)
     {
         if(x-128 < 0) return "";
         return table[(short)x-128];
     }
-    unsigned char stringToCode(string x)
+    unsigned char stringToCodeXML(string x)
     {
+        return hashInTable(x)+128;
+    }
+    string codeToStringJSON(unsigned char x) // return name without brackets
+    {
+        if(x-128 < 0) return "";
+        string result = table[(short)x-128];
+        return result.substr(1, result.size()-2);
+    }
+    unsigned char stringToCodeJSON(string x)//x = name without brackets
+    {
+        string result="";
+        result+="<";
+        result+=x;
+        result+=">";
+        return hashInTable(result)+128;
+    }
 
-        return (isValidTag(x))? hashInTable(x)+128 : -1;
-    }
-    bool isValidTag(string x)
-    {
-        if(find(table.begin(), table.end(),x) != table.end() && hashInTable(x)!=-1)
-        {
-            return true;
-        }
-        return false;
-    }
+
 };
 #endif //COLLEGEPROJECT_HASHUTIL_H
