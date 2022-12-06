@@ -4,6 +4,6 @@ using namespace std;
 
 
 int main() {
-    prettify("sample.xml");
+    prettify("out.txt");
     return 0;
 }

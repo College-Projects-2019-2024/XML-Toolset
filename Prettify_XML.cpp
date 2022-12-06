@@ -20,14 +20,47 @@ string insert_tab(string s,int n){
     return s;
 }
 
-void prettify(string fileName) {
+//a function that divides large strings into multiple 12 word strings.
+vector<string> divide_string(string str1){
+    int c = 0,n = 0;
+    bool flag = false;
+    string s;
+    vector<string>v;
+    for(int i = 0; i<str1.length(); i++) {
+        if (str1[i] == ' ') {
+            c++;
+        }
+        if(c==12 ){
+            s = str1.substr(n,i-n+1);
+            v.push_back(s);
+            n=i;
+            c=0;
+            flag=true;
+        }
+
+    }
+    if(c<12 && !flag){
+        v.push_back(str1);
+    }
+    if(flag){
+        s = str1.substr(n,str1.length()-n);
+        v.push_back(s);
+    }
+    return v;
+
+}
+
+void prettify(const string& fileName) {
     fileInputStream.open(fileName);
-    fileOutputStream.open("prettified.xml");
+    fileOutputStream.open("out2.txt");
 
     string current_line;
     stack<int> stac;
     int count = 0;
     string str;
+    //string s;
+    vector<string>v;
+
 
     while (getline(fileInputStream, current_line)) {
 
@@ -46,13 +79,22 @@ void prettify(string fileName) {
             position = current_line.find('>', first);
             int next = current_line.find('<',position);
 
+            //if the line consists of text then closing tag
             if(d<first && text_at_start){
-                answer.push_back(insert_tab(current_line.substr(d,first),stac.top()+1));
+                str = current_line.substr(d,first);
+                v = divide_string(str);
+                for(int i = 0; i<v.size(); i++){
+                    answer.push_back(insert_tab(v[i], stac.top()+1));
+                }
+
                 text_at_start = false;
             }
-
+            //if the line consists only of text
             if ( first == -1 && position == -1){
-                answer.push_back(insert_tab(current_line, count));
+                v = divide_string(current_line);
+                for(int i = 0; i<v.size(); i++){
+                    answer.push_back(insert_tab(v[i], count));
+                }
                 break;
             }
 
@@ -62,15 +104,23 @@ void prettify(string fileName) {
                 str = current_line.substr(first,position-first+1);
                 answer.push_back(insert_tab(str, count));
 
+                //if the line consists of an opening tag then text
                 if(next == -1 && x-position != 0){
                     str = current_line.substr(position+1,x-position);
-                    answer.push_back(insert_tab(str, count+1));
+                    v = divide_string(str);
+                    for(int i = 0; i<v.size(); i++){
+                        answer.push_back(insert_tab(v[i], count+1));
+                    }
                     position = x;
                 }
+                //if the line has an opening tag then text then closing tag
                 if(next-position-1 >0){
 
                     str = current_line.substr(position+1,next-position-1);
-                    answer.push_back(insert_tab(str, count+1));
+                    v = divide_string(str);
+                    for(int i = 0; i<v.size(); i++){
+                        answer.push_back(insert_tab(v[i], count+1));
+                    }
 
                 }
                 count++;
