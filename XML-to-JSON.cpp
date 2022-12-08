@@ -67,8 +67,6 @@ void load_tree (){
     while(getline(myfile, currentLine))
     {
 
-        myfileo << currentLine << endl;
-
         //dealing with opening tags
         if (currentLine.find("<users>") != string::npos)
         {
@@ -236,8 +234,6 @@ void load_tree (){
 
 
     }
-
-
 
     myfile.close();
     myfileo.close();
