@@ -129,94 +129,59 @@ vector<string> divide_string(string str1){
 
 void prettify(const string& inFileName,const string& outFileName) {
 
-    fileInputStream.open(inFileName);
+    vector<string>v = get_xml(inFileName);
     fileOutputStream.open(outFileName);
-
-    string current_line;
+    //a stack to keep track of number of tabs to be inserted
     stack<int> stac;
+    //count the number of tabs to be inserted into a string
     int count = 0;
-    string str;
-    //string s;
-    vector<string>v;
+    //count number of spaces in a text
+    int n = 0;
+    //flag used in dividing large texts
+    bool flag = false;
 
-
-    while (getline(fileInputStream, current_line)) {
-
-        while (current_line[0] == ' ') {
-            current_line.erase(0, 1);
+    for(int i = 0; i<v.size(); i++){
+        //opening tag
+        if(v[i][0] == '<' && v[i][1] != '/'){
+            stac.push(count);
+            answer.push_back(insert_tab(v[i],count));
+            count++;
         }
-        bool text_at_start = true;
+        //closing tag
+        else if(v[i][0] == '<' && v[i][1] == '/'){
+            answer.push_back(insert_tab(v[i],stac.top()));
+            stac.pop();
+            count--;
+        }
+        //a text
+        else if(v[i][0] != '<'){
+            int k = 0;
+            for(int j = 0; j<v[i].length(); j++) {
 
-        int position = 0;
-        int d = position;
-        int x = current_line.length() - 1;
-
-        while ( position != x) {
-
-            int first = current_line.find('<', position);
-            position = current_line.find('>', first);
-            int next = current_line.find('<',position);
-
-            //if the line consists of text then closing tag
-            if(d<first && text_at_start){
-                str = current_line.substr(d,first);
-                v = divide_string(str);
-                for(int i = 0; i<v.size(); i++){
-                    answer.push_back(insert_tab(v[i], stac.top()+1));
+                if (v[i][j] == ' ')n++;
+                /*if the text has more than 12 words, divide it into substrings
+                where each substring consists of at least 12 words*/
+                if (n == 12) {
+                    answer.push_back(insert_tab(v[i].substr(k, j - k + 1),count));
+                    k=j;
+                    n=0;
+                    flag = true;
                 }
-
-                text_at_start = false;
             }
-            //if the line consists only of text
-            if ( first == -1 && position == -1){
-                v = divide_string(current_line);
-                for(int i = 0; i<v.size(); i++){
-                    answer.push_back(insert_tab(v[i], count));
-                }
-                break;
+            //the text was less than 12 words
+            if(n<12 && !flag){
+                answer.push_back(insert_tab(v[i],count));
             }
 
-            else if (current_line[first] == '<' && current_line[first+1] != '/') {
-                text_at_start = false;
-                stac.push(count);
-                str = current_line.substr(first,position-first+1);
-                answer.push_back(insert_tab(str, count));
+            else if(flag){
+                answer.push_back(insert_tab(v[i].substr(k,v[i].length()-k),count));
 
-                //if the line consists of an opening tag then text
-                if(next == -1 && x-position != 0){
-                    str = current_line.substr(position+1,x-position);
-                    v = divide_string(str);
-                    for(int i = 0; i<v.size(); i++){
-                        answer.push_back(insert_tab(v[i], count+1));
-                    }
-                    position = x;
-                }
-                //if the line has an opening tag then text then closing tag
-                if(next-position-1 >0){
-
-                    str = current_line.substr(position+1,next-position-1);
-                    v = divide_string(str);
-                    for(int i = 0; i<v.size(); i++){
-                        answer.push_back(insert_tab(v[i], count+1));
-                    }
-
-                }
-                count++;
-
-            }
-            else if (current_line[first] == '<' && current_line[first+1] == '/') {
-
-                str = current_line.substr(first,position-first+1);
-                answer.push_back(insert_tab(str, stac.top()));
-                stac.pop();
-                count--;
             }
 
         }
     }
-
+    //write the answer to the output file
     for(auto & i : answer) fileOutputStream << i << endl;
 
-    fileInputStream.close();
     fileOutputStream.close();
 }
