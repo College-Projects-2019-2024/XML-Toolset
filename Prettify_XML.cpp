@@ -97,35 +97,7 @@ string insert_tab(string s,int n){
     return s;
 }
 
-//a function that divides large strings into multiple 12 word strings.
-vector<string> divide_string(string str1){
-    int c = 0,n = 0;
-    bool flag = false;
-    string s;
-    vector<string>v;
-    for(int i = 0; i<str1.length(); i++) {
-        if (str1[i] == ' ') {
-            c++;
-        }
-        if(c==12 ){
-            s = str1.substr(n,i-n+1);
-            v.push_back(s);
-            n=i;
-            c=0;
-            flag=true;
-        }
 
-    }
-    if(c<12 && !flag){
-        v.push_back(str1);
-    }
-    if(flag){
-        s = str1.substr(n,str1.length()-n);
-        v.push_back(s);
-    }
-    return v;
-
-}
 
 void prettify(const string& inFileName,const string& outFileName) {
 
