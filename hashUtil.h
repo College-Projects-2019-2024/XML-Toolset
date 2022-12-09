@@ -8,7 +8,7 @@ private: vector <string> tags {"users", "user", "id", "name", "posts", "post", "
     vector <string> table; // a table to contain opening and closing tags
 public:  hashUtil()
     {
-        table.resize(46); //
+        table.resize(69); //
 
         for (string tag : tags)
         {
@@ -18,15 +18,15 @@ public:  hashUtil()
         {
             table [int (hashInTable("</" + tag +'>')) ]  = "</" + tag +'>';
         }
+        for (string tag : tags)
+        {
+            table [int (hashInTable("5"  + tag +"5" )) ]  = "5"  + tag +"5" ;
+        }
 
     }
-private:  unsigned char hashInTable(string s)
+private: unsigned char hashInTable(string s)
     {
-        if (!(s.front() == '<' && s.back() == '>'))
-        {
-            return -1;
-        }
-        else
+        if (s.front() == '<' && s.back() == '>')
         {
             if (s[1]== '/')
             {
@@ -37,6 +37,11 @@ private:  unsigned char hashInTable(string s)
                 return ( 2* (int(s[1]) - int(s[s.size()-2]) + 23) % 23 );
             }
         }
+        else if (s.front() == '5' && s.back() == '5')
+        {
+            return (( 2* (int(s[1]) - int(s[s.size()-2]) + 23) % 23  )+ 46);
+        }
+        else return -1;
     }
 public:
     string codeToString(unsigned char x)
