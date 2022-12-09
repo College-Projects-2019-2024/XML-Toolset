@@ -1,0 +1,10 @@
+release/Utility.o
+release/compression.o
+release/hashUtil.o
+release/Prettify_XML.o
+release/Utility.o
+release/compression.o
+release/hashUtil.o
+release/main.o
+release/mainwindow.o
+release/moc_mainwindow.o
