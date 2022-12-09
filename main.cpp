@@ -1,12 +1,16 @@
 #include <bits/stdc++.h>
 #include "compression.h"
+#include "Utility.h"
+
 using namespace std;
 
 int main() {
-    Compress("out1.xml","outCompressed.xml");
-    deCompress("outCompressed.xml","outdeCompressed.xml");
 
-    //lol
+    MinifyXML("sample.xml","sampleMinified.xml");
+
+    CompressXML("sample.xml","sampleCompressed.xml");
+    deCompressXML("sampleCompressed.xml","sampledeCompressed.xml");
+
 
 
 }

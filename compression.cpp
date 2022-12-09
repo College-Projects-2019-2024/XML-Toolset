@@ -4,56 +4,45 @@
 #include "hashUtil.h"
 using namespace std;
 
-ifstream fileInputStream1;
+hashUtil x;
 ofstream fileOutputStream1;
 
-
-hashUtil x;
-
-
-void Minify(string inputFileName, string outputFileName)
+void MinifyXML(string inputFileName, string outputFileName)
 {
-    fixLine();
-    removeSpacesFromFile();
-    fileInputStream1.open ("out.xml");
-    fileOutputStream1.open("out1.xml");
-    string currentLine = "";
-    while (getline(fileInputStream1, currentLine))
-    {
-        for(int i=0; i<currentLine.length(); i++)
-        {
-            //TODO modify currentLine[i]==' ' && currentLine[i+1]==' ' in a Function
-            if(i>0 && currentLine[i]==' ' && currentLine[i+1]==' '  || currentLine[i]=='\n') continue;
-            fileOutputStream1 << currentLine[i];
-
-        }
-    }
+    vector<string> file =  get_xml(inputFileName);
+    fileOutputStream1.open(outputFileName);
+    for (string currentLine : file) fileOutputStream1 << currentLine;
+    fileOutputStream1.close();
 }
 
-
-void Compress(string inputFileName , string outputFileName)
+void CompressXML(string inputFileName , string outputFileName)
 {
-    fixLine();
-    removeSpacesFromFile();
-    fileInputStream1.open(inputFileName);
+    vector<string> file =  get_xml(inputFileName);
     fileOutputStream1.open(outputFileName);
     string currentLine = "", text = "";
     bool writeTag = false;
 
-    while (getline(fileInputStream1, currentLine))
+    for (string currentLine : file)
     {
+        currentLine = removeSpacesFromLine(currentLine);
         for(char c : currentLine)
         {
             if(c=='>')
             {
-                text+=c;
+                text+='>';
                 writeTag = false;
-                fileOutputStream1 << x.stringToCode(text);
+                fileOutputStream1 << x.stringToCodeXML(text);
                 text = "";
 
             }
             else if(c == '<' || writeTag)
             {
+                if(c == '\"')
+                {
+                    text+='<';
+                    writeTag = true;
+                    continue;
+                }
                 text+=c;
                 writeTag = true;
             }
@@ -64,21 +53,20 @@ void Compress(string inputFileName , string outputFileName)
         }
     }
     fileOutputStream1.close();
-    fileInputStream1.close();
 }
-void deCompress(string inputFileName , string outputFileName)
-{
 
-    fileInputStream1.open(inputFileName);
+ void deCompressXML(string inputFileName , string outputFileName)
+{
+    vector<string> file = get_xml(inputFileName);
     fileOutputStream1.open(outputFileName);
-    string currentLine = "";
-    while (getline(fileInputStream1, currentLine))
+
+    for (string currentLine : file)
     {
         for(char c : currentLine)
         {
-            if(x.codeToString(c)!="")
+            if(x.codeToStringXML(c) != "")
             {
-                fileOutputStream1 << x.codeToString(c);
+                fileOutputStream1 << x.codeToStringXML(c);
             }
             else
             {
@@ -87,8 +75,7 @@ void deCompress(string inputFileName , string outputFileName)
         }
     }
     fileOutputStream1.close();
-    fileInputStream1.close();
-}
 
+}
 
 

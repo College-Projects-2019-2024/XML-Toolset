@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-void fixLine();
-void removeSpacesFromFile();
 string removeSpacesFromLine(string s);
+vector<string> get_xml(string inputFileName);
+
 #endif //COLLEGEPROJECT_UTILITY_H
