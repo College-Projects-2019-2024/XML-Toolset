@@ -8,4 +8,5 @@ void deCompressXML(string inputFileName , string outputFileName);
 void MinifyJSON(string inputFileName , string outputFileName);
 void CompressJSON(string inputFileName , string outputFileName);
 void deCompressJSON(string inputFileName , string outputFileName);
+
 #endif //COLLEGEPROJECT_COMPRESSION_H

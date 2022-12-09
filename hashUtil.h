@@ -18,6 +18,11 @@ public:  hashUtil()
         {
             table [int (hashInTable("</" + tag +'>')) ]  = "</" + tag +'>';
         }
+        //TODO
+//        for (string tag : tags)
+//        {
+//            table [int (hashInTable("\"" + tag +"\"")) ]  = "\"" + tag +"\"";
+//        }
 
     }
 private:  unsigned char hashInTable(string s)
@@ -48,21 +53,6 @@ public:
     {
         return hashInTable(x)+128;
     }
-    string codeToStringJSON(unsigned char x) // return name without brackets
-    {
-        if(x-128 < 0) return "";
-        string result = table[(short)x-128];
-        return result.substr(1, result.size()-2);
-    }
-    unsigned char stringToCodeJSON(string x)//x = name without brackets
-    {
-        string result="";
-        result+="<";
-        result+=x;
-        result+=">";
-        return hashInTable(result)+128;
-    }
-
 
 };
 #endif //COLLEGEPROJECT_HASHUTIL_H
