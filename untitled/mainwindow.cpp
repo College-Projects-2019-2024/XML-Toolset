@@ -16,10 +16,6 @@ QFile result;
 vector<string>xml;
 QString filename;
 
-void setmainfile(){
-    xml = get_xml(mainfile.fileName().toStdString());
-}
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -39,12 +35,13 @@ void MainWindow::on_pushButton_clicked()
     filename = QFileDialog::getOpenFileName(
                 this,
                 tr("Open File")
-
                 );
 
     mainfile.setFileName(filename);
     if(!mainfile.open(QIODevice::ReadOnly))
           QMessageBox::information(0,"info", mainfile.errorString());
+
+    xml = get_xml(mainfile.fileName().toStdString());
 
 
     QTextStream in (&mainfile);
@@ -55,16 +52,15 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
 
-    prettify(mainfile.fileName().toStdString(),"prettified.xml");
-
+    prettify(xml,"prettified.xml");
 
     filename = "prettified.xml";
-    mainfile.setFileName(filename);
-    if(!mainfile.open(QIODevice::ReadOnly))
-          QMessageBox::information(0,"info", mainfile.errorString());
+    result.setFileName(filename);
+    if(!result.open(QIODevice::ReadOnly))
+        QMessageBox::information(0,"info", result.errorString());
 
 
-    QTextStream in (&mainfile);
+    QTextStream in (&result);
     ui->textBrowser_2->setText(in.readAll());
 
 }
@@ -72,16 +68,15 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    COLLEGEPROJECT_COMPRESSION_H::CompressXML(mainfile.fileName().toStdString(), "output.xml");
-
+    COLLEGEPROJECT_COMPRESSION_H::CompressXML(xml, "output.xml");
 
     filename = "output.xml";
-    mainfile.setFileName(filename);
-    if(!mainfile.open(QIODevice::ReadOnly))
-          QMessageBox::information(0,"info", mainfile.errorString());
+    result.setFileName(filename);
+    if(!result.open(QIODevice::ReadOnly))
+          QMessageBox::information(0,"info", result.errorString());
 
 
-    QTextStream in (&mainfile);
+    QTextStream in (&result);
     ui->textBrowser_2->setText(in.readAll());
 
 }
@@ -94,7 +89,7 @@ void MainWindow::on_pushButton_3_clicked()
 //          QMessageBox::information(0,"info", mainfile.errorString());
 
     QString dir = QFileDialog::getExistingDirectory(this,tr("save file"));
-    QFile::copy(mainfile.fileName(),dir+'/'+filename);
+    QFile::copy(result.fileName(),dir+'/'+filename);
 
 }
 

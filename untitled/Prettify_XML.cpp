@@ -3,88 +3,12 @@
 #include "string"
 #include "stack"
 #include "vector"
+#include "Utility.h"
 using namespace std;
 ifstream fileInputStream;
 ofstream fileOutputStream;
 
 vector<string>answer;
-
-vector<string> get_xml(string inputFileName) {
-
-    fileInputStream.open(inputFileName);
-    string current_line;
-    string str;
-    vector<string> xml;
-
-    while (getline(fileInputStream, current_line)) {
-        //remove spaces from start on the line
-        while (current_line[0] == ' ') {
-            current_line.erase(0, 1);
-        }
-        bool text_at_start = true;
-
-        //a value that keeps track of the position of '>'
-        int position = 0;
-        //a temp value to hold initial position
-        int d = position;
-        int x = current_line.length() - 1;
-
-        //if line is empty
-        if(x == -1)continue;
-
-        while (position != x) {
-            //first occurrence of '<' starting from position
-            int first = current_line.find('<', position);
-            //first occurrence of '>' starting from the position of the previous '<'
-            position = current_line.find('>', first);
-            //second occurrence of '<' starting from position
-            int next = current_line.find('<', position);
-
-            //if the line consists of text at start then closing tag
-            if (d < first && text_at_start) {
-                str = current_line.substr(d, first);
-                xml.push_back(str);
-                text_at_start = false;
-            }
-            //if the line consists only of text
-            else if (first == -1 && position == -1) {
-                xml.push_back(current_line);
-                position = x;
-            }
-            //found an opening tag
-            else if (current_line[first] == '<' && current_line[first + 1] != '/') {
-                text_at_start = false;
-                str = current_line.substr(first, position - first + 1);
-                xml.push_back(str);
-
-                //if the line consists of an opening tag then text
-                if (next == -1 && x - position != 0) {
-                    str = current_line.substr(position + 1, x - position);
-                    xml.push_back(str);
-                    position = x;
-                }
-                //if the line consists of an opening tag then text then closing tag
-                if (next - position - 1 > 0) {
-
-                    str = current_line.substr(position + 1, next - position - 1);
-                    xml.push_back(str);
-
-                }
-            }
-            //found a closing tag
-            else if (current_line[first] == '<' && current_line[first + 1] == '/') {
-
-                str = current_line.substr(first, position - first + 1);
-                xml.push_back(str);
-
-
-            }
-        }
-
-    }
-    fileInputStream.close();
-    return xml;
-}
 
 string insert_tab(string s,int n){
     string str = " ";
@@ -97,9 +21,8 @@ string insert_tab(string s,int n){
 
 
 
-void prettify(const string& inFileName,const string& outFileName) {
+void prettify(vector<string>v,const string& outFileName) {
 
-    vector<string>v = get_xml(inFileName);
     fileOutputStream.open(outFileName);
     //a stack to keep track of number of tabs to be inserted
     stack<int> stac;

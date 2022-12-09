@@ -1,9 +1,10 @@
 #ifndef COLLEGEPROJECT_UTILITY_H
 #define COLLEGEPROJECT_UTILITY_H
 #include <string>
+#include <vector>
 using namespace std;
 
-void fixLine(string inputFileName , string outputFileName);
-void removeSpacesFromFile(string inputFileName , string outputFileName);
 string removeSpacesFromLine(string s);
+vector<string> get_xml(string inputFileName);
+
 #endif //COLLEGEPROJECT_UTILITY_H
