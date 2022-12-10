@@ -82,9 +82,6 @@ void printnode(treeNode * node , int depth)
 }
 
 
-
-
-
 string s,f,cf,open,close ;
 vector <string> v;
 
@@ -99,13 +96,38 @@ bool can_increment = true;
 
 
 
+bool goOn (treeNode * node, int x)
+{
+    f = ""; f+= "<";f+=node->type; f+=">";
+    if (f == v[x]) return true;
+
+    if (node->max ==-1)
+    {
+        if (v[x].front() != '<' && v[x].back() != '>' ) return true;
+        else return false;
+    }
+    else fori(node->max + 1)
+    {
+           return goOn(node->children[i], x);
+    }
+
+    f = ""; f+= "</";f+=node->type; f+=">";//
+    if (f == v[x]) return true;
+}
+
+
+
+
+
+
+
 
 void checknode(treeNode * node )
 {
-    if (can_increment) s= v[x++];//
-    f = ""; f+= "<";f+=node->type; f+=">";//
-    if (f != s) cout<<f <<" was missing"<<endl, can_increment = false;//
-    else can_increment = true;//
+    if (can_increment) s = v[x++];
+    f = ""; f+= "<";f+=node->type; f+=">";
+    if (f != s) cout<<f <<" was missing"<<endl, can_increment = false;
+    else can_increment = true;
 
     if (node->max ==-1)
     {
@@ -125,71 +147,16 @@ void checknode(treeNode * node )
         fori(node->max + 1)
         {
             checknode(node->children[i]);
-
-            f = "";f += "<";f += node->children[node->max]->type; f += ">";
-            cf = "";cf += "</";cf += node->children[node->max]->type; cf += ">";
-
-            if (i== node->max && can_increment)
-            {
-                if  (v[x] == f) i--;
-                else
-                {
-                    forj(2) //
-                    {
-                        if (j+x < v.size())
-                        {
-                            if(v[x+j]==f ||  v[x+j]==cf) {i--; break;}//case topic
-                            else if (node->max > -1 && node->children[node->max]->max > -1 )
-                            {
-                                open = "";open += "<";open += node->children[node->max]->children[0]->type; open += ">";
-                                close = "";close += "</";close += node->children[node->max]->children[0]->type; close += ">";
-                                if( v[x+j]==open || v[x+j]==close) { i--; break; }
-                            }
-                        }
-                    }
-                }
-            }
+            f = ""; f+= "</";f+=node->type; f+=">";
+            if (i== node->max && v[x]!=f && goOn(node->children[i],x)) i--;
         }
     }
 
-
-    if (can_increment) s= v[x++];//
-    f = ""; f+= "</";f+=node->type; f+=">";//
-    if (f != s) cout << f << " was missing" << endl, can_increment = false;//
-    else can_increment = true;//
+    if (can_increment) s= v[x++];
+    f = ""; f+= "</";f+=node->type; f+=">";
+    if (f != s) cout << f << " was missing" << endl, can_increment = false;
+    else can_increment = true;
 }
-void get_XML()
-{
-    while(getline (cin,s)) {
-        if(s=="") continue;
-        int start_pos =0,end_pos=0;
-        int i = 0;
-        while (s[i] == ' ') i++;
-        start_pos = s.find('<', end_pos);
-        end_pos = s.find('>', end_pos + 1);
-        if ((end_pos == -1 && start_pos == -1) || ((end_pos - start_pos) == s.length() - i -1))
-            v.push_back(s.substr(i, s.length()));
-        else {
-            if (s[i] == '<') {
-                v.push_back(s.substr(i, end_pos - i + 1));
-                i = end_pos + 1;
-                start_pos = s.find('<', end_pos);
-                end_pos = s.find('>', end_pos + 1);
-                if (start_pos != -1) {
-                    v.push_back(s.substr(i, start_pos - i));
-                    v.push_back(s.substr(start_pos, end_pos - start_pos + 1));
-                }
-                else v.push_back(s.substr(i, s.length()-i));
-            }
-            else {
-                if (start_pos != -1) v.push_back(s.substr(i, start_pos - i));
-                v.push_back(s.substr(start_pos, end_pos - start_pos + 1));
-            }
-        }
-
-    }
-
-};
 
 
 int main()
@@ -198,9 +165,9 @@ int main()
     freopen("in.in", "r", stdin);
 
     while (cin>>s) v.push_back(s);
-    // get_XML();
-    //debug(v);
+
     ans();
     checknode(usersSample);
+
 
 }
