@@ -21,12 +21,14 @@
                     </topic>
                 </topics>
             </post>
+
         </posts>
         <followers>
             <follower>
                 <id>
                     hisidis456
-
+                </id>
+            </follower>
             <follower>
                  <id>
                     hisidis456
@@ -56,6 +58,20 @@
                         </topic>
                     </topics>
                 </post>
+                <post>
+                                    <body>
+                                        thisismybody
+                                    </body>
+                                    <topics>
+                                        <topic>
+                                                thisismytopic
+                                        </topic>
+
+                                        <topic>
+                                               thisismytopic
+                                        </topic>
+                                    </topics>
+                                </post>
             </posts>
             <followers>
                 <follower>
