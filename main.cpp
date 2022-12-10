@@ -82,7 +82,7 @@ void printnode(treeNode * node , int depth)
 }
 
 
-string s,f,cf,open,close ;
+string s,f;
 vector <string> v;
 
 
@@ -103,12 +103,14 @@ bool goOn (treeNode * node, int x)
 
     if (node->max ==-1)
     {
-        if (v[x].front() != '<' && v[x].back() != '>' ) return true;
+        f = ""; f+= "</";f+=node->type; f+=">";//
+        if ((v[x].front() != '<' && v[x].back() != '>')  ||  v[x]==f)  return true;
         else return false;
     }
     else fori(node->max + 1)
     {
-           return goOn(node->children[i], x);
+
+        return goOn(node->children[i], x);
     }
 
     f = ""; f+= "</";f+=node->type; f+=">";//

@@ -17,8 +17,8 @@
                     </topic>
 
                     <topic>
-                                                        thisismytopic
-                                                </topic>
+                           thisismytopic
+                    </topic>
                 </topics>
             </post>
         </posts>
@@ -26,8 +26,7 @@
             <follower>
                 <id>
                     hisidis456
-                </id>
-            </follower>
+
             <follower>
                  <id>
                     hisidis456
@@ -53,8 +52,8 @@
                         </topic>
 
                         <topic>
-                                                            thisismytopic
-                                                    </topic>
+                               thisismytopic
+                        </topic>
                     </topics>
                 </post>
             </posts>
