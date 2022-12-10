@@ -1,5 +1,4 @@
 //prettify done
-
 #include <bits/stdc++.h>
 #include <iostream>
 #include "string"
@@ -25,7 +24,7 @@ string insert_tab(string s,int n){
 
 void prettify(const string& inFileName,const string& outFileName) {
 
-    vector<string>v = get_xml(inFileName);
+    vector<Line>v = get_xml(inFileName);
     fileOutputStream.open(outFileName);
     //a stack to keep track of number of tabs to be inserted
     stack<int> stac;
@@ -38,27 +37,27 @@ void prettify(const string& inFileName,const string& outFileName) {
 
     for(int i = 0; i<v.size(); i++){
         //opening tag
-        if(v[i][0] == '<' && v[i][1] != '/'){
+        if(v[i].text[0] == '<' && v[i].text[1] != '/'){
             stac.push(count);
-            answer.push_back(insert_tab(v[i],count));
+            answer.push_back(insert_tab(v[i].text,count));
             count++;
         }
         //closing tag
-        else if(v[i][0] == '<' && v[i][1] == '/'){
-            answer.push_back(insert_tab(v[i],stac.top()));
+        else if(v[i].text[0] == '<' && v[i].text[1] == '/'){
+            answer.push_back(insert_tab(v[i].text,stac.top()));
             stac.pop();
             count--;
         }
         //a text
-        else if(v[i][0] != '<'){
+        else if(v[i].text[0] != '<'){
             int k = 0;
-            for(int j = 0; j<v[i].length(); j++) {
+            for(int j = 0; j<v[i].text.length(); j++) {
 
-                if (v[i][j] == ' ')n++;
+                if (v[i].text[j] == ' ')n++;
                 /*if the text has more than 12 words, divide it into substrings
                 where each substring consists of at least 12 words*/
                 if (n == 12) {
-                    answer.push_back(insert_tab(v[i].substr(k, j - k + 1),count));
+                    answer.push_back(insert_tab(v[i].text.substr(k, j - k + 1),count));
                     k=j;
                     n=0;
                     flag = true;
@@ -66,11 +65,11 @@ void prettify(const string& inFileName,const string& outFileName) {
             }
             //the text was less than 12 words
             if(n<12 && !flag){
-                answer.push_back(insert_tab(v[i],count));
+                answer.push_back(insert_tab(v[i].text,count));
             }
 
             else if(flag){
-                answer.push_back(insert_tab(v[i].substr(k,v[i].length()-k),count));
+                answer.push_back(insert_tab(v[i].text.substr(k,v[i].text.length()-k),count));
 
             }
 
