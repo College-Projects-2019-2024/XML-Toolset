@@ -25,6 +25,14 @@ public:  hashUtil()
     }
 
 public:
+    bool isValidTag(string x)
+    {
+        if(find(table.begin(), table.end(),x) != table.end() || find(JSONTable.begin(), JSONTable.end(),x) != JSONTable.end())
+        {
+            return true;
+        }
+        return false;
+    }
     string codeToStringXML(unsigned char x)
     {
         if(x-128 < 0) return "";
@@ -32,7 +40,7 @@ public:
     }
     unsigned char stringToCodeXML(string x)
     {
-        return (hasher(x)%100)+128;
+       return (isValidTag(x))? hasher(x)%100+128 : '%';
     }
     string codeToStringJSON(unsigned char x)
     {
@@ -41,7 +49,7 @@ public:
     }
     unsigned char stringToCodeJSON(string x)
     {
-        return (hasher(x)%90)+128;
+        return (isValidTag(x))? (hasher(x)%90)+128 : '%';
     }
 
 
