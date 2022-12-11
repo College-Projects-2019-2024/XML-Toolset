@@ -51,6 +51,10 @@ vector<Line> get_xml(string inputFileName) {
 
         //if line is empty
         if(x == -1)continue;
+        if(position == x){
+            xml.push_back({removeSpacesFromLine(current_line),idx});
+            continue;
+        }
 
         while (position != x) {
             //first occurrence of '<' starting from position
@@ -96,6 +100,7 @@ vector<Line> get_xml(string inputFileName) {
 
                 str = current_line.substr(first, position - first + 1);
                 xml.push_back({removeSpacesFromLine(str),idx});
+                text_at_start = false;
 
 
             }

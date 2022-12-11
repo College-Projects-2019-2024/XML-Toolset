@@ -21,7 +21,6 @@ string insert_tab(string s,int n){
 }
 
 
-
 void prettify(const string& inFileName,const string& outFileName) {
 
     vector<Line>v = get_xml(inFileName);
