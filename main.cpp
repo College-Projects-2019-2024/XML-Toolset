@@ -95,22 +95,22 @@ void print_JSON(treeNode * data, int n)
     if (data->max == -1)
     {
         cout << "\"" << data->text << "\"";
-
+        return;
     }
     else
     {
         if(data->max == 0) object = true;
 
-        fori(data->max)
+        fori(data->max - 1)
         {
             if(data->children[i]->type != data->children[i + 1]->type) object = true;
         }
 
         if(object){
             cout << '{' << "\n";
-            fori(data->max + 1) {
+            fori(data->children.size()) {
                 print_JSON(data->children[i], n + 1);
-                if(i == data->max)
+                if(i == (data->children.size() - 1))
                 {
                     cout << "\n";
                 }
@@ -120,14 +120,15 @@ void print_JSON(treeNode * data, int n)
                 }
             }
             tab += "    ";
-            cout << tab << '}' ;
+            cout << tab << '}';
+
         }
         else
         {
             cout << '[' << "\n";
-            fori(data->max + 1) {
+            fori(data->children.size()) {
                 print_JSON(data->children[i], n + 1);
-                if(i == data->max)
+                if(i == (data->children.size() -1))
                 {
                     cout << "\n";
                 }
@@ -138,6 +139,7 @@ void print_JSON(treeNode * data, int n)
             }
             tab += "    ";
             cout << tab << ']';
+
         }
     }
 }
