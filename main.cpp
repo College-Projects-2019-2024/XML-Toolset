@@ -76,7 +76,8 @@ void load_xml(treeNode * samplenode, treeNode * data)
             load_xml(samplenode->children[i], createdNode);
             //add to the vector (push created node)
             data->children.push_back(createdNode);
-
+            string f = ""; f+= "<";f+=samplenode->children[samplenode->max]->type; f+=">";
+            if(f == token[currentLine]) i--;
         }
     }
 
@@ -154,7 +155,7 @@ void XMl_to_Json(treeNode* data)
 
 
 int main() {
-    freopen("sample(unit).xml", "r", stdin);
+    freopen("sample(prettified).xml", "r", stdin);
 
     while (cin >> s) token.push_back(s);
     ans();
