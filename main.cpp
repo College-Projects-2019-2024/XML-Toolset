@@ -77,7 +77,7 @@ void load_xml(treeNode * samplenode, treeNode * data)
             //add to the vector (push created node)
             data->children.push_back(createdNode);
             string f = ""; f+= "<";f+=samplenode->children[samplenode->max]->type; f+=">";
-            if(f == token[currentLine]) i--;
+            if(i== samplenode->max && f == token[currentLine]) i--;
         }
     }
 
@@ -120,7 +120,7 @@ void print_JSON(treeNode * data, int n)
                 }
             }
             tab += "    ";
-            cout << tab << '}' <<"\n";
+            cout << tab << '}' ;
         }
         else
         {
@@ -137,7 +137,7 @@ void print_JSON(treeNode * data, int n)
                 }
             }
             tab += "    ";
-            cout << tab << ']' <<"\n";
+            cout << tab << ']';
         }
     }
 }
@@ -148,7 +148,7 @@ void XMl_to_Json(treeNode* data)
 
     print_JSON(data, 1);
 
-    cout << '}' << "\n";
+    cout << "\n" << '}' << "\n";
 }
 
 
