@@ -84,32 +84,61 @@ void load_xml(treeNode * samplenode, treeNode * data)
     s = token[currentLine++];
 }
 
-void print_JSON(treeNode * data, int n)
+void print_JSON(treeNode * data, int n,bool arr_obj)
 {
     bool object = false;
     string tab;
 
     fori(n) tab += "    ";
 
-    cout << tab << "\"" << data->type << "\"" << ":" << " ";
+    if(data->type == "topics" && data->children.size() > 1)
+    {
+        cout << tab << "\"" << data->type << "\"" << ":" << " " << "{" << "\n";
+        cout << tab << "   " << "\"" << "topic" << "\"" << ":" << " " << "[" <<"\n";
+        fori(data->children.size())
+        {
+            cout << tab << "       " << "\"" << data->children[i]->text << "\"";
+            if(i == (data->children.size() -1))
+            {
+                cout << "\n";
+            }
+            else
+            {
+                cout << "," << "\n";
+            }
+        }
+        cout << tab << "   " << "]" << "\n";
+        cout << tab << "}";
+        return;
+    }
+
     if (data->max == -1)
     {
+        cout << tab << "\"" << data->type << "\"" << ":" << " ";
         cout << "\"" << data->text << "\"";
         return;
     }
     else
     {
-        if(data->max == 0) object = true;
+        if(data->children.size() == 1) object = true;
 
-        fori(data->max - 1)
+        fori(data->children.size() - 1)
         {
             if(data->children[i]->type != data->children[i + 1]->type) object = true;
         }
 
         if(object){
-            cout << '{' << "\n";
+            if(arr_obj)
+            {
+                cout  << tab << "   " << '{' << "\n";
+            }
+            else
+            {
+                cout  << tab << "\"" << data->type << "\"" << ":" << " " << '{' << "\n";
+            }
+
             fori(data->children.size()) {
-                print_JSON(data->children[i], n + 1);
+                print_JSON(data->children[i], n + 1, false);
                 if(i == (data->children.size() - 1))
                 {
                     cout << "\n";
@@ -125,9 +154,12 @@ void print_JSON(treeNode * data, int n)
         }
         else
         {
-            cout << '[' << "\n";
+            cout << tab << "\"" << data->type << "\"" << ":" << " " << "{" << "\n";
+
+            cout << tab << "    " << "\"" << data->children[0]->type << "\"" << ":" << " " << "[" << "\n";
+
             fori(data->children.size()) {
-                print_JSON(data->children[i], n + 1);
+                print_JSON(data->children[i], n + 1, true);
                 if(i == (data->children.size() -1))
                 {
                     cout << "\n";
@@ -137,8 +169,9 @@ void print_JSON(treeNode * data, int n)
                     cout << "," << "\n";
                 }
             }
-            tab += "    ";
-            cout << tab << ']';
+
+            cout << tab << "    " << ']' << "\n";
+            cout << tab << '}';
 
         }
     }
@@ -148,7 +181,7 @@ void XMl_to_Json(treeNode* data)
 {
     cout << '{' << "\n";
 
-    print_JSON(data, 1);
+    print_JSON(data, 1, true);
 
     cout << "\n" << '}' << "\n";
 }
