@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include "Utility.h"
+#include "queue"
 using namespace std;
 ifstream fileInputStream2;
 
@@ -32,7 +33,10 @@ vector<Line> get_xml(string inputFileName) {
     fileInputStream2.open(inputFileName);
     string current_line;
     string str;
+    string s = "";
     vector<Line> xml;
+    //a queue to store any text other than tags
+    queue<string>q;
     int idx = 0;
 
     while (getline(fileInputStream2, current_line)) {
@@ -67,12 +71,12 @@ vector<Line> get_xml(string inputFileName) {
             //if the line consists of text at start then closing tag
             if (d < first && text_at_start) {
                 str = current_line.substr(d, first);
-                xml.push_back({removeSpacesFromLine(str),idx});
+                q.push(str);
                 text_at_start = false;
             }
                 //if the line consists only of text
             else if (first == -1 && position == -1) {
-                xml.push_back({removeSpacesFromLine(current_line),idx});
+                q.push(current_line);
                 position = x;
             }
                 //found an opening tag
@@ -84,19 +88,29 @@ vector<Line> get_xml(string inputFileName) {
                 //if the line consists of an opening tag then text
                 if (next == -1 && x - position != 0) {
                     str = current_line.substr(position + 1, x - position);
-                    xml.push_back({removeSpacesFromLine(str),idx});
+                    q.push(str);
                     position = x;
                 }
                 //if the line consists of an opening tag then text then closing tag
                 if (next - position - 1 > 0) {
 
                     str = current_line.substr(position + 1, next - position - 1);
-                    xml.push_back({removeSpacesFromLine(str),idx});
+                    q.push(str);
+
 
                 }
             }
                 //found a closing tag
-            else if (current_line[first] == '<' && current_line[first + 1] == '/') {
+             if (current_line[first] == '<' && current_line[first + 1] == '/') {
+                 //this means there is text that has not been pushed to the xml vector yet
+                if(!q.empty()){
+                    while(!q.empty()){
+                        s+=q.front();
+                        q.pop();
+                    }
+                    xml.push_back({removeSpacesFromLine(s),idx});
+                    s="";
+                }
 
                 str = current_line.substr(first, position - first + 1);
                 xml.push_back({removeSpacesFromLine(str),idx});
@@ -107,6 +121,7 @@ vector<Line> get_xml(string inputFileName) {
         }
 
     }
+
     fileInputStream2.close();
     return xml;
 }
