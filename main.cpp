@@ -149,7 +149,6 @@ void XMl_to_Json(treeNode* data)
     print_JSON(data, 1);
 
     cout << '}' << "\n";
-
 }
 
 
