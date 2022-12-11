@@ -5,62 +5,48 @@ using namespace std;
 class hashUtil
 {
 private: vector <string> tags {"users", "user", "id", "name", "posts", "post", "body", "topics", "topic", "followers", "follower"};
-    vector <string> table; // a table to contain opening and closing tags
+         vector <string> table; // a table to contain opening and closing tags
+         vector <string> JSONTable;
+         hash<string> hasher;
+
+
+
+
 public:  hashUtil()
     {
-        table.resize(69); //
-
+        table.resize(100);
+        JSONTable.resize(90);
         for (string tag : tags)
         {
-            table [int (hashInTable('<'+ tag +'>'))]  = '<'+tag+'>';
+            table[hasher('<'+ tag +'>')%100]    = '<'+tag+'>';
+            table[hasher("</" + tag +">")%100]  = "</" + tag +">";
+            JSONTable[hasher("\"" + tag +"\"")%90] = "\"" + tag +"\"";
         }
-        for (string tag : tags)
-        {
-            table [int (hashInTable("</" + tag +'>')) ]  = "</" + tag +'>';
-        }
-        for (string tag : tags)
-        {
-            table [int (hashInTable("5"  + tag +"5" )) ]  = "5"  + tag +"5" ;
-        }
-
     }
-private: unsigned char hashInTable(string s)
-    {
-        if (s.front() == '<' && s.back() == '>')
-        {
-            if (s[1]== '/')
-            {
-                return (( 2* (int(s[2]) - int(s[s.size()-2]) + 23) % 23  )+ 23);
-            }
-            else
-            {
-                return ( 2* (int(s[1]) - int(s[s.size()-2]) + 23) % 23 );
-            }
-        }
-        else if (s.front() == '5' && s.back() == '5')
-        {
-            return (( 2* (int(s[1]) - int(s[s.size()-2]) + 23) % 23  )+ 46);
-        }
-        else return -1;
-    }
+
 public:
-    string codeToString(unsigned char x)
+    string codeToStringXML(unsigned char x)
     {
         if(x-128 < 0) return "";
         return table[(short)x-128];
     }
-    unsigned char stringToCode(string x)
+    unsigned char stringToCodeXML(string x)
     {
+        return (hasher(x)%100)+128;
+    }
+    string codeToStringJSON(unsigned char x)
+    {
+        if(x-128 < 0) return "";
+        return JSONTable[(short)x-128];
+    }
+    unsigned char stringToCodeJSON(string x)
+    {
+        return (hasher(x)%90)+128;
+    }
 
-        return (isValidTag(x))? hashInTable(x)+128 : -1;
-    }
-    bool isValidTag(string x)
-    {
-        if(find(table.begin(), table.end(),x) != table.end() && hashInTable(x)!=-1)
-        {
-            return true;
-        }
-        return false;
-    }
+
+
+
+
 };
 #endif //COLLEGEPROJECT_HASHUTIL_H

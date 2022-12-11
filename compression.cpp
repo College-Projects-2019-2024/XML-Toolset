@@ -31,7 +31,7 @@ void CompressXML(string inputFileName , string outputFileName)
             {
                 text+='>';
                 writeTag = false;
-                fileOutputStream1 << x.stringToCodeXML(text);
+                fileOutputStream1 << x.stringToCode(text);
                 text = "";
 
             }
@@ -64,9 +64,9 @@ void CompressXML(string inputFileName , string outputFileName)
     {
         for(char c : currentLine)
         {
-            if(x.codeToStringXML(c) != "")
+            if(x.codeToString(c) != "")
             {
-                fileOutputStream1 << x.codeToStringXML(c);
+                fileOutputStream1 << x.codeToString(c);
             }
             else
             {
