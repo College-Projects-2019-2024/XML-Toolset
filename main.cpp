@@ -177,7 +177,7 @@ void print_JSON(treeNode * data, int n,bool arr_obj)
     }
 }
 
-void XMl_to_Json(treeNode* data)
+void Convert_to_Json(treeNode* data)
 {
     cout << '{' << "\n";
 
@@ -186,7 +186,12 @@ void XMl_to_Json(treeNode* data)
     cout << "\n" << '}' << "\n";
 }
 
+void XMLtoJSON(treeNode* samplenode, treeNode * data)
+{
+    load_xml(samplenode, data);
+    Convert_to_Json(data);
 
+}
 
 int main() {
     freopen("sample(prettified).xml", "r", stdin);
@@ -194,8 +199,7 @@ int main() {
     while (cin >> s) token.push_back(s);
     ans();
     treeNode * dataRoot = new treeNode(0,"users","", {});
-    load_xml(usersSample, dataRoot);
-    XMl_to_Json(dataRoot);
+    XMLtoJSON(usersSample, dataRoot);
 
     return 0;
 }
