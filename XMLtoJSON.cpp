@@ -6,7 +6,6 @@ using namespace std;
 
 int currentLine = 0;
 string s;
-ofstream fileOutput;
 
 
 void load_xml(treeNode * samplenode, treeNode * data, vector<Line> token)
