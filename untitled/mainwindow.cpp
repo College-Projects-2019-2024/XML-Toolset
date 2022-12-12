@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "Prettify_XML.h"
 #include "compression.h"
+#include "Utility.h"
 #include <QFile>
 #include <QTextStream>
 #include<QMessageBox>
@@ -13,7 +14,7 @@
 ofstream fileOutput;
 QFile mainfile;
 QFile result;
-vector<string>xml;
+vector<Line>xml;
 QString filename;
 
 
@@ -68,16 +69,16 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    COLLEGEPROJECT_COMPRESSION_H::CompressXML(xml, "output.xml");
+//    COLLEGEPROJECT_COMPRESSION_H::CompressXML(xml, "output.xml");
 
-    filename = "output.xml";
-    result.setFileName(filename);
-    if(!result.open(QIODevice::ReadOnly))
-          QMessageBox::information(0,"info", result.errorString());
+//    filename = "output.xml";
+//    result.setFileName(filename);
+//    if(!result.open(QIODevice::ReadOnly))
+//          QMessageBox::information(0,"info", result.errorString());
 
 
-    QTextStream in (&result);
-    ui->textBrowser_2->setText(in.readAll());
+//    QTextStream in (&result);
+//    ui->textBrowser_2->setText(in.readAll());
 
 }
 
