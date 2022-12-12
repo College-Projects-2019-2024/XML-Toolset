@@ -11,19 +11,10 @@ ofstream fileOutputStream;
 
 vector<string>answer;
 
-string insert_tab(string s,int n){
-    string str = " ";
 
-    for(int i = 0; i<4*n; i++){
-        s.insert(0,str);
-    }
-    return s;
-}
+void prettify(vector<Line>v,const string& outFileName) {
 
 
-void prettify(const string& inFileName,const string& outFileName) {
-
-    vector<Line>v = get_xml(inFileName);
     fileOutputStream.open(outFileName);
     //a stack to keep track of number of tabs to be inserted
     stack<int> stac;
