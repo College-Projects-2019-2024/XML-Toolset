@@ -7,6 +7,6 @@
 void load_xml(treeNode * samplenode, treeNode * data,vector<Line> token);
 void print_JSON(treeNode * data, int n,bool arr_obj);
 void Convert_to_Json(treeNode* data);
-void XMLtoJSON(treeNode* samplenode, treeNode * data, vector<Line> t);
+void XMLtoJSON(treeNode* samplenode, treeNode * data, vector<Line> t, const char * filename);
 
 #endif //COLLEGEPROJECT_XMLTOJSON_H

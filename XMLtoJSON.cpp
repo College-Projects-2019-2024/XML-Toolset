@@ -6,6 +6,7 @@ using namespace std;
 
 int currentLine = 0;
 string s;
+ofstream fileOutput;
 
 
 void load_xml(treeNode * samplenode, treeNode * data, vector<Line> token)
@@ -136,8 +137,9 @@ void Convert_to_Json(treeNode* data)
     cout << "\n" << '}' << "\n";
 }
 
-void XMLtoJSON(treeNode* samplenode, treeNode * data, vector<Line> t)
+void XMLtoJSON(treeNode* samplenode, treeNode * data, vector<Line> t, const char *filename)
 {
+    freopen(filename,"w",stdout);
     load_xml(samplenode, data, t);
     Convert_to_Json(data);
 }
