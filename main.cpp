@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 
+#include "utility.h"
+
+
 
 #include <iostream>
 
@@ -83,7 +86,8 @@ void printnode(treeNode * node , int depth)
 
 
 string s,f;
-vector <string> v;
+
+vector <Line> v;
 
 
 
@@ -94,31 +98,21 @@ int x= 0;
 bool can_increment = true;
 
 
-
-
 bool goOn (treeNode * node, int x)
 {
+    if (x>=v.size ()) return false;
+
     f = ""; f+= "<";f+=node->type; f+=">";
-    if (f == v[x]) return true;
+    if (f == v[x].text) return true;
 
     if (node->max ==-1)
     {
-        f = ""; f+= "</";f+=node->type; f+=">";//
-        if ((v[x].front() != '<' && v[x].back() != '>')  ||  v[x]==f)  return true;
+        f = ""; f+= "</";f+=node->type; f+=">";
+        if (  (v[x].text.front() != '<' && v[x].text.back() != '>')  ||  v[x].text==f)  return true;
         else return false;
     }
-    else fori(node->max + 1)
-    {
-
-        return goOn(node->children[i], x);
-    }
-
-    f = ""; f+= "</";f+=node->type; f+=">";//
-    if (f == v[x]) return true;
+    else  return goOn(node->children[0], x); //check the first child only as it is sufficient
 }
-
-
-
 
 
 
@@ -126,7 +120,7 @@ bool goOn (treeNode * node, int x)
 
 void checknode(treeNode * node )
 {
-    if (can_increment) s = v[x++];
+    if (can_increment) s = v[x++].text;
     f = ""; f+= "<";f+=node->type; f+=">";
     if (f != s) cout<<f <<" was missing"<<endl, can_increment = false;
     else can_increment = true;
@@ -135,12 +129,12 @@ void checknode(treeNode * node )
     {
         if (!can_increment)
         {
-            if ( !(v[x-1].front() != '<' && v[x-1].front() != '>') ) cout << node->type << " has no text" << endl;
+            if ( !(v[x-1].text.front() != '<' && v[x-1].text.front() != '>') ) cout << node->type << " has no text" << endl;
             else can_increment = true;
         }
         else
         {
-            if (!(v[x].front() != '<' && v[x].front() != '>')) cout << node->type << " has no text" << endl;
+            if (!(v[x].text.front() != '<' && v[x].text.front() != '>')) cout << node->type << " has no text" << endl;
             else x++, can_increment = true;
         }
     }
@@ -150,11 +144,11 @@ void checknode(treeNode * node )
         {
             checknode(node->children[i]);
             f = ""; f+= "</";f+=node->type; f+=">";
-            if (i== node->max && v[x]!=f && goOn(node->children[i],x)) i--;
+            if (i== node->max && v[x].text!=f && goOn(node->children[i],x)) i--;
         }
     }
 
-    if (can_increment) s= v[x++];
+    if (can_increment) s= v[x++].text;
     f = ""; f+= "</";f+=node->type; f+=">";
     if (f != s) cout << f << " was missing" << endl, can_increment = false;
     else can_increment = true;
@@ -166,9 +160,11 @@ int main()
 
     freopen("in.in", "r", stdin);
 
-    while (cin>>s) v.push_back(s);
-
+    v = get_xml("in.in");
     ans();
+
+
+
     checknode(usersSample);
 
 
