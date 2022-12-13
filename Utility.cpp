@@ -86,6 +86,7 @@ vector<Line> get_xml(string inputFileName) {
             else if (first == -1 && position == -1) {
                 q.push(current_line);
                 position = x;
+                idx--;
             }
                 //found an opening tag
             else if (current_line[first] == '<' && current_line[first + 1] != '/') {
@@ -118,6 +119,7 @@ vector<Line> get_xml(string inputFileName) {
                     }
                     xml.push_back({removeSpacesFromLine(s),idx});
                     s="";
+                    idx++;
                 }
 
                 str = current_line.substr(first, position - first + 1);

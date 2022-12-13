@@ -118,23 +118,26 @@ bool goOn (treeNode * node, int x)
 
 
 
+
+
+
 void checknode(treeNode * node )
 {
     if (can_increment) s = v[x++].text;
     f = ""; f+= "<";f+=node->type; f+=">";
-    if (f != s) cout<<f <<" was missing"<<endl, can_increment = false;
+    if (f != s) cout<<"At line "<<v[x-1].index<<" "<<f <<" was missing"<<endl, can_increment = false;
     else can_increment = true;
 
     if (node->max ==-1)
     {
         if (!can_increment)
         {
-            if ( !(v[x-1].text.front() != '<' && v[x-1].text.front() != '>') ) cout << node->type << " has no text" << endl;
+            if ( !(v[x-1].text.front() != '<' && v[x-1].text.front() != '>') ) cout <<"At line "<<v[x-1].index<<" "<< node->type << " has no text" << endl;
             else can_increment = true;
         }
         else
         {
-            if (!(v[x].text.front() != '<' && v[x].text.front() != '>')) cout << node->type << " has no text" << endl;
+            if (!(v[x].text.front() != '<' && v[x].text.front() != '>')) cout<<"At line "<<v[x-1].index<<" "<< node->type << " has no text" << endl;
             else x++, can_increment = true;
         }
     }
@@ -150,9 +153,16 @@ void checknode(treeNode * node )
 
     if (can_increment) s= v[x++].text;
     f = ""; f+= "</";f+=node->type; f+=">";
-    if (f != s) cout << f << " was missing" << endl, can_increment = false;
+    if (f != s) cout<<"At line "<<v[x-1].index<<" "<< f << " was missing" << endl, can_increment = false;
     else can_increment = true;
 }
+
+void Error_Detection()
+{
+    ans();
+    checknode(usersSample);
+}
+
 
 
 int main()
@@ -161,11 +171,7 @@ int main()
     freopen("in.in", "r", stdin);
 
     v = get_xml("in.in");
-    ans();
-
-
-
-    checknode(usersSample);
+    Error_Detection();
 
 
 }
