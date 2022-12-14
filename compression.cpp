@@ -8,18 +8,17 @@ hashUtil x;
 ofstream fileOutputStream1;
 ifstream fileInputStream1;
 
-void MinifyXML(string inputFileName, string outputFileName)
+string MinifyXML(vector<string> file)
 {
-    vector<string> file =  get_xml(inputFileName);
-    fileOutputStream1.open(outputFileName);
-    for (string currentLine : file) fileOutputStream1 << currentLine;
-    fileOutputStream1.close();
+    string result = "";
+    for(string currentLine : file)
+        result+=currentLine;
+    return result;
 }
-void CompressXML(string inputFileName, string outputFileName)
+
+string CompressXML(vector<string> file)
 {
-    vector<string> file =  get_xml(inputFileName);
-    fileOutputStream1.open(outputFileName);
-    string currentLine="", text = "";
+    string currentLine="", text = "" , result = "";
     unsigned char flag;
     bool writeTag = false;
 
@@ -35,9 +34,9 @@ void CompressXML(string inputFileName, string outputFileName)
                 flag = x.stringToCodeXML(text);
                 if(flag!='%')
                 {
-                    fileOutputStream1 << x.stringToCodeXML(text);
+                    result+= x.stringToCodeXML(text);
                 }
-                else fileOutputStream1 << text;
+                else result+= text;
 
                 text = "";
 
@@ -55,17 +54,18 @@ void CompressXML(string inputFileName, string outputFileName)
             }
             else
             {
-                fileOutputStream1 << c ;
+                result+= c ;
             }
         }
     }
-    fileOutputStream1.close();
+    return result;
+
 }
-void deCompressXML(string inputFileName, string outputFileName)
+vector<string> deCompressXML(vector<string> file)
 {
-    vector<string> file = get_xml(inputFileName);
-    fileOutputStream1.open(outputFileName);
-    string flag;
+
+    string flag,text = "";
+    vector<string> result;
 
     for (string currentLine : file)
     {
@@ -74,15 +74,19 @@ void deCompressXML(string inputFileName, string outputFileName)
             flag = x.codeToStringXML(c);
             if(flag != "")
             {
-                fileOutputStream1 << flag;
+                if(text!="")
+                    result.push_back(text);
+
+                result.push_back(flag);
+                text="";
             }
             else
             {
-                fileOutputStream1 << c ;
+                text+=c;
             }
         }
     }
-    fileOutputStream1.close();
+    return result;
 }
 
 void compressJSON(string inputFileName, string outputFileName)
