@@ -9,5 +9,6 @@ struct Line{
 string insert_tab(string s,int n);
 string removeSpacesFromLine(string s);
 vector<Line> get_xml(string inputFileName);
+vector<string> line_to_str(vector<Line>v);
 
 #endif //COLLEGEPROJECT_UTILITY_H

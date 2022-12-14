@@ -32,7 +32,11 @@ string removeSpacesFromLine(string s) {
     }
     return s.substr(begin, end + 1);
 }
-
+vector<string> line_to_str(vector<Line>v){
+    vector<string>ss;
+    for(long long i = 0; i < v.size(); i++) ss.push_back(v[i].text);
+    return ss;
+}
 vector<Line> get_xml(string inputFileName) {
 
     fileInputStream2.open(inputFileName);

@@ -1,10 +1,10 @@
 #include "string"
 #include "vector"
-#include "utility.h"
+#include "Utility.h"
 using namespace std;
 
 #ifndef COLLEGEPROJECT_PRETTIFY_XML_H
 #define COLLEGEPROJECT_PRETTIFY_XML_H
-void prettify(vector<Line>v,const string& outFileName);
+vector<string> prettify(vector<string>v);
 
 #endif //COLLEGEPROJECT_PRETTIFY_XML_H
