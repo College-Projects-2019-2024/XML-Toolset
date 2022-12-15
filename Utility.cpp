@@ -5,6 +5,42 @@
 using namespace std;
 ifstream fileInputStream2;
 
+treeNode* ans(treeNode * usersSamp)
+{
+    treeNode * myIDSample = new treeNode( -1, "id","my id is 123", {});//0
+    treeNode * nameSample = new treeNode( -1, "name","Dallash", {});//1
+
+
+    treeNode * topicSample = new treeNode( -1, "topic","this is my topic", {});
+    treeNode * topicsSample = new treeNode( 0, "topics","", {topicSample});
+    treeNode * bodySample =  new treeNode( -1, "body","this is my body", {});
+    vector<treeNode *> postChildrenArray = { bodySample,  topicsSample};
+    treeNode * postSample = new treeNode( 1, "post","", postChildrenArray);
+    treeNode * postsSample = new treeNode( 0, "posts","", {postSample});//2
+
+
+    treeNode * hisIDSample = new treeNode( -1, "id","his id is 456", {});
+    treeNode * followerSample = new treeNode( 0, "follower","", {hisIDSample});
+    treeNode * followersSample = new treeNode( 0, "followers","", {followerSample});//3
+
+
+    vector<treeNode *> userChildrenArray = { myIDSample,  nameSample, postsSample,followersSample};
+    treeNode * userSample = new treeNode( 3, "user","", userChildrenArray);
+
+
+    usersSamp = new treeNode( 0, "users","", {userSample});
+
+    return usersSamp;
+}
+
+string insert_tab(string s,int n){
+    string str = " ";
+
+    for(int i = 0; i<4*n; i++){
+        s.insert(0,str);
+    }
+    return s;
+}
 string insert_tab(string s, int n) {
     string str = " ";
 
