@@ -3,4 +3,4 @@ project(CollegeProject)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(CollegeProject main.cpp compression.h compression.cpp Utility.h Utility.cpp hashUtil.cpp hashUtil.h)
+add_executable(CollegeProject main.cpp compression.h compression.cpp hashUtil.h MainClass.h)

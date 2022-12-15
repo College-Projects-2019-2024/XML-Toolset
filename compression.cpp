@@ -1,93 +1,13 @@
 #include <bits/stdc++.h>
 #include "compression.h"
-#include "Utility.h"
 #include "hashUtil.h"
+#include "MainClass.h"
 using namespace std;
 
-hashUtil x;
+Utility x;
 ofstream fileOutputStream1;
 ifstream fileInputStream1;
 
-string MinifyXML(vector<string> file)
-{
-    string result = "";
-    for(string currentLine : file)
-        result+=currentLine;
-    return result;
-}
-
-string CompressXML(vector<string> file)
-{
-    string currentLine="", text = "" , result = "";
-    unsigned char flag;
-    bool writeTag = false;
-
-    for (string currentLine : file)
-    {
-        currentLine = removeSpacesFromLine(currentLine);
-        for(char c : currentLine)
-        {
-            if(c=='>')
-            {
-                text+='>';
-                writeTag = false;
-                flag = x.stringToCodeXML(text);
-                if(flag!='%')
-                {
-                    result+= x.stringToCodeXML(text);
-                }
-                else result+= text;
-
-                text = "";
-
-            }
-            else if(c == '<' || writeTag)
-            {
-                if(c == '\"')
-                {
-                    text+='<';
-                    writeTag = true;
-                    continue;
-                }
-                text+=c;
-                writeTag = true;
-            }
-            else
-            {
-                result+= c ;
-            }
-        }
-    }
-    return result;
-
-}
-vector<string> deCompressXML(vector<string> file)
-{
-
-    string flag,text = "";
-    vector<string> result;
-
-    for (string currentLine : file)
-    {
-        for(char c : currentLine)
-        {
-            flag = x.codeToStringXML(c);
-            if(flag != "")
-            {
-                if(text!="")
-                    result.push_back(text);
-
-                result.push_back(flag);
-                text="";
-            }
-            else
-            {
-                text+=c;
-            }
-        }
-    }
-    return result;
-}
 
 void compressJSON(string inputFileName, string outputFileName)
 {
