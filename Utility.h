@@ -25,10 +25,7 @@ public:
     }
 };
 
-struct Line{
-    string text;
-    int index;
-};
+
 string insert_tab(string s,int n);
 string removeSpacesFromLine(string s);
 vector<Line> get_xml(string inputFileName);
