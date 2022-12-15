@@ -33,14 +33,6 @@ treeNode* ans(treeNode * usersSamp)
     return usersSamp;
 }
 
-string insert_tab(string s,int n){
-    string str = " ";
-
-    for(int i = 0; i<4*n; i++){
-        s.insert(0,str);
-    }
-    return s;
-}
 string insert_tab(string s, int n) {
     string str = " ";
 
