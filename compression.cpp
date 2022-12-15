@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 #include "compression.h"
-#include "hashUtil.h"
 #include "MainClass.h"
 using namespace std;
 

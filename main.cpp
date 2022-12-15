@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "hashUtil.h"
+#include "utility.h"
 #include "MainClass.h"
 
 using namespace std;
