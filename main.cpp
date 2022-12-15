@@ -5,8 +5,12 @@
 using namespace std;
 int main() {
     MainClass x("sample.xml");
+    x.CompressXML();
+    vector<string> decomp;
+    decomp = x.deCompressXML();
+    cout << "";
 
-    cout << x.CompressXML();
+
    // deCompressJSON("sampleMinfied.json","sampledeMinfied.json");
 
 }

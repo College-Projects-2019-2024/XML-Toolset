@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "compression.h"
 #include "MainClass.h"
+
 using namespace std;
 
 Utility x;
@@ -8,8 +9,7 @@ ofstream fileOutputStream1;
 ifstream fileInputStream1;
 
 
-void compressJSON(string inputFileName, string outputFileName)
-{
+void compressJSON(string inputFileName, string outputFileName) {
     fileInputStream1.open(inputFileName);
     fileOutputStream1.open(outputFileName);
     bool inside = false;
@@ -17,31 +17,23 @@ void compressJSON(string inputFileName, string outputFileName)
     unsigned char flag;
     string text = "";
 
-    while (getline(fileInputStream1, currentLine))
-    {
-        for(char c : currentLine)
-        {
-            if (c=='\"')
-            {
-                text+=c;
-                if(inside)
-                {
+    while (getline(fileInputStream1, currentLine)) {
+        for (char c: currentLine) {
+            if (c == '\"') {
+                text += c;
+                if (inside) {
                     flag = x.stringToCodeJSON(text);
-                    if(flag!='%')
+                    if (flag != '%')
                         fileOutputStream1 << flag;
                     else
                         fileOutputStream1 << text;
                     text = "";
                 }
-                inside=!inside;
+                inside = !inside;
 
-            }
-            else if(inside)
-            {
-                text+=c;
-            }
-            else if(c!=' ')
-            {
+            } else if (inside) {
+                text += c;
+            } else if (c != ' ') {
                 fileOutputStream1 << c;
             }
 
@@ -51,25 +43,21 @@ void compressJSON(string inputFileName, string outputFileName)
     fileInputStream1.close();
 }
 
-void deCompressJSON(string inputFileName, string outputFileName)
-{
+void deCompressJSON(string inputFileName, string outputFileName) {
     fileInputStream1.open(inputFileName);
     fileOutputStream1.open(outputFileName);
     string currentLine = "";
     bool inside = false;
     string flag;
 
-    while (getline(fileInputStream1, currentLine))
-    {
-        for(char c : currentLine)
-        {
-        flag = x.codeToStringJSON(c);
-        if(flag!="") fileOutputStream1 << flag;
+    while (getline(fileInputStream1, currentLine)) {
+        for (char c: currentLine) {
+            flag = x.codeToStringJSON(c);
+            if (flag != "") fileOutputStream1 << flag;
 
-        else
-        {
-            fileOutputStream1 << c;
-        }
+            else {
+                fileOutputStream1 << c;
+            }
         }
     }
     fileOutputStream1.close();
