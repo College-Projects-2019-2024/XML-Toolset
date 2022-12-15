@@ -7,7 +7,7 @@ int main() {
     MainClass x("sample.xml");
     x.CompressXML();
     vector<string> decomp;
-    decomp = x.deCompressXML();
+    decomp = x.deCompressXML("sampleCompressed.xml");
     cout << "";
 
 

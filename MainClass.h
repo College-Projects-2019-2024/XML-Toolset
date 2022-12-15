@@ -7,7 +7,6 @@ using namespace std;
 
     class MainClass {
         vector<string> xml;
-        vector<string> xmlCompressed;
         ifstream fileInputStream2;
         Utility util;
 
@@ -137,18 +136,17 @@ using namespace std;
                     }
                 }
             }
-            xmlCompressed.push_back(result);
             return result;
 
         }
 
-        vector<string> deCompressXML()
+        vector<string> deCompressXML(string fileName)
         {
-
-            string flag,text = "";
+            fileInputStream2.open(fileName);
+            string flag,text = "" , currentLine;
             vector<string> result;
 
-            for (string currentLine : xmlCompressed)
+            while(getline(fileInputStream2,currentLine))
             {
                 for(char c : currentLine)
                 {
@@ -167,6 +165,7 @@ using namespace std;
                     }
                 }
             }
+            fileInputStream2.close();
             return result;
         }
 
