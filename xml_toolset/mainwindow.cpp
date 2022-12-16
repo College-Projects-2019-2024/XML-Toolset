@@ -195,6 +195,9 @@ void MainWindow::on_pushButton_8_clicked()
     if(!outfile.open(QIODevice::ReadOnly))
           QMessageBox::information(0,"info", outfile.errorString());
 
+    t->set_str(result);
+    result = t->prettify();
+
     for(int i = 0; i<result.size(); i++){
         fileoutputstream << result[i] << endl;
     }

@@ -23,6 +23,7 @@ private:
     vector<Line>detect;
     bool can_increment = true;
     int x = 0;
+    string s,f;
 
 
 public:
@@ -40,6 +41,11 @@ public:
     vector<Line>getdetected(){
         return this->detect;
     }
+
+    void set_str(vector<string>v){
+        this->str = v;
+    }
+
     void clear(){
         this->x = 0;
         this->detect.clear();
@@ -74,6 +80,7 @@ public:
 
         return usersSamp;
     }
+
     vector<string> prettify() {
         vector<string> v = str;
         vector<string> answer;
@@ -213,7 +220,7 @@ public:
 
     void checknode(treeNode * node )
     {
-        string s,f;
+
         if (can_increment) s = lines[x++].text;
         f = ""; f+= "<";f+=node->type; f+=">";
         if (f != s)  {
