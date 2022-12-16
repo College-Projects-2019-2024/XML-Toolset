@@ -7,8 +7,10 @@
 #include "ui_mainwindow.h"
 #include "Toolset.h"
 
+
 Toolset *t;
 ofstream fileoutputstream;
+treeNode* usersSample;
 
 QString infilename;
 QString outfilename;
@@ -17,6 +19,7 @@ QFile infile;
 QFile outfile;
 
 vector<string>result;
+vector<Line>result2;
 string r;
 
 
@@ -45,13 +48,15 @@ void MainWindow::on_pushButton_clicked()
               QMessageBox::information(0,"info", infile.errorString());
 
         t = new Toolset(infilename.toStdString());
+        usersSample = t->ans(usersSample);
+
+
 
         QTextStream in (&infile);
         ui->textBrowser->setText(in.readAll());
 
 
 }
-
 
 
 //prettify button
@@ -72,6 +77,7 @@ void MainWindow::on_pushButton_2_clicked()
 
     QTextStream in (&outfile);
     ui->textBrowser_2->setText(in.readAll());
+
 
     fileoutputstream.close();
 }
@@ -128,7 +134,7 @@ void MainWindow::on_pushButton_3_clicked()
     QFile::copy(outfile.fileName(),dir+'/'+outfilename);
 }
 
-
+//Minify button
 void MainWindow::on_pushButton_6_clicked()
 {
     r = t->MinifyXML();
@@ -146,6 +152,59 @@ void MainWindow::on_pushButton_6_clicked()
     ui->textBrowser_2->setText(in.readAll());
 
     fileoutputstream.close();
+
+}
+
+//detect errors button
+void MainWindow::on_pushButton_7_clicked()
+{
+    t->checknode(usersSample);
+    result2 = t->getdetected();
+    outfilename = "errors.txt";
+    fileoutputstream.open("errors.txt");
+
+    outfile.setFileName(outfilename);
+    if(!outfile.open(QIODevice::ReadOnly))
+          QMessageBox::information(0,"info", outfile.errorString());
+
+    for(int i = 0; i<result2.size(); i++){
+        fileoutputstream << result2[i].text<<"was missing at line "<<result2[i].index << endl;
+    }
+
+    QTextStream in (&outfile);
+    ui->textBrowser_2->setText(in.readAll());
+
+
+    fileoutputstream.close();
+
+    t->clear();
+
+}
+
+//correct errors button
+void MainWindow::on_pushButton_8_clicked()
+{
+    t->checknode(usersSample);
+    result = t->getCorrected();
+
+    outfilename = "corrected.xml";
+    fileoutputstream.open("corrected.xml");
+
+    outfile.setFileName(outfilename);
+
+    if(!outfile.open(QIODevice::ReadOnly))
+          QMessageBox::information(0,"info", outfile.errorString());
+
+    for(int i = 0; i<result.size(); i++){
+        fileoutputstream << result[i] << endl;
+    }
+
+    QTextStream in (&outfile);
+    ui->textBrowser_2->setText(in.readAll());
+
+
+    fileoutputstream.close();
+    t->clear();
 
 }
 

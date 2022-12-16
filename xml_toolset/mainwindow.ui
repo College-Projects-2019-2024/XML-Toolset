@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>873</width>
-    <height>645</height>
+    <width>977</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>120</y>
+      <x>780</x>
+      <y>110</y>
       <width>111</width>
       <height>51</height>
      </rect>
@@ -53,10 +53,10 @@
    <widget class="QTextBrowser" name="textBrowser_2">
     <property name="geometry">
      <rect>
-      <x>335</x>
-      <y>81</y>
-      <width>351</width>
-      <height>471</height>
+      <x>330</x>
+      <y>80</y>
+      <width>431</width>
+      <height>501</height>
      </rect>
     </property>
    </widget>
@@ -76,8 +76,8 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>190</y>
+      <x>780</x>
+      <y>180</y>
       <width>111</width>
       <height>51</height>
      </rect>
@@ -89,8 +89,8 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>260</y>
+      <x>780</x>
+      <y>250</y>
       <width>111</width>
       <height>51</height>
      </rect>
@@ -102,8 +102,8 @@
    <widget class="QPushButton" name="pushButton_6">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>330</y>
+      <x>780</x>
+      <y>320</y>
       <width>111</width>
       <height>51</height>
      </rect>
@@ -112,13 +112,39 @@
      <string>Minify</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_7">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>390</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Detect errors</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_8">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>460</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Correct errors</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>873</width>
+     <width>977</width>
      <height>21</height>
     </rect>
    </property>

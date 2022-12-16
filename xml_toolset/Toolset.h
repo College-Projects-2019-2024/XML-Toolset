@@ -6,15 +6,24 @@
 
 #ifndef TOOLSET_H
 #define TOOLSET_H
+#define MAX 100
 
 
 class Toolset {
 private:
+    ifstream fileInputStream2;
+
     vector<Line> lines;
     vector<string> str;
+
     Utility util;
-    vector<string> xmlCompressed;
-    ifstream fileInputStream2;
+
+    vector<string>xmlCompressed;
+    vector<string>corrected;
+    vector<Line>detect;
+    bool can_increment = true;
+    int x = 0;
+
 
 public:
     //constructor
@@ -23,7 +32,48 @@ public:
         this->str = util.line_to_str(lines);
     }
 
+    //getters
+    vector<string>getCorrected(){
+        return this->corrected;
+    }
+
+    vector<Line>getdetected(){
+        return this->detect;
+    }
+    void clear(){
+        this->x = 0;
+        this->detect.clear();
+        this->corrected.clear();
+    }
+
     //functions
+    treeNode* ans(treeNode * usersSamp)
+    {
+        treeNode * myIDSample = new treeNode( -1, "id","my id is 123", {});//0
+        treeNode * nameSample = new treeNode( -1, "name","Dallash", {});//1
+
+
+        treeNode * topicSample = new treeNode( -1, "topic","this is my topic", {});
+        treeNode * topicsSample = new treeNode( 0, "topics","", {topicSample});
+        treeNode * bodySample =  new treeNode( -1, "body","this is my body", {});
+        vector<treeNode *> postChildrenArray = { bodySample,  topicsSample};
+        treeNode * postSample = new treeNode( 1, "post","", postChildrenArray);
+        treeNode * postsSample = new treeNode( 0, "posts","", {postSample});//2
+
+
+        treeNode * hisIDSample = new treeNode( -1, "id","his id is 456", {});
+        treeNode * followerSample = new treeNode( 0, "follower","", {hisIDSample});
+        treeNode * followersSample = new treeNode( 0, "followers","", {followerSample});//3
+
+
+        vector<treeNode *> userChildrenArray = { myIDSample,  nameSample, postsSample,followersSample};
+        treeNode * userSample = new treeNode( 3, "user","", userChildrenArray);
+
+
+        usersSamp = new treeNode( 0, "users","", {userSample});
+
+        return usersSamp;
+    }
     vector<string> prettify() {
         vector<string> v = str;
         vector<string> answer;
@@ -135,6 +185,7 @@ public:
         fileInputStream2.close();
         return result;
     }
+
     string MinifyXML()
     {
         string result = "";
@@ -142,6 +193,83 @@ public:
             result+=currentLine;
         return result;
     }
+
+    bool goOn (treeNode * node, int x)
+    {
+        string f;
+        if (x>=lines.size()) return false;
+
+        f = ""; f+= "<";f+=node->type; f+=">";
+        if (f == lines[x].text) return true;
+
+        if (node->max ==-1)
+        {
+            f = ""; f+= "</";f+=node->type; f+=">";
+            if (  (lines[x].text.front() != '<' && lines[x].text.back() != '>')  ||  lines[x].text==f)  return true;
+            else return false;
+        }
+        else  return goOn(node->children[0], x); //check the first child only as it is sufficient
+    }
+
+    void checknode(treeNode * node )
+    {
+        string s,f;
+        if (can_increment) s = lines[x++].text;
+        f = ""; f+= "<";f+=node->type; f+=">";
+        if (f != s)  {
+            detect.push_back({f,lines[x-1].index});
+            can_increment = false;
+        }
+        else can_increment = true;
+        corrected.push_back(f);
+
+
+
+        if (node->max ==-1)
+        {
+            if (!can_increment)
+            {
+                if ( !(lines[x-1].text.front() != '<' && lines[x-1].text.front() != '>') )
+                {
+                    detect.push_back({node->type + "has no text",lines[x-1].index});
+                    corrected.push_back("noText");
+                }
+                else can_increment = true,corrected.push_back(lines[x-1].text);
+            }
+            else
+            {
+                if (!(lines[x].text.front() != '<' && lines[x].text.front() != '>'))
+                {
+                    detect.push_back({node->type + "has no text",lines[x-1].index});
+                    corrected.push_back("noText");
+                }
+                else x++, can_increment = true,corrected.push_back(lines[x-1].text);
+            }
+        }
+        else
+        {
+            fori(node->max + 1)
+            {
+                checknode(node->children[i]);
+                f = ""; f+= "</";f+=node->type; f+=">";
+                if (i== node->max && lines[x].text!=f && goOn(node->children[i],x)) i--;
+            }
+        }
+
+        if (can_increment) s= lines[x++].text;
+        f = ""; f+= "</";f+=node->type; f+=">";
+         corrected.push_back(f);
+
+
+
+        if (f != s)
+        {
+            detect.push_back({f,lines[x-1].index});
+            can_increment = false;
+        }
+        else can_increment = true;
+    }
+
 
 };
 
