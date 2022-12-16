@@ -119,16 +119,22 @@ bool goOn (treeNode * node, int x)
 
 
 vector <string> out;
+vector <Line> detect(100);
 
 int it = 0;
-
+int it2=0;
 bool can_increment  = true;
 
 void checknode(treeNode * node )
 {
+
     if (can_increment) s = v[x++].text;
     f = ""; f+= "<";f+=node->type; f+=">";
-    if (f != s)  cout<<"At line "<<v[x-1].index<<" "<<f <<" was missing"<<endl, can_increment = false;
+    if (f != s)  {
+        detect[it2].text=f;
+        detect[it2++].index=v[x-1].index;
+        can_increment = false;
+    }
     else can_increment = true;
 
     out[it++]=f;
@@ -138,12 +144,22 @@ void checknode(treeNode * node )
     {
         if (!can_increment)
         {
-            if ( !(v[x-1].text.front() != '<' && v[x-1].text.front() != '>') ) cout <<"At line "<<v[x-1].index<<" "<< node->type << " has no text" << endl , out[it++]="noTEX";
+            if ( !(v[x-1].text.front() != '<' && v[x-1].text.front() != '>') )
+            {
+                detect[it2].text=node->type;
+                detect[it2++].index=v[x-1].index;
+                out[it++]="noTEX";
+            }
             else can_increment = true, out[it++]=v[x-1].text;
         }
         else
         {
-            if (!(v[x].text.front() != '<' && v[x].text.front() != '>')) cout<<"At line "<<v[x-1].index<<" "<< node->type << " has no text" << endl,out[it++]="noTEX";
+            if (!(v[x].text.front() != '<' && v[x].text.front() != '>'))
+            {
+                detect[it2].text=node->type;
+                detect[it2++].index=v[x-1].index;
+                out[it++]="noTEX";
+            }
             else x++, can_increment = true, out[it++]=v[x-1].text;
         }
     }
@@ -162,26 +178,25 @@ void checknode(treeNode * node )
 
     out[it++]=f;
 
-    if (f != s) cout<<"At line "<<v[x-1].index<<" "<< f << " was missing" << endl, can_increment = false;
+    if (f != s)
+    {
+        detect[it2].text=f;
+        detect[it2++].index=v[x-1].index;
+        can_increment = false;
+    }
     else can_increment = true;
 }
-
-
 
 int main()
 {
 
     freopen("in.in", "r", stdin);
 
-   int line = 0;
-
+    int line = 0;
     while (cin>>s)  v.push_back({s,++line});
 
     out.resize(v.size()*3);
     ans();
-
-
-
     checknode(usersSample);
 
 }
