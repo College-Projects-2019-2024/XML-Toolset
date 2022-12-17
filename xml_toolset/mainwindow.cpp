@@ -11,6 +11,7 @@
 Toolset *t;
 ofstream fileoutputstream;
 treeNode* usersSample;
+treeNode * dataRoot;
 
 QString infilename;
 QString outfilename;
@@ -58,7 +59,6 @@ void MainWindow::on_pushButton_clicked()
 
 }
 
-
 //prettify button
 void MainWindow::on_pushButton_2_clicked()
 {
@@ -82,21 +82,32 @@ void MainWindow::on_pushButton_2_clicked()
     fileoutputstream.close();
 }
 
-
 //compress button
 void MainWindow::on_pushButton_4_clicked()
 {
-    r = t->CompressXML();
-    outfilename = "compressed.xml";
-    fileoutputstream.open("compressed.xml");
+    result = t->Compress(infilename.toStdString());
+    string extension = infilename.toStdString().substr(infilename.toStdString().size()-4,infilename.toStdString().size()-1);
+
+    if(extension == ".xml"){
+        outfilename = "compressed.xml";
+        fileoutputstream.open("compressed.xml");
+
+    }
+    else{
+        outfilename = "compressed.json";
+        fileoutputstream.open("compressed.json");
+    }
 
     outfile.setFileName(outfilename);
+
 
     if(!outfile.open(QIODevice::ReadOnly))
           QMessageBox::information(0,"info", outfile.errorString());
 
 
-    fileoutputstream << r << endl;
+    for(int i = 0; i<result.size(); i++){
+        fileoutputstream << result[i] << endl;
+    }
     QTextStream in (&outfile);
     ui->textBrowser_2->setText(in.readAll());
 
@@ -107,9 +118,20 @@ void MainWindow::on_pushButton_4_clicked()
 //decompress button
 void MainWindow::on_pushButton_5_clicked()
 {
-    result = t->deCompressXML(infilename.toStdString());
-    outfilename = "Decompressed.xml";
-    fileoutputstream.open("Decompressed.xml");
+    result = t->DeCompress(infilename.toStdString());
+    string extension = infilename.toStdString().substr(infilename.toStdString().size()-4,infilename.toStdString().size()-1);
+
+    if(extension == ".xml"){
+        outfilename = "Decompressed.xml";
+        fileoutputstream.open("Decompressed.xml");
+        t->set_str(result);
+        result = t->prettify();
+
+    }
+    else{
+        outfilename = "Decompressed.json";
+        fileoutputstream.open("Decompressed.json");
+    }
 
     outfile.setFileName(outfilename);
 
@@ -125,13 +147,6 @@ void MainWindow::on_pushButton_5_clicked()
 
     fileoutputstream.close();
 
-}
-
-//save button
-void MainWindow::on_pushButton_3_clicked()
-{
-    QString dir = QFileDialog::getExistingDirectory(this,tr("save file"));
-    QFile::copy(outfile.fileName(),dir+'/'+outfilename);
 }
 
 //Minify button
@@ -209,5 +224,38 @@ void MainWindow::on_pushButton_8_clicked()
     fileoutputstream.close();
     t->clear();
 
+}
+
+//ToJSON button
+void MainWindow::on_pushButton_9_clicked()
+{
+    dataRoot = new treeNode(0,"users","", {});
+    result = t->XMLtoJSON(usersSample,dataRoot);
+
+    outfilename = "ToJSON.json";
+    fileoutputstream.open("ToJSON.json");
+
+    outfile.setFileName(outfilename);
+
+    if(!outfile.open(QIODevice::ReadOnly))
+          QMessageBox::information(0,"info", outfile.errorString());
+
+    for(int i = 0; i<result.size(); i++){
+        fileoutputstream << result[i] << endl;
+    }
+
+    QTextStream in (&outfile);
+    ui->textBrowser_2->setText(in.readAll());
+
+
+    fileoutputstream.close();
+    t->clear();
+}
+
+//save button
+void MainWindow::on_pushButton_3_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this,tr("save file"));
+    QFile::copy(outfile.fileName(),dir+'/'+outfilename);
 }
 

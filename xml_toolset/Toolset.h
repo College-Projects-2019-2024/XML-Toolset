@@ -11,7 +11,7 @@
 
 class Toolset {
 private:
-    ifstream fileInputStream2;
+    ifstream is;
 
     vector<Line> lines;
     vector<string> str;
@@ -20,10 +20,352 @@ private:
 
     vector<string>xmlCompressed;
     vector<string>corrected;
+    vector<string>out;
     vector<Line>detect;
-    bool can_increment = true;
-    int x = 0;
-    string s,f;
+    bool can_increment = true,arr_object = false;
+    int x = 0,currentLine = 0;
+    string s,f,print;
+
+
+    vector<string> CompressXML()
+            {
+                string currentLine="", text = "" , result = "";
+                vector<string> r;
+                unsigned char flag;
+                bool writeTag = false;
+
+                for (string currentLine : str)
+                {
+                    currentLine = util.removeSpacesFromLine(currentLine);
+                    for(char c : currentLine)
+                    {
+                        if(c=='>')
+                        {
+                            text+='>';
+                            writeTag = false;
+                            flag = util.stringToCodeXML(text);
+                            if(flag!='%')
+                            {
+                                result+= util.stringToCodeXML(text);
+                            }
+                            else result+= text;
+
+                            text = "";
+
+                        }
+                        else if(c == '<' || writeTag)
+                        {
+                            if(c == '\"')
+                            {
+                                text+='<';
+                                writeTag = true;
+                                continue;
+                            }
+                            text+=c;
+                            writeTag = true;
+                        }
+                        else
+                        {
+                            result+= c ;
+                        }
+                    }
+                }
+                r.push_back(result);
+                return r;
+
+            }
+
+    vector<string> deCompressXML(string fileName)
+            {
+                is.open(fileName);
+                string flag,text = "" , currentLine;
+                vector<string> result;
+
+                while(getline(is, currentLine))
+                {
+                    for(char c : currentLine)
+                    {
+                        flag = util.codeToStringXML(c);
+                        if(flag != "")
+                        {
+                            if(text!="")
+                                result.push_back(text);
+
+                            result.push_back(flag);
+                            text="";
+                        }
+                        else
+                        {
+                            text+=c;
+                        }
+                    }
+                }
+                is.close();
+                return result;
+            }
+
+    vector<string> CompressJSON(string inputFileName) {
+                is.open(inputFileName);
+                string r = "";
+                bool inside = false;
+                string currentLine = "";
+                unsigned char flag;
+                string text = "";
+
+                while (getline(is, currentLine)) {
+                    for (char c: currentLine) {
+                        if (c == '\"') {
+                            text += c;
+                            if (inside) {
+                                flag = util.stringToCodeJSON(text);
+                                if (flag != '%')
+                                    r+= flag;
+                                else
+                                    r+= text;
+                                text = "";
+                            }
+                            inside = !inside;
+
+                        } else if (inside) {
+                            text += c;
+                        } else if (c != ' ') {
+                            r+= c;
+                        }
+
+                    }
+                }
+                vector<string> result;
+                result.push_back(r);
+                is.close();
+                return result;
+            }
+
+    vector<string> deCompressJSON(string inputFileName)
+            {
+                is.open(inputFileName);
+                string result = "";
+                string currentLine = "";
+                string flag;
+
+                while (getline(is, currentLine)) {
+                    for (char c: currentLine) {
+                        flag = util.codeToStringJSON(c);
+                        if (flag != "")
+                            result+= flag;
+
+                        else
+                        {
+                            result += c;
+                        }
+                    }
+                }
+                vector<string> r;
+                r.push_back(result);
+                is.close();
+                return r;
+            }
+
+    bool goOn (treeNode * node, int x)
+    {
+        string f;
+        if (x>=lines.size()) return false;
+
+        f = ""; f+= "<";f+=node->type; f+=">";
+        if (f == lines[x].text) return true;
+
+        if (node->max ==-1)
+        {
+            f = ""; f+= "</";f+=node->type; f+=">";
+            if (  (lines[x].text.front() != '<' && lines[x].text.back() != '>')  ||  lines[x].text==f)  return true;
+            else return false;
+        }
+        else  return goOn(node->children[0], x); //check the first child only as it is sufficient
+    }
+
+    void load_xml(treeNode * samplenode, treeNode * data)
+    {
+
+        s = lines[currentLine++].text;
+
+        if(samplenode->max == -1)
+        {
+            //store text
+            data->text = lines[currentLine++].text;
+        }
+        else
+        {
+            fori(samplenode->max + 1)
+            {
+                //create new node nn
+                treeNode * createdNode = new treeNode(samplenode->children[i]->max, samplenode->children[i]->type, samplenode->children[i]->text, {});
+                load_xml(samplenode->children[i], createdNode);
+                //add to the vector (push created node)
+                data->children.push_back(createdNode);
+                string f = ""; f+= "<";f+=samplenode->children[samplenode->max]->type; f+=">";
+                if(i== samplenode->max && f == lines[currentLine].text) i--;
+            }
+        }
+
+        s = lines[currentLine++].text;
+    }
+
+    void print_JSON(treeNode * data, int n,bool arr_obj)
+    {
+        bool object = false;
+        string tab;
+
+        fori(n) tab += "    ";
+
+        if(data->type == "topics" && data->children.size() > 1)
+        {
+            //cout << tab << "\"" << data->type << "\"" << ":" << " " << "{" << "\n";
+            print += tab; print += "\""; print += data->type; print += "\": {";
+            out.push_back(print);
+            print = "";
+
+            //cout << tab << "   " << "\"" << "topic" << "\"" << ":" << " " << "[" <<"\n";
+            print += tab; print += "   \"topic\": [";
+            out.push_back(print);
+            print = "";
+
+            fori(data->children.size())
+            {
+                //cout << tab << "       " << "\"" << data->children[i]->text << "\"";
+                print += tab; print += "       \""; print += data->children[i]->text; print += "\"";
+
+                if(i == (data->children.size() -1))
+                {
+                    //cout << "\n";
+                    out.push_back(print);
+                    print = "";
+                }
+                else
+                {
+                    //cout << "," << "\n";
+                    print += ",";
+                    out.push_back(print);
+                    print = "";
+                }
+            }
+            //cout << tab << "   " << "]" << "\n";
+            print += tab; print += "   ]";
+            out.push_back(print);
+            print = "";
+
+            //cout << tab << "}";
+            print += tab; print += "}";
+            return;
+        }
+
+        if (data->max == -1)
+        {
+            //cout << tab << "\"" << data->type << "\"" << ":" << " ";
+            print += tab; print += "\""; print += data->type; print += "\": ";
+
+            //cout << "\"" << data->text << "\"";
+            print += "\""; print += data->text; print += "\"";
+            return;
+        }
+        else
+        {
+            if(data->children.size() == 1) object = true;
+
+            fori(data->children.size() - 1)
+            {
+                if(data->children[i]->type != data->children[i + 1]->type) object = true;
+            }
+
+            if(object){
+                if(arr_obj)
+                {
+                    //cout  << tab << "   " << '{' << "\n";
+                    print += tab; print += "   {";
+                    out.push_back(print);
+                    print = "";
+                }
+                else
+                {
+                    //cout  << tab << "\"" << data->type << "\"" << ":" << " " << '{' << "\n";
+                    print += tab; print += "\""; print += data->type; print += "\": {";
+                    out.push_back(print);
+                    print = "";
+                }
+
+                fori(data->children.size()) {
+                    arr_object = false;
+                    print_JSON(data->children[i], n + 1, arr_object);
+                    if(i == (data->children.size() - 1))
+                    {
+                        //cout << "\n";
+                        out.push_back(print);
+                        print = "";
+                    }
+                    else
+                    {
+                        //cout << "," << "\n";
+                        print += ",";
+                        out.push_back(print);
+                        print = "";
+                    }
+                }
+                tab += "    ";
+                //cout << tab << '}';
+                print += tab; print += "}";
+
+            }
+            else
+            {
+                //cout << tab << "\"" << data->type << "\"" << ":" << " " << "{" << "\n";
+                print += tab; print += "\""; print += data->type; print += "\": {";
+                out.push_back(print);
+                print = "";
+
+                //cout << tab << "    " << "\"" << data->children[0]->type << "\"" << ":" << " " << "[" << "\n";
+                print += tab; print += "    \""; print += data->children[0]->type; print += "\": [";
+                out.push_back(print);
+                print = "";
+
+                fori(data->children.size()) {
+                    arr_object = true;
+                    print_JSON(data->children[i], n + 1, arr_object);
+                    if(i == (data->children.size() -1))
+                    {
+                        //cout << "\n";
+                        out.push_back(print);
+                        print = "";
+                    }
+                    else
+                    {
+                        //cout << "," << "\n";
+                        print += ",";
+                        out.push_back(print);
+                        print = "";
+                    }
+                }
+
+                //cout << tab << "    " << ']' << "\n";
+                print += tab; print += "   ]";
+                out.push_back(print);
+                print = "";
+
+                //cout << tab << '}';
+                print += tab; print += "}";
+
+            }
+        }
+    }
+
+    void Convert_to_Json(treeNode* data)
+    {
+        //cout << '{' << "\n";
+        out.push_back("{");
+
+        print_JSON(data, 1, arr_object);
+
+        //cout << "\n" << '}' << "\n";
+        out.push_back("  }");
+        out.push_back("}");
+    }
 
 
 public:
@@ -33,7 +375,7 @@ public:
         this->str = util.line_to_str(lines);
     }
 
-    //getters
+    //getters and setters
     vector<string>getCorrected(){
         return this->corrected;
     }
@@ -50,6 +392,8 @@ public:
         this->x = 0;
         this->detect.clear();
         this->corrected.clear();
+        this->out.clear();
+        this->currentLine = 0;
     }
 
     //functions
@@ -134,64 +478,36 @@ public:
         return answer;
     }
 
-    string CompressXML() {
-        string currentLine = "", text = "", result = "";
-        unsigned char flag;
-        bool writeTag = false;
-
-        for (string currentLine: str) {
-            currentLine = util.removeSpacesFromLine(currentLine);
-            for (char c: currentLine) {
-                if (c == '>') {
-                    text += '>';
-                    writeTag = false;
-                    flag = util.stringToCodeXML(text);
-                    if (flag != '%') {
-                        result += util.stringToCodeXML(text);
-                    } else result += text;
-
-                    text = "";
-
-                } else if (c == '<' || writeTag) {
-                    if (c == '\"') {
-                        text += '<';
-                        writeTag = true;
-                        continue;
-                    }
-                    text += c;
-                    writeTag = true;
-                } else {
-                    result += c;
+    vector<string> Compress(string inputFileName)
+            {
+                string extension = inputFileName.substr(inputFileName.size()-4,inputFileName.size()-1);
+                vector <string> result;
+                if(extension == ".xml")
+                {
+                    result = CompressXML();
                 }
-            }
-        }
-        xmlCompressed.push_back(result);
-        return result;
-
-    }
-
-    vector<string> deCompressXML(string fileName) {
-        fileInputStream2.open(fileName);
-        string flag, text = "", currentLine;
-        vector<string> result;
-
-        while (getline(fileInputStream2, currentLine)) {
-            for (char c: currentLine) {
-                flag = util.codeToStringXML(c);
-                if (flag != "") {
-                    if (text != "")
-                        result.push_back(text);
-
-                    result.push_back(flag);
-                    text = "";
-                } else {
-                    text += c;
+                else
+                {
+                    result = CompressJSON(inputFileName);
                 }
+                return result;
             }
-        }
-        fileInputStream2.close();
-        return result;
-    }
+
+    vector<string> DeCompress(string inputFileName)
+            {
+                string extension = inputFileName.substr(inputFileName.size()-4,inputFileName.size()-1);
+                vector <string> result;
+                if(extension == ".xml")
+                {
+                    result = deCompressXML(inputFileName);
+                }
+                else
+                {
+                    result = deCompressJSON(inputFileName);
+                }
+                return result;
+
+            }
 
     string MinifyXML()
     {
@@ -199,23 +515,6 @@ public:
         for(string currentLine : str)
             result+=currentLine;
         return result;
-    }
-
-    bool goOn (treeNode * node, int x)
-    {
-        string f;
-        if (x>=lines.size()) return false;
-
-        f = ""; f+= "<";f+=node->type; f+=">";
-        if (f == lines[x].text) return true;
-
-        if (node->max ==-1)
-        {
-            f = ""; f+= "</";f+=node->type; f+=">";
-            if (  (lines[x].text.front() != '<' && lines[x].text.back() != '>')  ||  lines[x].text==f)  return true;
-            else return false;
-        }
-        else  return goOn(node->children[0], x); //check the first child only as it is sufficient
     }
 
     void checknode(treeNode * node )
@@ -277,6 +576,13 @@ public:
         else can_increment = true;
     }
 
+    vector<string> XMLtoJSON(treeNode* samplenode, treeNode * data)
+    {
+        //vector<string>temp = out;
+        load_xml(samplenode, data);
+        Convert_to_Json(data);
+        return out;
+    }
 
 };
 
