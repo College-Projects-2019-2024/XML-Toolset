@@ -7,27 +7,38 @@
     <x>0</x>
     <y>0</y>
     <width>1208</width>
-    <height>813</height>
+    <height>707</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255,255,255);</string>
+   <string notr="true">background-color: #264653;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>50</x>
+      <y>30</y>
       <width>151</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton {
+border-radius: 25px;
+background:  #2a9d8f;
+padding: 6px;
+color: #e9c46a;
+}</string>
     </property>
     <property name="text">
      <string>Choose a file</string>
@@ -37,16 +48,26 @@
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>110</y>
+      <y>280</y>
       <width>111</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton_2 {
+border-radius: 25px;
+background: #e9c46a;
+padding: 6px;
+}</string>
     </property>
     <property name="text">
      <string>Prettify</string>
@@ -55,16 +76,25 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>890</x>
-      <y>10</y>
+      <x>850</x>
+      <y>30</y>
       <width>111</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">
-background-color: rgb(186, 186, 186);
-</string>
+     <string notr="true">QPushButton#pushButton_3 {
+border-radius: 25px;
+background:  #2a9d8f;
+padding: 6px;
+color: #e9c46a;
+}</string>
     </property>
     <property name="text">
      <string>Save file</string>
@@ -74,13 +104,23 @@ background-color: rgb(186, 186, 186);
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>170</y>
+      <y>365</y>
       <width>111</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton_4 {
+border-radius: 25px;
+background: #e9c46a;
+padding: 6px;
+}</string>
     </property>
     <property name="text">
      <string>Compress</string>
@@ -90,13 +130,23 @@ background-color: rgb(186, 186, 186);
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>230</y>
+      <y>450</y>
       <width>111</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton_5 {
+border-radius: 25px;
+background: #e9c46a;
+padding: 6px;
+}</string>
     </property>
     <property name="text">
      <string>Decompress</string>
@@ -106,13 +156,23 @@ background-color: rgb(186, 186, 186);
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>290</y>
+      <y>535</y>
       <width>111</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton_6 {
+border-radius: 25px;
+background: #e9c46a;
+padding: 6px;
+}</string>
     </property>
     <property name="text">
      <string>Minify</string>
@@ -122,13 +182,22 @@ background-color: rgb(186, 186, 186);
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>350</y>
+      <y>195</y>
       <width>111</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton_7 {
+border-radius: 25px;
+background: #e9c46a;
+padding: 6px;
+}</string>
     </property>
     <property name="text">
      <string>Detect errors</string>
@@ -138,13 +207,22 @@ background-color: rgb(186, 186, 186);
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>410</y>
+      <y>110</y>
       <width>111</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton_8 {
+border-radius: 25px;
+background: #e9c46a;
+padding: 6px;
+}</string>
     </property>
     <property name="text">
      <string>Correct errors</string>
@@ -154,16 +232,26 @@ background-color: rgb(186, 186, 186);
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>470</y>
+      <y>620</y>
       <width>111</width>
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(186, 186, 186);</string>
+     <string notr="true">QPushButton#pushButton_9 {
+border-radius: 25px;
+background: #e9c46a;
+padding: 6px;
+}</string>
     </property>
     <property name="text">
-     <string>ToJSON</string>
+     <string>To JSON</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser">
@@ -175,6 +263,11 @@ background-color: rgb(186, 186, 186);
       <height>561</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTextBrowser#textBrowser{
+background-color: #f4a261;
+}</string>
+    </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_2">
     <property name="geometry">
@@ -184,6 +277,11 @@ background-color: rgb(186, 186, 186);
       <width>531</width>
       <height>561</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTextBrowser#textBrowser_2{
+background-color: #f4a261;
+}</string>
     </property>
    </widget>
   </widget>
