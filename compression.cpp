@@ -9,9 +9,9 @@ ofstream fileOutputStream1;
 ifstream fileInputStream1;
 
 
-void compressJSON(string inputFileName, string outputFileName) {
+vector<string> compressJSON(string inputFileName) {
     fileInputStream1.open(inputFileName);
-    fileOutputStream1.open(outputFileName);
+    string r = "";
     bool inside = false;
     string currentLine = "";
     unsigned char flag;
@@ -24,9 +24,9 @@ void compressJSON(string inputFileName, string outputFileName) {
                 if (inside) {
                     flag = x.stringToCodeJSON(text);
                     if (flag != '%')
-                        fileOutputStream1 << flag;
+                        r+= flag;
                     else
-                        fileOutputStream1 << text;
+                        r+= text;
                     text = "";
                 }
                 inside = !inside;
@@ -34,32 +34,38 @@ void compressJSON(string inputFileName, string outputFileName) {
             } else if (inside) {
                 text += c;
             } else if (c != ' ') {
-                fileOutputStream1 << c;
+                r+= c;
             }
 
         }
     }
-    fileOutputStream1.close();
+    vector<string> result;
+    result.push_back(r);
     fileInputStream1.close();
+    return result;
 }
 
-void deCompressJSON(string inputFileName, string outputFileName) {
+vector<string> deCompressJSON(string inputFileName)
+{
     fileInputStream1.open(inputFileName);
-    fileOutputStream1.open(outputFileName);
+    string result = "";
     string currentLine = "";
-    bool inside = false;
     string flag;
 
     while (getline(fileInputStream1, currentLine)) {
         for (char c: currentLine) {
             flag = x.codeToStringJSON(c);
-            if (flag != "") fileOutputStream1 << flag;
+            if (flag != "")
+                result+= flag;
 
-            else {
-                fileOutputStream1 << c;
+            else
+            {
+                result += c;
             }
         }
     }
-    fileOutputStream1.close();
+    vector<string> r;
+    r.push_back(result);
     fileInputStream1.close();
+    return r;
 }

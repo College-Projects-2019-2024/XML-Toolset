@@ -6,18 +6,156 @@
 using namespace std;
 
     class MainClass {
+    private:
         vector<string> xml;
-        ifstream fileInputStream2;
+        ifstream is;
         Utility util;
+        vector<string> CompressXML()
+        {
+            string currentLine="", text = "" , result = "";
+            vector<string> r;
+            unsigned char flag;
+            bool writeTag = false;
+
+            for (string currentLine : xml)
+            {
+                currentLine = util.removeSpacesFromLine(currentLine);
+                for(char c : currentLine)
+                {
+                    if(c=='>')
+                    {
+                        text+='>';
+                        writeTag = false;
+                        flag = util.stringToCodeXML(text);
+                        if(flag!='%')
+                        {
+                            result+= util.stringToCodeXML(text);
+                        }
+                        else result+= text;
+
+                        text = "";
+
+                    }
+                    else if(c == '<' || writeTag)
+                    {
+                        if(c == '\"')
+                        {
+                            text+='<';
+                            writeTag = true;
+                            continue;
+                        }
+                        text+=c;
+                        writeTag = true;
+                    }
+                    else
+                    {
+                        result+= c ;
+                    }
+                }
+            }
+            r.push_back(result);
+            return r;
+
+        }
+
+        vector<string> deCompressXML(string fileName)
+        {
+            is.open(fileName);
+            string flag,text = "" , currentLine;
+            vector<string> result;
+
+            while(getline(is, currentLine))
+            {
+                for(char c : currentLine)
+                {
+                    flag = util.codeToStringXML(c);
+                    if(flag != "")
+                    {
+                        if(text!="")
+                            result.push_back(text);
+
+                        result.push_back(flag);
+                        text="";
+                    }
+                    else
+                    {
+                        text+=c;
+                    }
+                }
+            }
+            is.close();
+            return result;
+        }
+
+        vector<string> CompressJSON(string inputFileName) {
+            is.open(inputFileName);
+            string r = "";
+            bool inside = false;
+            string currentLine = "";
+            unsigned char flag;
+            string text = "";
+
+            while (getline(is, currentLine)) {
+                for (char c: currentLine) {
+                    if (c == '\"') {
+                        text += c;
+                        if (inside) {
+                            flag = util.stringToCodeJSON(text);
+                            if (flag != '%')
+                                r+= flag;
+                            else
+                                r+= text;
+                            text = "";
+                        }
+                        inside = !inside;
+
+                    } else if (inside) {
+                        text += c;
+                    } else if (c != ' ') {
+                        r+= c;
+                    }
+
+                }
+            }
+            vector<string> result;
+            result.push_back(r);
+            is.close();
+            return result;
+        }
+
+        vector<string> deCompressJSON(string inputFileName)
+        {
+            is.open(inputFileName);
+            string result = "";
+            string currentLine = "";
+            string flag;
+
+            while (getline(is, currentLine)) {
+                for (char c: currentLine) {
+                    flag = util.codeToStringJSON(c);
+                    if (flag != "")
+                        result+= flag;
+
+                    else
+                    {
+                        result += c;
+                    }
+                }
+            }
+            vector<string> r;
+            r.push_back(result);
+            is.close();
+            return r;
+        }
 
     public:
         MainClass(string inputFileName)
         {
-            fileInputStream2.open(inputFileName);
+            is.open(inputFileName);
             string current_line;
             string str;
 
-            while (getline(fileInputStream2, current_line)) {
+            while (getline(is, current_line)) {
                 //remove spaces from start on the line
                 while (current_line[0] == ' ') {
                     current_line.erase(0, 1);
@@ -82,11 +220,11 @@ using namespace std;
                 }
 
             }
-            fileInputStream2.close();
+            is.close();
 
         }
 
-        string MinifyXML()
+        string Minify()
         {
             string result = "";
             for(string currentLine : xml)
@@ -94,81 +232,36 @@ using namespace std;
             return result;
         }
 
-        string CompressXML()
+        vector<string> Compress(string inputFileName)
         {
-            string currentLine="", text = "" , result = "";
-            unsigned char flag;
-            bool writeTag = false;
-
-            for (string currentLine : xml)
+            string extension = inputFileName.substr(inputFileName.size()-4,inputFileName.size()-1);
+            vector <string> result;
+            if(extension == ".xml")
             {
-                currentLine = util.removeSpacesFromLine(currentLine);
-                for(char c : currentLine)
-                {
-                    if(c=='>')
-                    {
-                        text+='>';
-                        writeTag = false;
-                        flag = util.stringToCodeXML(text);
-                        if(flag!='%')
-                        {
-                            result+= util.stringToCodeXML(text);
-                        }
-                        else result+= text;
+                result = CompressXML();
+            }
+            else
+            {
+                result = CompressJSON(inputFileName);
+            }
+            return result;
+        }
 
-                        text = "";
-
-                    }
-                    else if(c == '<' || writeTag)
-                    {
-                        if(c == '\"')
-                        {
-                            text+='<';
-                            writeTag = true;
-                            continue;
-                        }
-                        text+=c;
-                        writeTag = true;
-                    }
-                    else
-                    {
-                        result+= c ;
-                    }
-                }
+        vector<string> DeCompress(string inputFileName)
+        {
+            string extension = inputFileName.substr(inputFileName.size()-4,inputFileName.size()-1);
+            vector <string> result;
+            if(extension == ".xml")
+            {
+                result = deCompressXML(inputFileName);
+            }
+            else
+            {
+                result = deCompressJSON(inputFileName);
             }
             return result;
 
         }
-
-        vector<string> deCompressXML(string fileName)
-        {
-            fileInputStream2.open(fileName);
-            string flag,text = "" , currentLine;
-            vector<string> result;
-
-            while(getline(fileInputStream2,currentLine))
-            {
-                for(char c : currentLine)
-                {
-                    flag = util.codeToStringXML(c);
-                    if(flag != "")
-                    {
-                        if(text!="")
-                            result.push_back(text);
-
-                        result.push_back(flag);
-                        text="";
-                    }
-                    else
-                    {
-                        text+=c;
-                    }
-                }
-            }
-            fileInputStream2.close();
-            return result;
-        }
-
     };
 
 
