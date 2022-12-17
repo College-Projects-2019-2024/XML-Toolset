@@ -1,6 +1,6 @@
 # XML-Toolset
 
-The folders named (xml_toolset) and (build-xml_toolset-Desktop_Qt_6_4_1_MinGW_64_bit-Debug) are the folders that contain the GUI code.
+The folders named (xml_toolset) and (build-xml_toolset) are the folders that contain the GUI code.
 
 1) Download these two folders and put them together into one folder.
 2) Open qt creator and click open project.
