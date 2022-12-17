@@ -394,6 +394,7 @@ public:
         this->corrected.clear();
         this->out.clear();
         this->currentLine = 0;
+        this->print = "";
     }
 
     //functions
