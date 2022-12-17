@@ -55,7 +55,7 @@ public:
 "border-radius: 25px;\n"
 "background:  #2a9d8f;\n"
 "padding: 6px;\n"
-"color: #e9c46a;\n"
+"color: #F2DCA6;\n"
 "}"));
         pushButton_2 = new QPushButton(centralwidget);
         pushButton_2->setObjectName("pushButton_2");
@@ -78,7 +78,7 @@ public:
 "border-radius: 25px;\n"
 "background:  #2a9d8f;\n"
 "padding: 6px;\n"
-"color: #e9c46a;\n"
+"color: #F2DCA6;\n"
 "}"));
         pushButton_4 = new QPushButton(centralwidget);
         pushButton_4->setObjectName("pushButton_4");
@@ -127,16 +127,21 @@ public:
         pushButton_8 = new QPushButton(centralwidget);
         pushButton_8->setObjectName("pushButton_8");
         pushButton_8->setGeometry(QRect(1020, 110, 111, 51));
-        pushButton_8->setFont(font4);
+        QFont font5;
+        font5.setPointSize(9);
+        font5.setBold(true);
+        pushButton_8->setFont(font5);
         pushButton_8->setStyleSheet(QString::fromUtf8("QPushButton#pushButton_8 {\n"
 "border-radius: 25px;\n"
 "background: #e9c46a;\n"
 "padding: 6px;\n"
+"box-shadow: -3px 3px orange, -2px 2px orange, -1px 1px orange;\n"
+"  border: 2px solid #2a9d8f;\n"
 "}"));
         pushButton_9 = new QPushButton(centralwidget);
         pushButton_9->setObjectName("pushButton_9");
         pushButton_9->setGeometry(QRect(1020, 620, 111, 51));
-        pushButton_9->setFont(font2);
+        pushButton_9->setFont(font1);
         pushButton_9->setStyleSheet(QString::fromUtf8("QPushButton#pushButton_9 {\n"
 "border-radius: 25px;\n"
 "background: #e9c46a;\n"

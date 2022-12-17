@@ -37,7 +37,7 @@
 border-radius: 25px;
 background:  #2a9d8f;
 padding: 6px;
-color: #e9c46a;
+color: #F2DCA6;
 }</string>
     </property>
     <property name="text">
@@ -93,7 +93,7 @@ padding: 6px;
 border-radius: 25px;
 background:  #2a9d8f;
 padding: 6px;
-color: #e9c46a;
+color: #F2DCA6;
 }</string>
     </property>
     <property name="text">
@@ -214,6 +214,7 @@ padding: 6px;
     </property>
     <property name="font">
      <font>
+      <pointsize>9</pointsize>
       <bold>true</bold>
      </font>
     </property>
