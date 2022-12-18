@@ -135,8 +135,6 @@ public:
 "border-radius: 25px;\n"
 "background: #e9c46a;\n"
 "padding: 6px;\n"
-"box-shadow: -3px 3px orange, -2px 2px orange, -1px 1px orange;\n"
-"  border: 2px solid #2a9d8f;\n"
 "}"));
         pushButton_9 = new QPushButton(centralwidget);
         pushButton_9->setObjectName("pushButton_9");
