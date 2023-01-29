@@ -1,6 +1,6 @@
 # XML-Toolset
 
-Code is in xml folder
+Code is in xml folder -> xml_toolset
 
 we classify the project into 6 parts :
 1-Error detection and Correction.
