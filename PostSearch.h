@@ -1,0 +1,11 @@
+
+#ifndef COLLEGEPROJECT_POSTSEARCH_H
+#define COLLEGEPROJECT_POSTSEARCH_H
+
+
+class PostSearch {
+
+};
+
+
+#endif //COLLEGEPROJECT_POSTSEARCH_H

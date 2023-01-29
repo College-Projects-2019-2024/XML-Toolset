@@ -13,7 +13,9 @@ int main() {
     vector<Line> v = get_xml("sample.xml");
     usersSample = ans(usersSample);
     treeNode * dataRoot = new treeNode(0,"users","", {});
-    XMLtoJSON(usersSample, dataRoot, v, "output.json");
+    //XMLtoJSON(usersSample, dataRoot, v, "output.json");
+
+
 
     return 0;
 }
