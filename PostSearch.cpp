@@ -19,9 +19,10 @@ vector<pair<int,int>> topic_search(treeNode* root, string word){
         for(int post_number = 0; post_number < root->children[i]->children[2]->children.size(); post_number++)
         {
             //check if word is in the post body
-            size_t substring_length = root->children[i]->children[2]->children[post_number]->children[0]->text.find(word);
+            size_t substring_length = root->children[i]->children[2]->children[post_number]->children[0]->text.find(word , 0);
 
-            if(substring_length != 0 && substring_length != std::string::npos)
+
+            if(substring_length != std::string::npos)
             {
                 //add user id and post number in output vector
                 found.push_back(make_pair(stoi(root->children[i]->children[0]->text),post_number + 1));
