@@ -1,6 +1,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 #include <bits/stdc++.h>
+#include <iostream>
 
 using namespace std;
 
@@ -212,6 +213,26 @@ public:
     unsigned char stringToCodeJSON(string x)
     {
         return (isValidTag(x))? (hasher(x)%90)+128 : '%';
+    }
+
+    string printPosts(vector<pair<int,int>>v){
+
+        string ans = "";
+        string s = "";
+        string r = "";
+        fori(v.size()){
+            r = "Found in user number ";
+
+            r+= to_string(v[i].first);
+            r+= ", post number ";
+            r+=to_string(v[i].second);
+
+            ans.append(r);
+            ans.append("\n");
+        }
+
+        return ans;
+
     }
 
 

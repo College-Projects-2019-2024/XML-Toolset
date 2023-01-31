@@ -8,6 +8,7 @@
 #define TOOLSET_H
 #define MAX 100
 
+#define fori(size) for(int i=0; i < (size); i+= 1)
 
 class Toolset {
 private:
@@ -182,32 +183,7 @@ private:
         else  return goOn(node->children[0], x); //check the first child only as it is sufficient
     }
 
-    void load_xml(treeNode * samplenode, treeNode * data)
-    {
 
-        s = lines[currentLine++].text;
-
-        if(samplenode->max == -1)
-        {
-            //store text
-            data->text = lines[currentLine++].text;
-        }
-        else
-        {
-            fori(samplenode->max + 1)
-            {
-                //create new node nn
-                treeNode * createdNode = new treeNode(samplenode->children[i]->max, samplenode->children[i]->type, samplenode->children[i]->text, {});
-                load_xml(samplenode->children[i], createdNode);
-                //add to the vector (push created node)
-                data->children.push_back(createdNode);
-                string f = ""; f+= "<";f+=samplenode->children[samplenode->max]->type; f+=">";
-                if(i== samplenode->max && f == lines[currentLine].text) i--;
-            }
-        }
-
-        s = lines[currentLine++].text;
-    }
 
     void print_JSON(treeNode * data, int n,bool arr_obj)
     {
@@ -426,6 +402,33 @@ public:
         return usersSamp;
     }
 
+    void load_xml(treeNode * samplenode, treeNode * data)
+    {
+
+        s = lines[currentLine++].text;
+
+        if(samplenode->max == -1)
+        {
+            //store text
+            data->text = lines[currentLine++].text;
+        }
+        else
+        {
+            fori(samplenode->max + 1)
+            {
+                //create new node nn
+                treeNode * createdNode = new treeNode(samplenode->children[i]->max, samplenode->children[i]->type, samplenode->children[i]->text, {});
+                load_xml(samplenode->children[i], createdNode);
+                //add to the vector (push created node)
+                data->children.push_back(createdNode);
+                string f = ""; f+= "<";f+=samplenode->children[samplenode->max]->type; f+=">";
+                if(i== samplenode->max && f == lines[currentLine].text) i--;
+            }
+        }
+
+        s = lines[currentLine++].text;
+    }
+
     vector<string> prettify() {
         vector<string> v = str;
         vector<string> answer;
@@ -583,6 +586,44 @@ public:
         load_xml(samplenode, data);
         Convert_to_Json(data);
         return out;
+    }
+
+    vector<pair<int,int>> topic_search(treeNode* root, string word){
+
+        //declare output vector
+        vector<pair<int,int>> found;
+
+        //iterate over every user
+        fori(root->children.size())
+        {
+            //iterate over every post
+            for(int post_number = 0; post_number < root->children[i]->children[2]->children.size(); post_number++)
+            {
+                //check if word is in the post body
+                size_t substring_length = root->children[i]->children[2]->children[post_number]->children[0]->text.find(word);
+
+                if( substring_length != std::string::npos)
+                {
+                    //add user id and post number in output vector
+                    found.push_back(make_pair(stoi(root->children[i]->children[0]->text),post_number + 1));
+                    continue;
+                }
+
+                //iterate over every topic of the post
+                for(int topic_number = 0; topic_number < root->children[i]->children[2]->children[post_number]->children[1]->children.size(); topic_number++)
+                {
+                    //check if the word is found in any topic
+                    if(root->children[i]->children[2]->children[post_number]->children[1]->children[topic_number]->text.compare(word) == 0)
+                    {
+                        //add user id and post number in output vector
+                        found.push_back(make_pair(stoi(root->children[i]->children[0]->text),post_number + 1));
+                    }
+                }
+            }
+        }
+
+        return found;
+
     }
 
 };

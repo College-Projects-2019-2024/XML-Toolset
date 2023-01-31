@@ -37,13 +37,14 @@ public:
     QTextBrowser *textBrowser_2;
     QPlainTextEdit *plainTextEdit;
     QPushButton *pushButton_10;
+    QPushButton *pushButton_11;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1208, 707);
+        MainWindow->resize(1208, 829);
         MainWindow->setStyleSheet(QString::fromUtf8("background-color: #264653;"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -165,7 +166,16 @@ public:
         plainTextEdit->setGeometry(QRect(250, 20, 91, 31));
         pushButton_10 = new QPushButton(centralwidget);
         pushButton_10->setObjectName("pushButton_10");
-        pushButton_10->setGeometry(QRect(350, 30, 80, 24));
+        pushButton_10->setGeometry(QRect(370, 20, 111, 31));
+        pushButton_10->setStyleSheet(QString::fromUtf8("QPushButton#pushButton_10 {\n"
+"border-radius: 25px;\n"
+"background:  #2a9d8f;\n"
+"padding: 6px;\n"
+"color: #F2DCA6;\n"
+"}"));
+        pushButton_11 = new QPushButton(centralwidget);
+        pushButton_11->setObjectName("pushButton_11");
+        pushButton_11->setGeometry(QRect(640, 50, 80, 24));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -189,6 +199,7 @@ public:
         pushButton_8->setText(QCoreApplication::translate("MainWindow", "Correct errors", nullptr));
         pushButton_9->setText(QCoreApplication::translate("MainWindow", "To JSON", nullptr));
         pushButton_10->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
+        pushButton_11->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
     } // retranslateUi
 
 };

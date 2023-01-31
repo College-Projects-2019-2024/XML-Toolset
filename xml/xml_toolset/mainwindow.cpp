@@ -7,9 +7,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Toolset.h"
+#include "Utility.h"
 
 
 Toolset *t;
+Utility *u;
 ofstream fileoutputstream;
 treeNode* usersSample;
 treeNode * dataRoot;
@@ -265,7 +267,20 @@ void MainWindow::on_pushButton_3_clicked()
 //post search button
 void MainWindow::on_pushButton_10_clicked()
 {
+    dataRoot = new treeNode(0,"users","", {});
+    t->load_xml(usersSample,dataRoot);
     QString df = ui->plainTextEdit->toPlainText();
-    ui->textBrowser_2->setText(df);
+    vector<pair<int,int>>found = t->topic_search(dataRoot,df.toStdString());
+    string r = u->printPosts(found);
+
+    ui->textBrowser_2->setText(QString::fromStdString (r));
+    t->clear();
+}
+
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    nw->show();
+        this->hide();
 }
 
