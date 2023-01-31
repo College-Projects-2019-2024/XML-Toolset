@@ -16,6 +16,8 @@ int main() {
     treeNode * dataRoot = new treeNode(0,"users","", {});
     load_xml(usersSample, dataRoot, v);
     //XMLtoJSON(usersSample, dataRoot, v, "output.json");
+
+
     string searchWord;
     cin >> searchWord;
 

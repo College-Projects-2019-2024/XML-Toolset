@@ -8,23 +8,33 @@ using namespace std;
 
 
 vector<pair<int,int>> topic_search(treeNode* root, string word){
+
+    //declare output vector
     vector<pair<int,int>> found;
 
+    //iterate over every user
     fori(root->children.size())
     {
+        //iterate over every post
         for(int post_number = 0; post_number < root->children[i]->children[2]->children.size(); post_number++)
         {
+            //check if word is in the post body
+            size_t substring_length = root->children[i]->children[2]->children[post_number]->children[0]->text.find(word);
+
+            if(substring_length != 0 && substring_length != std::string::npos)
+            {
+                found.push_back(make_pair(stoi(root->children[i]->children[0]->text),post_number + 1));
+                continue;
+            }
+
+            //iterate over every topic of the post
             for(int topic_number = 0; topic_number < root->children[i]->children[2]->children[post_number]->children[1]->children.size(); topic_number++)
             {
+                //check if the word is found in any topic
                 if(root->children[i]->children[2]->children[post_number]->children[1]->children[topic_number]->text.compare(word) == 0)
                 {
                     found.push_back(make_pair(stoi(root->children[i]->children[0]->text),post_number + 1));
                 }
-            }
-
-            for(int body_number = 0; body_number < root->children[i]->children[2]->children[post_number]->children[1]->children.size(); body_number++)
-            {
-
             }
 
         }
