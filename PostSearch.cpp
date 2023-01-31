@@ -23,6 +23,7 @@ vector<pair<int,int>> topic_search(treeNode* root, string word){
 
             if(substring_length != 0 && substring_length != std::string::npos)
             {
+                //add user id and post number in output vector
                 found.push_back(make_pair(stoi(root->children[i]->children[0]->text),post_number + 1));
                 continue;
             }
@@ -33,10 +34,10 @@ vector<pair<int,int>> topic_search(treeNode* root, string word){
                 //check if the word is found in any topic
                 if(root->children[i]->children[2]->children[post_number]->children[1]->children[topic_number]->text.compare(word) == 0)
                 {
+                    //add user id and post number in output vector
                     found.push_back(make_pair(stoi(root->children[i]->children[0]->text),post_number + 1));
                 }
             }
-
         }
     }
 
