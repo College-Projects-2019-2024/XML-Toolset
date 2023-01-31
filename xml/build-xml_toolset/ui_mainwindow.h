@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
@@ -34,6 +35,8 @@ public:
     QPushButton *pushButton_9;
     QTextBrowser *textBrowser;
     QTextBrowser *textBrowser_2;
+    QPlainTextEdit *plainTextEdit;
+    QPushButton *pushButton_10;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -157,6 +160,12 @@ public:
         textBrowser_2->setStyleSheet(QString::fromUtf8("QTextBrowser#textBrowser_2{\n"
 "background-color: #f4a261;\n"
 "}"));
+        plainTextEdit = new QPlainTextEdit(centralwidget);
+        plainTextEdit->setObjectName("plainTextEdit");
+        plainTextEdit->setGeometry(QRect(250, 20, 91, 31));
+        pushButton_10 = new QPushButton(centralwidget);
+        pushButton_10->setObjectName("pushButton_10");
+        pushButton_10->setGeometry(QRect(350, 30, 80, 24));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -179,6 +188,7 @@ public:
         pushButton_7->setText(QCoreApplication::translate("MainWindow", "Detect errors", nullptr));
         pushButton_8->setText(QCoreApplication::translate("MainWindow", "Correct errors", nullptr));
         pushButton_9->setText(QCoreApplication::translate("MainWindow", "To JSON", nullptr));
+        pushButton_10->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
     } // retranslateUi
 
 };

@@ -1,0 +1,7 @@
+</id>was missing at line 6
+</name>was missing at line 10
+<posts>was missing at line 10
+</body>was missing at line 14
+<topic>was missing at line 19
+<follower>was missing at line 26
+</user>was missing at line 87

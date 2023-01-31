@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <ostream>
+#include <QPlainTextEdit>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Toolset.h"
@@ -257,5 +258,14 @@ void MainWindow::on_pushButton_3_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,tr("save file"));
     QFile::copy(outfile.fileName(),dir+'/'+outfilename);
+}
+
+
+
+//post search button
+void MainWindow::on_pushButton_10_clicked()
+{
+    QString df = ui->plainTextEdit->toPlainText();
+    ui->textBrowser_2->setText(df);
 }
 
