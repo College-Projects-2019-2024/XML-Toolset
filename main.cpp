@@ -17,8 +17,7 @@ int main() {
     load_xml(usersSample, dataRoot, v);
     //XMLtoJSON(usersSample, dataRoot, v, "output.json");
 
-
-    string searchWord;
+    /*string searchWord;
     cin >> searchWord;
 
     vector<pair<int,int>> output = topic_search(dataRoot, searchWord);
@@ -27,6 +26,9 @@ int main() {
     {
         cout << output[i].first << ", " << output[i].second << endl;
     }
+     */
+
+
 
 
 
