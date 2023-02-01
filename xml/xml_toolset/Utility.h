@@ -235,7 +235,15 @@ public:
 
     }
 
+    int stringTointeger(string str)
+    {
+        int temp = 0;
+        for (int i = 0; i < str.length(); i++) {
 
+            temp = temp * 10 + (str[i] - '0');
+        }
+        return temp;
+    }
 
     string insert_tab(string s, int n) {
         string str = " ";
@@ -270,6 +278,8 @@ public:
         for(long long i = 0; i < v.size(); i++) ss.push_back(v[i].text);
         return ss;
     }
+
+
 
 };
 #endif //COLLEGEPROJECT_HASHUTIL_H

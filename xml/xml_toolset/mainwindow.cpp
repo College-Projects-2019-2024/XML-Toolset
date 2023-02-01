@@ -21,7 +21,7 @@ QString outfilename;
 
 QFile infile;
 QFile outfile;
-
+vector<vector<treeNode*>> adjancecy_list;
 vector<string>result;
 vector<Line>result2;
 string r;
@@ -38,6 +38,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 //choose file button
 void MainWindow::on_pushButton_clicked()
@@ -264,6 +266,7 @@ void MainWindow::on_pushButton_3_clicked()
 
 
 
+
 //post search button
 void MainWindow::on_pushButton_10_clicked()
 {
@@ -277,10 +280,35 @@ void MainWindow::on_pushButton_10_clicked()
     t->clear();
 }
 
-
+//most active user button
 void MainWindow::on_pushButton_11_clicked()
 {
-    nw->show();
-        this->hide();
+    dataRoot = new treeNode(0,"users","", {});
+    t->load_xml(usersSample,dataRoot);
+    adjancecy_list = t->make_adj_list(dataRoot);
+
+    string j = t->most_active_user(adjancecy_list);
+
+    ui->textBrowser_2->setText(QString::fromStdString (j));
+    t->clear();
+
+}
+
+//mutual users button
+void MainWindow::on_pushButton_12_clicked()
+{
+    dataRoot = new treeNode(0,"users","", {});
+    t->load_xml(usersSample,dataRoot);
+    adjancecy_list = t->make_adj_list(dataRoot);
+
+    QString s1 = ui->plainTextEdit_2->toPlainText();
+    QString s2 = ui->plainTextEdit_3->toPlainText();
+
+    string ans = t->mutual_followers(u->stringTointeger(s1.toStdString()),u->stringTointeger(s2.toStdString()),adjancecy_list);
+
+    ui->textBrowser_2->setText(QString::fromStdString (ans));
+    t->clear();
+
+
 }
 
