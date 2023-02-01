@@ -4,6 +4,7 @@
 #include <vector>
 
 #define fori(size) for(int i=0; i < (size); i+= 1)
+#define forj(size) for(int j=0; j < (size); j+= 1)
 
 using namespace std;
 struct Line{

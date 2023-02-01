@@ -40,6 +40,8 @@ int main() {
 
     }
 
+    cout<<most_active_user(adj_list);
+
 
     return 0;
 }
