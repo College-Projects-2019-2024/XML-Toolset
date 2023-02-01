@@ -42,6 +42,16 @@ string insert_tab(string s,int n){
     return s;
 }
 
+int stringTointeger(string str)
+{
+    int temp = 0;
+    for (int i = 0; i < str.length(); i++) {
+
+        temp = temp * 10 + (str[i] - '0');
+    }
+    return temp;
+}
+
 string removeSpacesFromLine(string s)
 {
     int begin=0 , end = s.length()-1;

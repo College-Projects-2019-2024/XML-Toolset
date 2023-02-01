@@ -16,7 +16,7 @@ vector<vector<treeNode*>> make_adj_list(treeNode* root)
     return adj_list;
 }
 
-int most_active_user(vector<vector<treeNode*>> adj_list){
+string most_active_user(vector<vector<treeNode*>> adj_list){
     int max = adj_list[0].size();
     int index = 1;
     fori(adj_list.size()){
@@ -25,22 +25,17 @@ int most_active_user(vector<vector<treeNode*>> adj_list){
             index = i+1;
         }
     }
+    string g = "User number ";
+    g+= to_string(index);
+    g+=" is the most active user";
 
-    return index;
+    return g;
 }
 
-int stringTointeger(string str)
-{
-    int temp = 0;
-    for (int i = 0; i < str.length(); i++) {
-
-        temp = temp * 10 + (str[i] - '0');
-    }
-    return temp;
-}
-
-vector<int> mutual_followers(int user1,int user2,vector<vector<treeNode*>> adj_list){
-    vector<int>vec;
+string mutual_followers(int user1,int user2,vector<vector<treeNode*>> adj_list){
+    //vector<string>vec;
+    string k = "";
+    bool flag = false;
     int freq_arr[adj_list.size()+1];
 
     fori(adj_list.size()+1){
@@ -56,8 +51,25 @@ vector<int> mutual_followers(int user1,int user2,vector<vector<treeNode*>> adj_l
     }
 
     fori(adj_list.size()+1){
-        if(freq_arr[i] > 1)vec.push_back(i);
+        if(freq_arr[i] > 1){
+            flag = true;
+            k+="User ";
+            k+=to_string(i);
+            k+="\n";
+
+            //vec.push_back(to_string(i));
+
+        }
+
 
     }
-    return vec;
+    if(!flag){
+        k = "No mutual users";
+        return k;
+    }
+    else{
+        return k;
+    }
+    //return k;
+
 }
