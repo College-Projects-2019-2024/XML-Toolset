@@ -273,8 +273,15 @@ void MainWindow::on_pushButton_10_clicked()
     dataRoot = new treeNode(0,"users","", {});
     t->load_xml(usersSample,dataRoot);
     QString df = ui->plainTextEdit->toPlainText();
+    string r = "";
     vector<pair<int,int>>found = t->topic_search(dataRoot,df.toStdString());
-    string r = u->printPosts(found);
+    if(found.size() == 0){
+        r = "The word was not found in any post";
+    }
+    else{
+         r = u->printPosts(found);
+    }
+
 
     ui->textBrowser_2->setText(QString::fromStdString (r));
     t->clear();
