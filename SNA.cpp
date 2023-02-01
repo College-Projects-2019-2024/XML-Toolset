@@ -78,6 +78,7 @@ string mostActive(vector<vector<treeNode*>> adj_list)
 {
     unordered_map<int,int> follows;
     int max = 0;
+    int maxID;
     for(vector<treeNode*> user : adj_list)
     {
         for(treeNode* follower : user)
@@ -86,15 +87,18 @@ string mostActive(vector<vector<treeNode*>> adj_list)
             int currentID = stringTointeger(follower->children[0]->text);
 
             //increment the follows of the current ID
-            if(follows.contains(currentID)) follows[currentID] = 0;
+            if(!follows.contains(currentID)) follows[currentID] = 0;
             else follows[currentID]++;
 
             //get the id with the max follows
-            if(follows[currentID]>max) max = follows[currentID];
+            if(follows[currentID]>max) {max = follows[currentID]; maxID = currentID;}
 
         }
     }
-    return to_string(max);
+
+
+
+    return to_string(maxID);
 }
 
 vector<int> suggestUser(vector<vector<treeNode*>> adj_list)
