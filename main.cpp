@@ -2,6 +2,7 @@
 #include "Utility.h"
 #include "XMLtoJSON.h"
 #include "PostSearch.h"
+#include "SNA.h"
 
 
 #include <iostream>
@@ -28,8 +29,16 @@ int main() {
     }
      */
 
+    vector<vector<treeNode*>> adj_list = make_adj_list(dataRoot);
+    fori(adj_list.size())
+    {
+        for(int j = 0; j < adj_list[i].size(); j++)
+        {
+            cout << adj_list[i][j]->children[0]->text << " ";
+        }
+        cout << endl;
 
-
+    }
 
 
     return 0;
