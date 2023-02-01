@@ -11,7 +11,9 @@
                     "topics": {
                        "topic": [
                            "economy",
-                           "finance"
+                           "test",
+                           "finance",
+                           "lol"
                        ]
                     }
                     },
@@ -46,10 +48,21 @@
                     }
                 },
             "followers": {
-                "follower": {
+                "follower": [
+                   {
                     "id": "1"
+                    },
+                   {
+                    "id": "5"
+                    },
+                   {
+                    "id": "3"
+                    },
+                   {
+                    "id": "2"
                     }
-                }
+               ]
+            }
             },
            {
             "id": "3",
@@ -63,10 +76,21 @@
                     }
                 },
             "followers": {
-                "follower": {
+                "follower": [
+                   {
                     "id": "1"
+                    },
+                   {
+                    "id": "2"
+                    },
+                   {
+                    "id": "3"
+                    },
+                   {
+                    "id": "4"
                     }
-                }
+               ]
+            }
             }
        ]
   }

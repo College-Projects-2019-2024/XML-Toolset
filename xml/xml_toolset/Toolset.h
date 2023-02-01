@@ -2,7 +2,7 @@
 #include <queue>
 #include <stack>
 #include "Utility.h"
-
+#include<bits/stdc++.h>
 
 #ifndef TOOLSET_H
 #define TOOLSET_H
@@ -13,13 +13,12 @@
 
 class Toolset {
 private:
+    //attributes used in the functions
     ifstream is;
     Utility *U;
     vector<Line> lines;
     vector<string> str;
-
     Utility util;
-
     vector<string>xmlCompressed;
     vector<string>corrected;
     vector<string>out;
@@ -29,6 +28,7 @@ private:
     string s,f,print;
 
 
+    //functions that are used in the main functions
     vector<string> CompressXML()
             {
                 string currentLine="", text = "" , result = "";
@@ -183,8 +183,6 @@ private:
         }
         else  return goOn(node->children[0], x); //check the first child only as it is sufficient
     }
-
-
 
     void print_JSON(treeNode * data, int n,bool arr_obj)
     {
@@ -372,13 +370,16 @@ public:
         this->out.clear();
         this->currentLine = 0;
         this->print = "";
+        this->s = "";
+        this->f = "";
+
     }
 
 
 
 
 
-    //functions
+    //Main functions
     treeNode* ans(treeNode * usersSamp)
     {
         treeNode * myIDSample = new treeNode( -1, "id","my id is 123", {});//0
@@ -410,8 +411,9 @@ public:
     vector<vector<treeNode*>> make_adj_list(treeNode* root)
     {
         vector<vector<treeNode*>> adj_list;
+        int x = root->children.size();
 
-        fori(root->children.size())
+        fori(x)
         {
             adj_list.push_back(root->children[i]->children[3]->children);
         }
@@ -425,10 +427,10 @@ public:
         vector<string>result;
         fori(adj_list.size()){
             s+=to_string(i+1);
-            s+="    ";
+            s+="      ";
             forj(adj_list[i].size()){
                 s+=adj_list[i][j]->children[0]->text;
-                s+=" ";
+                s+="  ";
             }
             result.push_back(s);
             s="";
@@ -715,6 +717,65 @@ public:
             return k;
         }
         //return k;
+
+    }
+
+    string mostActive(vector<vector<treeNode*>> adj_list)
+    {
+        unordered_map<int,int> follows;
+        int max = 0;
+        int maxID;
+        for(vector<treeNode*> user : adj_list)
+        {
+            for(treeNode* follower : user)
+            {
+                //fetch current id
+                int currentID = U->stringTointeger(follower->children[0]->text);
+
+                //increment the follows of the current ID
+                //if(follows.find(currentID) != follows.end()) follows[currentID] = 0;
+                follows[currentID]++;
+
+                //get the id with the max follows
+                if(follows[currentID]>max) {max = follows[currentID]; maxID = currentID;}
+
+            }
+        }
+
+
+
+        return to_string(maxID);
+    }
+
+    string suggest_users_to_follow(string x,vector<vector<treeNode*>> adj_list){
+        vector<string>followers;
+        vector<string>followers_of_followers;
+        unordered_set<string> set;
+        string h = "";
+        int number = U->stringTointeger(x);
+        set.insert(x);
+
+        fori(adj_list[number-1].size()){
+            followers.push_back(adj_list[number-1][i]->children[0]->text);
+            set.insert(adj_list[number-1][i]->children[0]->text);
+        }
+
+        fori(followers.size()){
+            int e = U->stringTointeger(followers[i])-1;
+            int y = adj_list[e].size();
+            forj(y){
+                if(set.find(adj_list[U->stringTointeger(followers[i])-1][j]->children[0]->text) != set.end())continue;
+                followers_of_followers.push_back(adj_list[U->stringTointeger(followers[i])-1][j]->children[0]->text);
+            }
+        }
+
+        fori(followers_of_followers.size()){
+            h+="User ";
+            h+=followers_of_followers[i];
+            h+="\n";
+        }
+
+        return h;
 
     }
 

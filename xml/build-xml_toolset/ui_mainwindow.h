@@ -43,6 +43,8 @@ public:
     QPlainTextEdit *plainTextEdit_3;
     QPushButton *pushButton_13;
     QPushButton *pushButton_14;
+    QPushButton *pushButton_15;
+    QPlainTextEdit *plainTextEdit_4;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -234,6 +236,20 @@ public:
 "background: #2a9d8f;\n"
 "padding: 5px;\n"
 "color: #F2DCA6;"));
+        pushButton_15 = new QPushButton(centralwidget);
+        pushButton_15->setObjectName("pushButton_15");
+        pushButton_15->setGeometry(QRect(660, 630, 141, 51));
+        pushButton_15->setFont(font2);
+        pushButton_15->setStyleSheet(QString::fromUtf8("border-radius: 25px;\n"
+"background: #2a9d8f;\n"
+"padding: 5px;\n"
+"color: #F2DCA6;"));
+        plainTextEdit_4 = new QPlainTextEdit(centralwidget);
+        plainTextEdit_4->setObjectName("plainTextEdit_4");
+        plainTextEdit_4->setGeometry(QRect(710, 690, 41, 31));
+        plainTextEdit_4->setFont(font6);
+        plainTextEdit_4->setAutoFillBackground(false);
+        plainTextEdit_4->setStyleSheet(QString::fromUtf8("background: #ffffff;"));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -261,6 +277,7 @@ public:
         pushButton_12->setText(QCoreApplication::translate("MainWindow", "Mutual users", nullptr));
         pushButton_13->setText(QCoreApplication::translate("MainWindow", "Most active user", nullptr));
         pushButton_14->setText(QCoreApplication::translate("MainWindow", "Extract graph", nullptr));
+        pushButton_15->setText(QCoreApplication::translate("MainWindow", "Suggest users", nullptr));
     } // retranslateUi
 
 };

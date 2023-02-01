@@ -312,6 +312,22 @@ void MainWindow::on_pushButton_12_clicked()
 
 }
 
+//most active user button
+void MainWindow::on_pushButton_13_clicked()
+{
+    dataRoot = new treeNode(0,"users","", {});
+    t->load_xml(usersSample,dataRoot);
+    adjancecy_list = t->make_adj_list(dataRoot);
+
+    string j = "User ";
+    j+=t->mostActive(adjancecy_list);
+
+    ui->textBrowser_2->setText(QString::fromStdString (j));
+    t->clear();
+
+
+}
+
 //extract graph button
 void MainWindow::on_pushButton_14_clicked()
 {
@@ -337,6 +353,24 @@ void MainWindow::on_pushButton_14_clicked()
 
 
     fileoutputstream.close();
+    t->clear();
+}
+
+
+
+
+//suggest users button
+void MainWindow::on_pushButton_15_clicked()
+{
+    dataRoot = new treeNode(0,"users","", {});
+    t->load_xml(usersSample,dataRoot);
+    adjancecy_list = t->make_adj_list(dataRoot);
+
+    QString s = ui->plainTextEdit_4->toPlainText();
+
+    string n = t->suggest_users_to_follow(s.toStdString(),adjancecy_list);
+
+    ui->textBrowser_2->setText(QString::fromStdString (n));
     t->clear();
 }
 

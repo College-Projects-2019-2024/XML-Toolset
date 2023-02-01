@@ -53,6 +53,7 @@ public:  Utility()
 
 public:
 
+    //helper functions
     vector<Line> get_xml(string inputFileName) {
 
              fileInputStream2.open(inputFileName);
@@ -69,9 +70,10 @@ public:
                  //current line number
                  idx++;
                  //remove spaces from start on the line
-                 while (current_line[0] == ' ') {
-                     current_line.erase(0, 1);
-                 }
+                 current_line = removeSpacesFromLine(current_line);
+//                 while (current_line[0] == ' ') {
+//                     current_line.erase(0, 1);
+//                 }
                  bool text_at_start = true;
 
                  //a value that keeps track of the position of '>'
@@ -258,7 +260,7 @@ public:
         int begin = 0, end = s.length() - 1;
 
         for (int i = begin; i < s.size(); i++) {
-            if (s[i] != ' ') {
+            if (s[i] != ' ' && s[i] != '\t') {
                 begin = i;
                 break;
             }
