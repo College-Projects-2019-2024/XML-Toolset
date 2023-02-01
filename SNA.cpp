@@ -16,7 +16,7 @@ vector<vector<treeNode*>> make_adj_list(treeNode* root)
     return adj_list;
 }
 
-string most_active_user(vector<vector<treeNode*>> adj_list){
+string most_inf_user(vector<vector<treeNode*>> adj_list){
     int max = adj_list[0].size();
     int index = 1;
     fori(adj_list.size()){
@@ -73,3 +73,32 @@ string mutual_followers(int user1,int user2,vector<vector<treeNode*>> adj_list){
     //return k;
 
 }
+
+string mostActive(vector<vector<treeNode*>> adj_list)
+{
+    unordered_map<int,int> follows;
+    int max = 0;
+    for(vector<treeNode*> user : adj_list)
+    {
+        for(treeNode* follower : user)
+        {
+            //fetch current id
+            int currentID = stringTointeger(follower->children[0]->text);
+
+            //increment the follows of the current ID
+            if(follows.contains(currentID)) follows[currentID] = 0;
+            else follows[currentID]++;
+
+            //get the id with the max follows
+            if(follows[currentID]>max) max = follows[currentID];
+
+        }
+    }
+    return to_string(max);
+}
+
+vector<int> suggestUser(vector<vector<treeNode*>> adj_list)
+{
+
+}
+

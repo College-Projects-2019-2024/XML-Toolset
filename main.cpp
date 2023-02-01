@@ -30,23 +30,18 @@ int main() {
      */
 
     vector<vector<treeNode*>> adj_list = make_adj_list(dataRoot);
-    fori(adj_list.size())
-    {
-        for(int j = 0; j < adj_list[i].size(); j++)
-        {
-            cout << adj_list[i][j]->children[0]->text << " ";
-        }
-        cout << endl;
+//    fori(adj_list.size())
+//    {
+//        for(int j = 0; j < adj_list[i].size(); j++)
+//        {
+//            cout << adj_list[i][j]->children[0]->text << " ";
+//        }
+//        cout << endl;
+//
+//    }
 
-    }
 
-    vector<string>a = mutual_followers(1,3,adj_list);
-
-    fori(a.size()){
-        cout<<a[i]<<" ";
-    }
-
-    //cout<<most_active_user(adj_list);
+  cout <<  mostActive(adj_list);
 
     //cout<<stringTointeger("4");
     return 0;

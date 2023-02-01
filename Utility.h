@@ -17,7 +17,7 @@ public:
     int max;
     string type;
     string text;
-    vector<treeNode *> children;
+    vector<treeNode*> children;
 
     treeNode(int max, string type,string text, vector<treeNode *> children)
     {
