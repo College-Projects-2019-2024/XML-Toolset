@@ -17,6 +17,10 @@ int main() {
     treeNode * dataRoot = new treeNode(0,"users","", {});
     load_xml(usersSample, dataRoot, v);
     //XMLtoJSON(usersSample, dataRoot, v, "output.json");
+    vector<vector<treeNode*>> adj_list = make_adj_list(dataRoot);
+    vector<string>s = extract_graph(adj_list);
+    vector<string>d = suggest_users_to_follow("1",adj_list);
+
 
     /*string searchWord;
     cin >> searchWord;
@@ -29,19 +33,26 @@ int main() {
     }
      */
 
-    vector<vector<treeNode*>> adj_list = make_adj_list(dataRoot);
+//
 //    fori(adj_list.size())
 //    {
+//        cout<<i+1<<"   ";
 //        for(int j = 0; j < adj_list[i].size(); j++)
 //        {
+//
 //            cout << adj_list[i][j]->children[0]->text << " ";
 //        }
 //        cout << endl;
 //
 //    }
 
+    //vector<string>a = mutual_followers(1,3,adj_list);
 
-  cout <<  mostActive(adj_list);
+//    fori(a.size()){
+//        cout<<a[i]<<" ";
+//    }
+
+    //cout<<most_active_user(adj_list);
 
     //cout<<stringTointeger("4");
     return 0;

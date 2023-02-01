@@ -74,6 +74,51 @@ string mutual_followers(int user1,int user2,vector<vector<treeNode*>> adj_list){
 
 }
 
+vector<string> extract_graph(vector<vector<treeNode*>> adj_list){
+
+    string s = "";
+    vector<string>result;
+    fori(adj_list.size()){
+        s+= to_string(i+1);
+        s+="    ";
+        forj(adj_list[i].size()){
+            s+=adj_list[i][j]->children[0]->text;
+            s+=" ";
+        }
+        result.push_back(s);
+        s="";
+    }
+    return result;
+}
+
+vector<string> suggest_users_to_follow(string x,vector<vector<treeNode*>> adj_list){
+    vector<string>followers;
+    vector<string>followers_of_followers;
+    unordered_set<string> set;
+    int number = stringTointeger(x);
+    set.insert(x);
+
+    fori(adj_list[number-1].size()){
+        followers.push_back(adj_list[number-1][i]->children[0]->text);
+        set.insert(adj_list[number-1][i]->children[0]->text);
+    }
+
+    fori(followers.size()){
+        forj(adj_list[stringTointeger(followers[i])-1].size()){
+            if(set.contains(adj_list[stringTointeger(followers[i])-1][j]->children[0]->text))continue;
+            followers_of_followers.push_back(adj_list[stringTointeger(followers[i])-1][j]->children[0]->text);
+        }
+    }
+
+    return followers_of_followers;
+
+}
+
+//1   2 3
+//2   1 5
+//3   1 2 3 4
+
+
 string mostActive(vector<vector<treeNode*>> adj_list)
 {
     unordered_map<int,int> follows;
@@ -101,8 +146,5 @@ string mostActive(vector<vector<treeNode*>> adj_list)
     return to_string(maxID);
 }
 
-vector<int> suggestUser(vector<vector<treeNode*>> adj_list)
-{
 
-}
 
