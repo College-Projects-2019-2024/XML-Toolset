@@ -28,3 +28,36 @@ int most_active_user(vector<vector<treeNode*>> adj_list){
 
     return index;
 }
+
+int stringTointeger(string str)
+{
+    int temp = 0;
+    for (int i = 0; i < str.length(); i++) {
+
+        temp = temp * 10 + (str[i] - '0');
+    }
+    return temp;
+}
+
+vector<int> mutual_followers(int user1,int user2,vector<vector<treeNode*>> adj_list){
+    vector<int>vec;
+    int freq_arr[adj_list.size()+1];
+
+    fori(adj_list.size()+1){
+        freq_arr[i] = 0;
+    }
+    fori(adj_list[user1-1].size()){
+        freq_arr[stringTointeger(adj_list[user1-1][i]->children[0]->text)]++;
+
+    }
+    fori(adj_list[user2-1].size()){
+        freq_arr[stringTointeger(adj_list[user2-1][i]->children[0]->text)]++;
+
+    }
+
+    fori(adj_list.size()+1){
+        if(freq_arr[i] > 1)vec.push_back(i);
+
+    }
+    return vec;
+}

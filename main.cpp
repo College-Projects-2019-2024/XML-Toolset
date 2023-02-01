@@ -40,8 +40,14 @@ int main() {
 
     }
 
-    cout<<most_active_user(adj_list);
+    vector<int>a = mutual_followers(1,3,adj_list);
 
+    fori(a.size()){
+        cout<<a[i]<<" ";
+    }
 
+    //cout<<most_active_user(adj_list);
+
+    //cout<<stringTointeger("4");
     return 0;
 }
