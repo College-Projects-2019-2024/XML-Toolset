@@ -41,6 +41,8 @@ private slots:
 
     void on_pushButton_12_clicked();
 
+    void on_pushButton_14_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWindow *nw = new QWindow();

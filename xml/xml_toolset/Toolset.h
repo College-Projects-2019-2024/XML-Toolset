@@ -9,6 +9,7 @@
 #define MAX 100
 
 #define fori(size) for(int i=0; i < (size); i+= 1)
+#define forj(size) for(int j=0; j < (size); j+= 1)
 
 class Toolset {
 private:
@@ -418,6 +419,23 @@ public:
         return adj_list;
     }
 
+    vector<string> extract_graph(vector<vector<treeNode*>> adj_list){
+
+        string s = "";
+        vector<string>result;
+        fori(adj_list.size()){
+            s+=to_string(i+1);
+            s+="    ";
+            forj(adj_list[i].size()){
+                s+=adj_list[i][j]->children[0]->text;
+                s+=" ";
+            }
+            result.push_back(s);
+            s="";
+        }
+        return result;
+    }
+
     void load_xml(treeNode * samplenode, treeNode * data)
     {
 
@@ -642,7 +660,7 @@ public:
 
     }
 
-    string most_active_user(vector<vector<treeNode*>> adj_list){
+    string most_influencer_user(vector<vector<treeNode*>> adj_list){
         int max = adj_list[0].size();
         int index = 1;
         fori(adj_list.size()){
@@ -653,7 +671,7 @@ public:
         }
         string g = "User number ";
         g+= to_string(index);
-        g+=" is the most active user";
+        g+=" is the most influencer user";
 
         return g;
     }

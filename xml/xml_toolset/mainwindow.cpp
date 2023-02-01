@@ -280,14 +280,14 @@ void MainWindow::on_pushButton_10_clicked()
     t->clear();
 }
 
-//most active user button
+//most influencer user button
 void MainWindow::on_pushButton_11_clicked()
 {
     dataRoot = new treeNode(0,"users","", {});
     t->load_xml(usersSample,dataRoot);
     adjancecy_list = t->make_adj_list(dataRoot);
 
-    string j = t->most_active_user(adjancecy_list);
+    string j = t->most_influencer_user(adjancecy_list);
 
     ui->textBrowser_2->setText(QString::fromStdString (j));
     t->clear();
@@ -310,5 +310,33 @@ void MainWindow::on_pushButton_12_clicked()
     t->clear();
 
 
+}
+
+//extract graph button
+void MainWindow::on_pushButton_14_clicked()
+{
+    dataRoot = new treeNode(0,"users","", {});
+    t->load_xml(usersSample,dataRoot);
+    adjancecy_list = t->make_adj_list(dataRoot);
+    result = t->extract_graph(adjancecy_list);
+
+    outfilename = "Graph adjancecy list.txt";
+    fileoutputstream.open("Graph adjancecy list.txt");
+
+    outfile.setFileName(outfilename);
+
+    if(!outfile.open(QIODevice::ReadOnly))
+          QMessageBox::information(0,"info", outfile.errorString());
+
+    for(int i = 0; i<result.size(); i++){
+        fileoutputstream << result[i] << endl;
+    }
+
+    QTextStream in (&outfile);
+    ui->textBrowser_2->setText(in.readAll());
+
+
+    fileoutputstream.close();
+    t->clear();
 }
 
