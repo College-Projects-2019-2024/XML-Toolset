@@ -37,7 +37,6 @@ public:
     QTextBrowser *textBrowser_2;
     QPlainTextEdit *plainTextEdit;
     QPushButton *pushButton_10;
-    QPushButton *pushButton_11;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -163,19 +162,26 @@ public:
 "}"));
         plainTextEdit = new QPlainTextEdit(centralwidget);
         plainTextEdit->setObjectName("plainTextEdit");
-        plainTextEdit->setGeometry(QRect(250, 20, 91, 31));
+        plainTextEdit->setGeometry(QRect(250, 40, 231, 31));
+        QFont font6;
+        font6.setPointSize(10);
+        plainTextEdit->setFont(font6);
+        plainTextEdit->setAutoFillBackground(false);
+        plainTextEdit->setStyleSheet(QString::fromUtf8("QPlainTextEdit#plainTextEdit{\n"
+"background: #ffffff;\n"
+"}"));
         pushButton_10 = new QPushButton(centralwidget);
         pushButton_10->setObjectName("pushButton_10");
-        pushButton_10->setGeometry(QRect(370, 20, 111, 31));
-        pushButton_10->setStyleSheet(QString::fromUtf8("QPushButton#pushButton_10 {\n"
+        pushButton_10->setEnabled(true);
+        pushButton_10->setGeometry(QRect(500, 30, 131, 51));
+        pushButton_10->setFont(font);
+        pushButton_10->setAutoFillBackground(false);
+        pushButton_10->setStyleSheet(QString::fromUtf8("QPushButton#pushButton_10{\n"
 "border-radius: 25px;\n"
-"background:  #2a9d8f;\n"
-"padding: 6px;\n"
+"background: #2a9d8f;\n"
+"padding: 5px;\n"
 "color: #F2DCA6;\n"
 "}"));
-        pushButton_11 = new QPushButton(centralwidget);
-        pushButton_11->setObjectName("pushButton_11");
-        pushButton_11->setGeometry(QRect(640, 50, 80, 24));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -198,8 +204,7 @@ public:
         pushButton_7->setText(QCoreApplication::translate("MainWindow", "Detect errors", nullptr));
         pushButton_8->setText(QCoreApplication::translate("MainWindow", "Correct errors", nullptr));
         pushButton_9->setText(QCoreApplication::translate("MainWindow", "To JSON", nullptr));
-        pushButton_10->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
-        pushButton_11->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
+        pushButton_10->setText(QCoreApplication::translate("MainWindow", "Post Search", nullptr));
     } // retranslateUi
 
 };
