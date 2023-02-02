@@ -380,7 +380,7 @@ public:
 
 
     //Main functions
-    treeNode* ans(treeNode * usersSamp)
+    treeNode* sample_tree(treeNode * usersSamp)
     {
         treeNode * myIDSample = new treeNode( -1, "id","my id is 123", {});//0
         treeNode * nameSample = new treeNode( -1, "name","Dallash", {});//1

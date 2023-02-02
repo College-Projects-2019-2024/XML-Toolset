@@ -54,7 +54,7 @@ void MainWindow::on_pushButton_clicked()
               QMessageBox::information(0,"info", infile.errorString());
 
         t = new Toolset(infilename.toStdString());
-        usersSample = t->ans(usersSample);
+        usersSample = t->sample_tree(usersSample);
 
 
 
