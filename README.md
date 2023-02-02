@@ -1,7 +1,8 @@
 # XML-Toolset
 
-Code is in xml folder -> xml_toolset
-main code logic is in Toolset.h file
+Code is in xml folder -> xml_toolset.
+
+main code logic is in Toolset.h file.
 
 we classify the project into 6 parts :
 1-Error detection and Correction.
