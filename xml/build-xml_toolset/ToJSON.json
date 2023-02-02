@@ -3,7 +3,7 @@
         "user": [
            {
             "id": "1",
-            "name": "Ahmed Ali",
+            "name": "Ahmed Aliiiiiii",
             "posts": {
                 "post": [
                    {
@@ -11,9 +11,7 @@
                     "topics": {
                        "topic": [
                            "economy",
-                           "test",
-                           "finance",
-                           "lol"
+                           "finance"
                        ]
                     }
                     },
@@ -48,21 +46,10 @@
                     }
                 },
             "followers": {
-                "follower": [
-                   {
+                "follower": {
                     "id": "1"
-                    },
-                   {
-                    "id": "5"
-                    },
-                   {
-                    "id": "3"
-                    },
-                   {
-                    "id": "2"
                     }
-               ]
-            }
+                }
             },
            {
             "id": "3",
@@ -76,18 +63,32 @@
                     }
                 },
             "followers": {
+                "follower": {
+                    "id": "1"
+                    }
+                }
+            },
+           {
+            "id": "4",
+            "name": "samir",
+            "posts": {
+                "post": {
+                    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                    "topics": {
+                        "topic": "chemistry"
+                        }
+                    }
+                },
+            "followers": {
                 "follower": [
                    {
-                    "id": "1"
+                    "id": "3"
                     },
                    {
                     "id": "2"
                     },
                    {
-                    "id": "3"
-                    },
-                   {
-                    "id": "4"
+                    "id": "1"
                     }
                ]
             }

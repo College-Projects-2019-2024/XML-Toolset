@@ -4,7 +4,7 @@
             1
         </id>
         <name>
-            Ahmed Ali
+            Ahmed Aliiiiiii
         </name>
         <posts>
             <post>
@@ -19,13 +19,7 @@
                         economy
                     </topic>
                     <topic>
-                        test
-                    </topic>
-                    <topic>
                         finance
-                    </topic>
-                    <topic>
-                        lol
                     </topic>
                 </topics>
             </post>
@@ -83,21 +77,6 @@
                     1
                 </id>
             </follower>
-            <follower>
-                <id>
-                    5
-                </id>
-            </follower>
-            <follower>
-                <id>
-                    3
-                </id>
-            </follower>
-            <follower>
-                <id>
-                    2
-                </id>
-            </follower>
         </followers>
     </user>
     <user>
@@ -126,21 +105,6 @@
             <follower>
                 <id>
                     1
-                </id>
-            </follower>
-            <follower>
-                <id>
-                    2
-                </id>
-            </follower>
-            <follower>
-                <id>
-                    3
-                </id>
-            </follower>
-            <follower>
-                <id>
-                    4
                 </id>
             </follower>
         </followers>
