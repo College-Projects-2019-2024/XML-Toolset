@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
@@ -45,13 +46,14 @@ public:
     QPushButton *pushButton_14;
     QPushButton *pushButton_15;
     QPlainTextEdit *plainTextEdit_4;
+    QLabel *label;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1208, 755);
+        MainWindow->resize(1225, 762);
         MainWindow->setStyleSheet(QString::fromUtf8("background-color: #264653;"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -70,7 +72,7 @@ public:
 "}"));
         pushButton_2 = new QPushButton(centralwidget);
         pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(1020, 280, 111, 51));
+        pushButton_2->setGeometry(QRect(1050, 280, 111, 51));
         QFont font1;
         font1.setPointSize(11);
         font1.setBold(true);
@@ -93,7 +95,7 @@ public:
 "}"));
         pushButton_4 = new QPushButton(centralwidget);
         pushButton_4->setObjectName("pushButton_4");
-        pushButton_4->setGeometry(QRect(1020, 365, 111, 51));
+        pushButton_4->setGeometry(QRect(1050, 365, 111, 51));
         pushButton_4->setFont(font1);
         pushButton_4->setStyleSheet(QString::fromUtf8("QPushButton#pushButton_4 {\n"
 "border-radius: 25px;\n"
@@ -102,7 +104,7 @@ public:
 "}"));
         pushButton_5 = new QPushButton(centralwidget);
         pushButton_5->setObjectName("pushButton_5");
-        pushButton_5->setGeometry(QRect(1020, 450, 111, 51));
+        pushButton_5->setGeometry(QRect(1050, 450, 111, 51));
         QFont font2;
         font2.setPointSize(10);
         font2.setBold(true);
@@ -114,7 +116,7 @@ public:
 "}"));
         pushButton_6 = new QPushButton(centralwidget);
         pushButton_6->setObjectName("pushButton_6");
-        pushButton_6->setGeometry(QRect(1020, 535, 111, 51));
+        pushButton_6->setGeometry(QRect(1050, 535, 111, 51));
         QFont font3;
         font3.setPointSize(13);
         font3.setBold(true);
@@ -126,7 +128,7 @@ public:
 "}"));
         pushButton_7 = new QPushButton(centralwidget);
         pushButton_7->setObjectName("pushButton_7");
-        pushButton_7->setGeometry(QRect(1020, 195, 111, 51));
+        pushButton_7->setGeometry(QRect(1050, 195, 111, 51));
         QFont font4;
         font4.setBold(true);
         pushButton_7->setFont(font4);
@@ -137,7 +139,7 @@ public:
 "}"));
         pushButton_8 = new QPushButton(centralwidget);
         pushButton_8->setObjectName("pushButton_8");
-        pushButton_8->setGeometry(QRect(1020, 110, 111, 51));
+        pushButton_8->setGeometry(QRect(1050, 110, 111, 51));
         QFont font5;
         font5.setPointSize(9);
         font5.setBold(true);
@@ -149,7 +151,7 @@ public:
 "}"));
         pushButton_9 = new QPushButton(centralwidget);
         pushButton_9->setObjectName("pushButton_9");
-        pushButton_9->setGeometry(QRect(1020, 620, 111, 51));
+        pushButton_9->setGeometry(QRect(1050, 620, 111, 51));
         pushButton_9->setFont(font1);
         pushButton_9->setStyleSheet(QString::fromUtf8("QPushButton#pushButton_9 {\n"
 "border-radius: 25px;\n"
@@ -193,7 +195,7 @@ public:
         pushButton_11 = new QPushButton(centralwidget);
         pushButton_11->setObjectName("pushButton_11");
         pushButton_11->setEnabled(true);
-        pushButton_11->setGeometry(QRect(20, 630, 151, 51));
+        pushButton_11->setGeometry(QRect(140, 640, 181, 51));
         pushButton_11->setFont(font2);
         pushButton_11->setAutoFillBackground(false);
         pushButton_11->setStyleSheet(QString::fromUtf8("border-radius: 25px;\n"
@@ -202,7 +204,7 @@ public:
 "color: #F2DCA6;"));
         pushButton_12 = new QPushButton(centralwidget);
         pushButton_12->setObjectName("pushButton_12");
-        pushButton_12->setGeometry(QRect(250, 630, 141, 51));
+        pushButton_12->setGeometry(QRect(370, 680, 141, 51));
         pushButton_12->setFont(font2);
         pushButton_12->setStyleSheet(QString::fromUtf8("border-radius: 25px;\n"
 "background: #2a9d8f;\n"
@@ -210,19 +212,19 @@ public:
 "color: #F2DCA6;"));
         plainTextEdit_2 = new QPlainTextEdit(centralwidget);
         plainTextEdit_2->setObjectName("plainTextEdit_2");
-        plainTextEdit_2->setGeometry(QRect(260, 690, 41, 31));
+        plainTextEdit_2->setGeometry(QRect(380, 640, 41, 31));
         plainTextEdit_2->setFont(font6);
         plainTextEdit_2->setAutoFillBackground(false);
         plainTextEdit_2->setStyleSheet(QString::fromUtf8("background: #ffffff;"));
         plainTextEdit_3 = new QPlainTextEdit(centralwidget);
         plainTextEdit_3->setObjectName("plainTextEdit_3");
-        plainTextEdit_3->setGeometry(QRect(340, 690, 41, 31));
+        plainTextEdit_3->setGeometry(QRect(450, 640, 41, 31));
         plainTextEdit_3->setFont(font6);
         plainTextEdit_3->setAutoFillBackground(false);
         plainTextEdit_3->setStyleSheet(QString::fromUtf8("background: #ffffff;"));
         pushButton_13 = new QPushButton(centralwidget);
         pushButton_13->setObjectName("pushButton_13");
-        pushButton_13->setGeometry(QRect(450, 630, 141, 51));
+        pushButton_13->setGeometry(QRect(570, 640, 161, 51));
         pushButton_13->setFont(font2);
         pushButton_13->setStyleSheet(QString::fromUtf8("border-radius: 25px;\n"
 "background: #2a9d8f;\n"
@@ -238,7 +240,7 @@ public:
 "color: #F2DCA6;"));
         pushButton_15 = new QPushButton(centralwidget);
         pushButton_15->setObjectName("pushButton_15");
-        pushButton_15->setGeometry(QRect(660, 630, 141, 51));
+        pushButton_15->setGeometry(QRect(860, 640, 141, 51));
         pushButton_15->setFont(font2);
         pushButton_15->setStyleSheet(QString::fromUtf8("border-radius: 25px;\n"
 "background: #2a9d8f;\n"
@@ -246,10 +248,19 @@ public:
 "color: #F2DCA6;"));
         plainTextEdit_4 = new QPlainTextEdit(centralwidget);
         plainTextEdit_4->setObjectName("plainTextEdit_4");
-        plainTextEdit_4->setGeometry(QRect(710, 690, 41, 31));
+        plainTextEdit_4->setGeometry(QRect(800, 650, 41, 31));
         plainTextEdit_4->setFont(font6);
         plainTextEdit_4->setAutoFillBackground(false);
         plainTextEdit_4->setStyleSheet(QString::fromUtf8("background: #ffffff;"));
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+        label->setGeometry(QRect(30, 640, 81, 51));
+        QFont font7;
+        font7.setPointSize(22);
+        label->setFont(font7);
+        label->setStyleSheet(QString::fromUtf8("QLabel#label{\n"
+"color: #e9c46a;\n"
+"}"));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -278,6 +289,7 @@ public:
         pushButton_13->setText(QCoreApplication::translate("MainWindow", "Most active user", nullptr));
         pushButton_14->setText(QCoreApplication::translate("MainWindow", "Extract graph", nullptr));
         pushButton_15->setText(QCoreApplication::translate("MainWindow", "Suggest users", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "SNA: ", nullptr));
     } // retranslateUi
 
 };
